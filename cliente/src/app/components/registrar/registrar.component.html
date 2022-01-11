@@ -1,0 +1,108 @@
+<section id="registro" class="mb-5">
+    <div class="containter">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+                <div class="card_register">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <form  [formGroup]="user" (ngSubmit)="onRegister()" >
+                                <h1 class="h3 mb-3 font-weight-nomrmal">Regístrate</h1>
+                                <div class="form-group">
+                                    <input  type="text"  formControlName="NOMBRE" class="form-control"  placeholder="Nombre" autofocus>
+                                    <!--dirty es que el usuario ya escrito sobre este input, touched que el usuario ha puesto cursor sobre input-->
+                                    <!--la condicion ? delante de NOMBRE evita el error de NULL ya que el NOMBRE puede ser null o que no haya error-->    
+                                    <div class="alert-danger" *ngIf="NOMBRE?.invalid && (NOMBRE?.dirty || NOMBRE?.touched)"> 
+                                        <div class="container-error-message" *ngIf="NOMBRE?.errors?.['required']">
+                                            Introduzca el nombre.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="NOMBRE?.errors?.['maxlength']">
+                                            El nombre es demasiado largo.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input  type="text" formControlName="APELLIDO" class="form-control"  placeholder="Apellidos">
+                                    <div class="alert-danger" *ngIf="APELLIDO?.invalid && (APELLIDO?.dirty || APELLIDO?.touched)"> 
+                                       <div class="container-error-message" *ngIf="APELLIDO?.errors?.['maxlength']">
+                                           Los apellidos son demasiado largos.
+                                       </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input  type="email"  formControlName="EMAIL" class="form-control" placeholder="Email">
+                                    <div class="alert-danger" *ngIf="EMAIL?.invalid && (EMAIL?.dirty || EMAIL?.touched)"> 
+                                        <div class="container-error-message" *ngIf="EMAIL?.errors?.['required']">
+                                            Introduzca el em@il.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="EMAIL?.errors?.['maxlength']">
+                                            El em@il es demasiado largo.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="EMAIL?.errors?.['minlength']">
+                                            El em@il es demasiado corto.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="EMAIL?.errors?.['pattern']">
+                                            No es un em@il.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="EMAIL?.errors?.['notAvailable']">
+                                            Este em@il ya existe.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input  type="password" formControlName="PASS" class="form-control" placeholder="Contraseña">
+                                    <div class="alert-danger" *ngIf="PASS?.invalid && (PASS?.dirty || PASS?.touched)"> 
+                                        <div class="container-error-message" *ngIf="PASS?.errors?.['required']">
+                                            Introduzca la contraseña.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="PASS?.errors?.['maxlength']">
+                                            La contraseña es demasiado larga.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="PASS?.errors?.['minlength']">
+                                            La contraseña es demasiado corta.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="PASS?.errors?.['pattern']">
+                                            La contraseña debe contener al menos 8 caracteres con al menos una cifra, una minúscula y una mayúscula.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input  type="text"  formControlName="TELEFONO" class="form-control" placeholder="Teléfono">
+                                    <div class="alert-danger" *ngIf="TELEFONO?.invalid && (TELEFONO?.dirty || TELEFONO?.touched)"> 
+                                        <div class="container-error-message" *ngIf="TELEFONO?.errors?.['required']">
+                                            Introduzca el telefono.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="TELEFONO?.errors?.['minlength'] || TELEFONO?.errors?.['maxlength']">
+                                            El telefono debe tener 9 digitos.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input  type="text"  formControlName="FECHA_NACIMIENTO" class="form-control"  placeholder="Fecha de Nacimiento" onfocus="(this.type='date')">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text"  formControlName="DIRECCION" class="form-control"  placeholder="Dirección">
+                                    <div class="alert-danger" *ngIf="DIRECCION?.invalid && (DIRECCION?.dirty || DIRECCION?.touched)"> 
+                                        <div class="container-error-message" *ngIf="DIRECCION?.errors?.['required']">
+                                            Introduzca la dirección.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="DIRECCION?.errors?.['maxlength']">
+                                            La dirección es demasiado larga.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="DIRECCION?.errors?.['minlength']">
+                                            La dirección es demasiado corta.
+                                        </div>
+                                    </div>
+                                </div>
+                                <button  type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="user.invalid">Enviar</button>
+                                <div class="form-group">
+                                    <a routerLink="../login" class="form-control login-user" >¿Ya esta registrado?</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

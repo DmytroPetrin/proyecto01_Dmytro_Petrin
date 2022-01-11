@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,6 +9,8 @@ import { HomeComponent } from './components/home/home.component';
 import { PrivateComponent } from './components/private/private.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
+import { EmpleadoComponent } from './components/empleado/empleado.component';
+import { RegistrarComponent } from './components/registrar/registrar.component';
 
 //providers
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -20,11 +22,13 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     HomeComponent,
     PrivateComponent,
     AdminComponent,
-    LoginComponent
+    LoginComponent,
+    EmpleadoComponent,
+    RegistrarComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, 
-    AppRoutingModule
+    AppRoutingModule, ReactiveFormsModule
   ],
   providers: [
     //jwt
