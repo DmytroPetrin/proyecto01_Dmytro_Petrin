@@ -92,9 +92,9 @@ router.put('/registerUser', (req, res)=>{
 });
 
 router.put('/registerEmpleado', (req, res)=>{
-    const{NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, DNI, FECHA_ALTA, FECHA_BAJA, DIRECCION } = req.body;
-    mysqlConnection.query('INSERT INTO empleados(NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, DNI, FECHA_ALTA, FECHA_BAJA, DIRECCION, ROL) VALUES (?,?,?,?,?,?,?,?,?,?)',
-     [NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, DNI, FECHA_ALTA, FECHA_BAJA, DIRECCION, 'empleado'],
+    const{NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, FECHA_ALTA, DIRECCION, DNI, ROL} = req.body;
+    mysqlConnection.query('INSERT INTO empleados(NOMBRE, APELLIDO, EMAIL, CONTRASEÑA, TELEFONO, FECHA_ALTA, DIRECCION, DNI, ROL) VALUES (?,?,?,?,?,?,?,?,?)',
+     [NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, FECHA_ALTA, DIRECCION, DNI, ROL],
      (err,rows, fields) =>{
         if(!err){
             //console.log(rows);

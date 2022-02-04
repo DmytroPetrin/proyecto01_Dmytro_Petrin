@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { NullVisitor } from '@angular/compiler/src/render3/r3_ast';
 
 @Injectable({
   providedIn: 'root'   //(Injectable)ESTO PERMITE USAR AUTH SIN NECESITAD DE INCLUIR ESTE MODULO DENTRO DE APP.MODULE.TS
@@ -41,6 +42,13 @@ export class AuthService {
     console.log(user);
       return this.http.put(this.URL+"/user/registerUser", user);
   }
+
+  registerEmpleado(user:{NOMBRE: string, APPELLIDO:string, EMAIL:string, PASS:string,
+    TELEFONO:number, FECHA_ALTA:Date, DIRECCION:string, DNI:string, ROL:string}){
+    
+      console.log(user);
+        return this.http.put(this.URL+"/user/registerEmpleado", user);
+    }
 
   getCurrentUser():boolean{
     const token = localStorage.getItem('token');
