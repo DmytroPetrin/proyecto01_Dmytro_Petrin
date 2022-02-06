@@ -43,7 +43,7 @@ export class AdminEdempleadoComponent implements OnInit {
    createFormGroup(){
      return new FormGroup({
      NOMBRE:new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
-     APELLIDO:new FormControl('', Validators.maxLength(40)),
+     APELLIDO:new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
      EMAIL:new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40), Validators.pattern(this.emailPattern)], this.miValidator.bind(this)),  
      PASS:new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(40), Validators.pattern(this.passPattern)]) ,
      TELEFONO:new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),

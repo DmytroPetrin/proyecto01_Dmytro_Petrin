@@ -25,6 +25,9 @@
                                  <div class="form-group">
                                     <input  type="text" formControlName="APELLIDO" class="form-control"  placeholder="Apellidos">
                                     <div class="alert-danger" *ngIf="APELLIDO?.invalid && (APELLIDO?.dirty || APELLIDO?.touched)"> 
+                                        <div class="container-error-message" *ngIf="APELLIDO?.errors?.['required']">
+                                            Introduzca los apellidos.
+                                        </div>
                                        <div class="container-error-message" *ngIf="APELLIDO?.errors?.['maxlength']">
                                            Los apellidos son demasiado largos.
                                        </div>

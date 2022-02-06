@@ -50,6 +50,11 @@ export class AuthService {
         return this.http.put(this.URL+"/user/registerEmpleado", user);
     }
 
+  registerIngrediente(ingrediente:{NOMBRE: string, ALERGENO: string, IMAGEN: string}){
+    console.log(ingrediente);
+    return this.http.post(this.URL+"/pizza/registerIngrediente", ingrediente);
+  }  
+
   getCurrentUser():boolean{
     const token = localStorage.getItem('token');
     if(token!==null||token!==undefined){

@@ -1,1 +1,64 @@
-<p>admin-edingrediente works!</p>
+
+<section id="editar_empleado" class="mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+                <div class="card_register">
+                    <div class="card">
+                        <div class="card-body text-center">
+                             <form [formGroup]="ingrediente" (ngSubmit)="onRegister()">
+                                <h1 class="h3 mb-3 font-weight-nomrmal">Añadir Ingrediente</h1>
+                                 <div class="form-group">
+                                     <input type='text' [(ngModel)]="ing.NOMBRE" formControlName="NOMBRE" name='nombre' placeholder="Ingrediente" class="form-control" autofocus>
+                                     <!--dirty es que el ing ya escrito sobre este input, touched que el ing ha puesto cursor sobre input-->
+                                     <!--la condicion ? delante de NOMBRE evita el error de NULL ya que el NOMBRE puede ser null o que no haya error-->    
+                                     <div class="alert-danger" *ngIf="NOMBRE?.invalid && (NOMBRE?.dirty || NOMBRE?.touched)"> 
+                                        <div class="container-error-message" *ngIf="NOMBRE?.errors?.['required']">
+                                            Introduzca el nombre de ingrediente.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="NOMBRE?.errors?.['maxlength']">
+                                            El nombre de ingrediente es demasiado largo.
+                                        </div>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <input  type="text" [(ngModel)]="ing.ALERGENO" formControlName="ALERGENO" class="form-control"  placeholder="Alergeno">
+                                    <div class="alert-danger" *ngIf="ALERGENO?.invalid && (ALERGENO?.dirty || ALERGENO?.touched)"> 
+                                       <div class="container-error-message" *ngIf="ALERGENO?.errors?.['maxlength']">
+                                           El nombre de alergeno es demasiado largo.
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <input type='text' [(ngModel)]="ing.IMAGEN" formControlName="IMAGEN" name='dni' placeholder="Imagen de alergeno" class="form-control">
+                                     <div class="alert-danger" *ngIf="IMAGEN?.invalid && (IMAGEN?.dirty || IMAGEN?.touched)"> 
+                                       
+                                        <div class="container-error-message" *ngIf="IMAGEN?.errors?.['maxlength']">
+                                            Ruta a la imagen es demasiado larga.
+                                        </div>
+                                    </div>
+                                 </div>
+                                 
+                                 <button  type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="ingrediente.invalid">Guardar</button>
+                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col 5">
+                <div class="card">
+                    <div class="card body text-center">
+                        <img [src]="ing.IMAGEN == '' ? '/assets/no_image.png': ing.IMAGEN" class="card-img-top">
+                        <h3> {{ing.NOMBRE == '' ? 'Ingrediente': ing.NOMBRE}}</h3>
+                        <p>{{ing.ALERGENO == '' ? 'Alergeno': ing.ALERGENO}}</p>
+                       
+                        
+                    </div>
+                </div>
+            </div>
+         
+            
+        </div>
+    </div>
+</section>

@@ -13,4 +13,7 @@ const express = require('express');
  const userRoute = require('./api/routers/user');
  app.use('/user', userRoute);
 
+ const pizzaRoute = require('./api/routers/pizza');
+ app.use('/pizza', pizzaRoute);
+
  module.exports = app;
