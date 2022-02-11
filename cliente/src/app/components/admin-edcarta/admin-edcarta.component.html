@@ -1,3 +1,4 @@
+
 <section id="editar_empleado" class="mb-5">
     <div class="container">
         <div class="row">
@@ -5,34 +6,85 @@
                 <div class="card_register">
                     <div class="card">
                         <div class="card-body text-center">
-                             <form>
-                                <div class="form group">
-                                    <input type='text' name='carta' placeholder="Carta" class="form-control" autofocus>
+                             <form [formGroup]="menu" (ngSubmit)="onRegister()">
+                                <h1 class="h3 mb-3 font-weight-nomrmal">Añadir Menu</h1>
+                                 <div class="form-group">
+                                    <div class="form-group">
+                                        <select class="form-control"  formControlName="CARTA" required autoforcus>
+                                           <!--seleccionar la tabla donde se guardaran los datos-->
+                                            <option value="pizza" >Pizza</option>
+                                            <option value="entrantes">Entrante</option>
+                                            <option value="bebida">Bebida</option>
+                                            <option value="postres">Postre</option>
+                                        </select>
+                                    </div>
+                                     <input type='text' [(ngModel)]="menux.NOMBRE" formControlName="NOMBRE" name='nombre' placeholder="Nombre" class="form-control" >
+                                     <!--dirty es que el ing ya escrito sobre este input, touched que el ing ha puesto cursor sobre input-->
+                                     <!--la condicion ? delante de NOMBRE evita el error de NULL ya que el NOMBRE puede ser null o que no haya error-->    
+                                     <div class="alert-danger" *ngIf="NOMBRE?.invalid && (NOMBRE?.dirty || NOMBRE?.touched)"> 
+                                        <div class="container-error-message" *ngIf="NOMBRE?.errors?.['required']">
+                                            Introduzca el nombre de ingrediente.
+                                        </div>
+                                        <div class="container-error-message" *ngIf="NOMBRE?.errors?.['maxlength']">
+                                            El nombre de ingrediente es demasiado largo.
+                                        </div>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <input  type="number" [(ngModel)]="menux.PRECIO" formControlName="PRECIO" class="form-control"  placeholder="Precio">
+                                    <div class="alert-danger" *ngIf="PRECIO?.invalid && (PRECIO?.dirty || PRECIO?.touched)"> 
+                                       <div class="container-error-message" *ngIf="PRECIO?.errors?.['maxlength']">
+                                           El precio es demasiado largo.
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <input  type="text" [(ngModel)]="menux.SIZE" formControlName="SIZE" class="form-control"  placeholder="Tamaño">
+                                    <div class="alert-danger" *ngIf="SIZE?.invalid && (SIZE?.dirty || SIZE?.touched)"> 
+                                       <div class="container-error-message" *ngIf="SIZE?.errors?.['maxlength']">
+                                           La descripción de tamaño es demasiado largo.
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <input type='text' [(ngModel)]="menux.IMAGEN" formControlName="IMAGEN"  placeholder="Imagen" class="form-control">
+                                     <div class="alert-danger" *ngIf="IMAGEN?.invalid && (IMAGEN?.dirty || IMAGEN?.touched)"> 
+                                        <div class="container-error-message" *ngIf="IMAGEN?.errors?.['maxlength']">
+                                            Ruta a la imagen es demasiado larga.
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <textarea [(ngModel)]="menux.DESCRIPCION" formControlName="DESCRIPCION"  placeholder="Descripción" class="form-control"></textarea>
                                 </div>
-                                 <div class="form group">
-                                     <input type='text' name='nombre' placeholder="Nombre" class="form-control">
-                                 </div>
-                                 <div class="form group">
-                                     <input type='text' name='precio' placeholder="Precio" class="form-control">
-                                 </div>
-                                 <div class="form group">
-                                     <input type='text' name='size' placeholder="Tamaño" class="form-control">
-                                 </div>
-                                 <div class="form group">
-                                    <input type='text' name='ingrediente' placeholder="Ingrediente" class="form-control">
+                                <div class="form-group">
+                                    <button type="button">new</button>
+                                    <select class="form-control" [(ngModel)]="menux.INGREDIENTE[0]" >
+                                        <option [value]="item" *ngFor="let item of lista">{{item}}</option>
+                                    </select>
                                 </div>
-                                 <div class="form group">
-                                     <input type='text' name='imagen' placeholder="Imagen" class="form-control">
-                                 </div>
-                                 <div class="form group">
-                                     <textarea class="form-control"  name='descripcion' placeholder="Discripción" ></textarea>
-                                 </div>
-                                 <button  type="submit" class="btn btn-lg btn-primary btn-block" >Guardar</button>
+                                 <button  type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="menu.invalid">Guardar</button>
                              </form>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <div class="col 5">
+                <div class="card">
+                    <div class="card body text-center">
+                        <img [src]="menux.IMAGEN == '' ? '/assets/no_image.png': menux.IMAGEN" class="card-img-top">
+                        <h3> {{menux.NOMBRE == '' ? 'NOMBRE': menux.NOMBRE}}</h3>
+                        <p>{{menux.PRECIO == '' ? 'PRECIO': menux.PRECIO}} €</p>
+                        <p>{{menux.SIZE == '' ? 'TAMAÑO': menux.SIZE}}</p>
+                        <p>{{menux.DESCRIPCION == '' ? 'DESCRIPCIÓN': menux.DESCRIPCION}}</p>
+                        <p>{{menux.INGREDIENTE.length == 0 ? 'INGREDIENTE': menux.INGREDIENTE}}</p>
+                        
+                    </div>
+                </div>
+            </div>
+         
+            
         </div>
     </div>
 </section>

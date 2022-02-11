@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
+import {CartaService} from 'src/app/services/carta.service'
 
 @Component({
   selector: 'app-admin-edingrediente',
@@ -17,7 +17,7 @@ export class AdminEdingredienteComponent implements OnInit {
     IMAGEN: ''
   };
   
-    constructor(private authService: AuthService)
+    constructor( private cartaService: CartaService)
     {
         this.ingrediente = this.createFormGroup(); 
       }
@@ -35,7 +35,7 @@ export class AdminEdingredienteComponent implements OnInit {
         console.log(this.ingrediente.value);
         console.log(this.ing);
         */
-        this.authService.registerIngrediente(this.ingrediente.value).subscribe((res:any)=>{
+        this.cartaService.registerIngrediente(this.ingrediente.value).subscribe((res:any)=>{
            //console.log(res);
         });
         this.OnResetForm();
