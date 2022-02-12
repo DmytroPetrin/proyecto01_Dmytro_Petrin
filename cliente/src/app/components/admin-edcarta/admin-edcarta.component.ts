@@ -41,7 +41,7 @@ export class AdminEdcartaComponent implements OnInit {
         
         console.log('Valido');
         console.log(this.menu.value);
-        console.log(this.menux);
+        console.log(this.menux.INGREDIENTE);
         /*
         this.cartaService.registerIngrediente(this.menu.value).subscribe((res:any)=>{
            //console.log(res);
@@ -60,7 +60,8 @@ export class AdminEdcartaComponent implements OnInit {
        PRECIO:new FormControl('',[Validators.required, Validators.maxLength(6)]),
        SIZE:new FormControl('',[Validators.required, Validators.maxLength(20)]),
        IMAGEN:new FormControl('',  Validators.maxLength(100)),
-       DESCRIPCION:new FormControl('')
+       DESCRIPCION:new FormControl(''),
+       INGREDIENTE: new FormControl('')
        
        });
        
@@ -116,6 +117,13 @@ export class AdminEdcartaComponent implements OnInit {
 
       get CARTA(){return this.menu.get('CARTA')}
     
+      get INGREDIENTE(){
+        const ingrediente = this.menu.get('INGREDIENTE');
+        if(typeof(ingrediente)=="string"){
+          this.menux.INGREDIENTE = ingrediente;
+        };
+         return ingrediente;
+        }
       
    
   }
