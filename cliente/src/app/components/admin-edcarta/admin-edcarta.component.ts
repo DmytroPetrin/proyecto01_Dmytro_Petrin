@@ -28,11 +28,20 @@ export class AdminEdcartaComponent implements OnInit {
     constructor( private cartaService: CartaService)
     {
         this.menu = this.createFormGroup(); 
-      }
+    }
   
-  
+    selectIngrediente(){
+        this.cartaService.getIngrediente().subscribe((res:any)=>{
+        console.log(res[0]['NOMBRE']);
+        // los datos vienen en formato array[object] entonces hay que primero sacar datos de cada index de  array y luego sacar info de object
+        this.lista = res;
+        console.log(this.lista[0][0]);
+     });
+    }
+
     ngOnInit(): void {
       console.log(this.menu);
+      this.selectIngrediente();
     }
   
     onRegister(): void{

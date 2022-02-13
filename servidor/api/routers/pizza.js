@@ -33,6 +33,16 @@ router.post('/registerIngrediente', (req,res)=>{
      
 });
 
+router.get('/getIngrediente', (req,res)=>{
+    mysqlConnection.query('SELECT ID_INGREDIENTE, NOMBRE FROM ingredientes ORDER BY NOMBRE ASC;',
+    (err, rows, fields)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+})
 
 
 
