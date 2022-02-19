@@ -21,6 +21,7 @@ import { PizzaComponent } from './components/pizza/pizza.component';
 import { EntranteComponent } from './components/entrante/entrante.component';
 import { BebidaComponent } from './components/bebida/bebida.component';
 import { PostreComponent } from './components/postre/postre.component';
+import { AdminEdofertaComponent } from './components/admin-edoferta/admin-edoferta.component';
 
 
 
@@ -38,7 +39,8 @@ const routes: Routes = [
           {path:'edempleado', component: AdminEdempleadoComponent},
           {path:'edcarta', component: AdminEdcartaComponent},
           {path:'edingrediente', component: AdminEdingredienteComponent},
-          {path:'edsalon', component: AdminEdsalonComponent}
+          {path:'edsalon', component: AdminEdsalonComponent},
+          {path:'edoferta', component: AdminEdofertaComponent}
       ],
       canActivate:[RoleGuard], data: {expectedRole: 'admin'}
   },

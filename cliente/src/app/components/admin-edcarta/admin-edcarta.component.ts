@@ -20,11 +20,10 @@ export class AdminEdcartaComponent implements OnInit {
     INGREDIENTE: Array<string>()
   };
   
-  //prueba para ingredientes:
-
-  lista:string[]=["hola","que","tal", "estas"];
+ 
   
 
+  lista:{ID_INGREDIENTE:number, NOMBRE:string}[] = [];
     constructor( private cartaService: CartaService)
     {
         this.menu = this.createFormGroup(); 
@@ -32,15 +31,16 @@ export class AdminEdcartaComponent implements OnInit {
   
     selectIngrediente(){
         this.cartaService.getIngrediente().subscribe((res:any)=>{
-        console.log(res[0]['NOMBRE']);
-        // los datos vienen en formato array[object] entonces hay que primero sacar datos de cada index de  array y luego sacar info de object
-        this.lista = res;
-        console.log(this.lista[0][0]);
-     });
+         
+          res.forEach((element:{ID_INGREDIENTE:number, NOMBRE:string}) => {
+           
+            this.lista.push(element);
+          });
+        });
     }
 
     ngOnInit(): void {
-      console.log(this.menu);
+     //console.log(this.menu);
       this.selectIngrediente();
     }
   
@@ -51,11 +51,11 @@ export class AdminEdcartaComponent implements OnInit {
         console.log('Valido');
         console.log(this.menu.value);
         console.log(this.menux.INGREDIENTE);
-        /*
-        this.cartaService.registerIngrediente(this.menu.value).subscribe((res:any)=>{
+        
+        this.cartaService.registerCarta(this.menu.value).subscribe((res:any)=>{
            //console.log(res);
         });
-        this.OnResetForm();*/
+        this.OnResetForm();
       }else{
         console.log('No valido');}
     
@@ -81,6 +81,9 @@ export class AdminEdcartaComponent implements OnInit {
        this.menux.IMAGEN='';
        this.menux.NOMBRE='';
        this.menux.PRECIO='';
+       this.menux.DESCRIPCION='';
+       this.menux.SIZE='';
+       
      }
    
        

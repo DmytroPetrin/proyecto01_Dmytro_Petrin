@@ -33,6 +33,34 @@ router.post('/registerIngrediente', (req,res)=>{
      
 });
 
+router.post('/registerCarta', (req,res)=>{
+    const{CARTA, NOMBRE, PRECIO, SIZE, IMAGEN, DESCRIPCION, INGREDIENTE} = req.body;
+    mysqlConnection.query('INSERT INTO '+ CARTA +' (NOMBRE, PRECIO, TAMAÑO, IMAGEN, DESCRIPCION) VALUES (?, ?, ?, ?, ?)',
+    [NOMBRE, PRECIO, SIZE, IMAGEN, DESCRIPCION],
+    (err, rows, fields)=>{
+        if(err){
+            console.log(err);
+        }
+    });
+    console.log(CARTA);
+    console.log(typeof CARTA);
+    
+    if(CARTA == "pizza"|| CARTA == "entrantes"){
+        INGREDIENTE.forEach((element)=> {
+            mysqlConnection.query('INSERT INTO ' + CARTA +
+            '_ingrediente (INGREDIENTE, ' + CARTA + ') SELECT ID_INGREDIENTE, MAX(ID_' + CARTA + ') FROM ingredientes, ' + CARTA + ' WHERE ingredientes.NOMBRE = ?;',
+            [element],
+            (err, rows, fileds)=>{
+                if(err){
+                    console.log(err);
+                }
+            });
+        }); 
+        
+    }
+     
+});
+
 router.get('/getIngrediente', (req,res)=>{
     mysqlConnection.query('SELECT ID_INGREDIENTE, NOMBRE FROM ingredientes ORDER BY NOMBRE ASC;',
     (err, rows, fields)=>{

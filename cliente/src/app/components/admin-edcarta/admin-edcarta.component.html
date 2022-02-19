@@ -58,9 +58,9 @@
                                     <textarea [(ngModel)]="menux.DESCRIPCION" formControlName="DESCRIPCION"  placeholder="Descripción" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <button type="button">new</button>
-                                    <select class="form-control" [(ngModel)]="menux.INGREDIENTE" formControlName="INGREDIENTE" multiple>
-                                        <option [value]="item" *ngFor="let item of lista">{{item}}</option>
+                                    
+                                    <select class=" form-control selectpiker "  [(ngModel)]="menux.INGREDIENTE" formControlName="INGREDIENTE" multiple >
+                                        <option [value]="item.NOMBRE" *ngFor="let item of lista">{{item.NOMBRE}}</option>
                                     </select>
                                 </div>
                                  <button  type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="menu.invalid">Guardar</button>
