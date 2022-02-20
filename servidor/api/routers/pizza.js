@@ -70,9 +70,19 @@ router.get('/getIngrediente', (req,res)=>{
             console.log(err);
         }
     });
-})
+});
 
-
+router.post('/getCarta', (req,res)=>{
+    const[CARTA]=req.body;
+    mysqlConnection.query('SELECT ID_'+ CARTA +', NOMBRE FROM '+ CARTA + ' ORDER BY NOMBRE ASC;',
+    (err, rows, fields)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
 
 
 module.exports = router;

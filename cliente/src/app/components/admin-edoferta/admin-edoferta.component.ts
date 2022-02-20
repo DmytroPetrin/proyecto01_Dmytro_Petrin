@@ -21,6 +21,8 @@ export class AdminEdofertaComponent implements OnInit, DoCheck {
     INGREDIENTE: Array<string>()
   };
   
+  public select_carta: string[]=[];
+
   public no_ingrediente = true;
   
   lista:{ID_INGREDIENTE:number, NOMBRE:string}[] = [];
@@ -32,36 +34,28 @@ export class AdminEdofertaComponent implements OnInit, DoCheck {
 
    ngOnInit(): void {
      //console.log(this.menu);
-       
-       this.selectIngrediente();
+      this.selectCarta();  
+      
       
     }
 //esta siempre pendiente de los cambios que se producen en el input
     ngDoCheck(): void {
-       this.Noingrediente();
+      
     }
   
-    selectIngrediente(){
-        this.cartaService.getIngrediente().subscribe((res:any)=>{
+    selectCarta(){
+      if(this.menux.CARTA != null){
+         this.cartaService.getCarta(this.menux.CARTA).subscribe((res:any)=>{
          
-          res.forEach((element:{ID_INGREDIENTE:number, NOMBRE:string}) => {
+          res.forEach((element:{ID: number, NOMBRE:string}) => {
            
-            this.lista.push(element);
+            this.select_carta.push(element.NOMBRE);
           });
         });
+      }
+       
     }
  
-    Noingrediente(){
-      const carta = this.menux.CARTA;
-      
-        if (carta == "pizza" || carta == "entrantes"){
-          this.no_ingrediente = false;
-        }
-        else {this.no_ingrediente = true;}
-     // console.log('haciendo cosas...   '+this.no_ingrediente);
-
-    }
-   
     onRegister(): void{
       //console.log(this.user);
       if(this.menu.valid){
@@ -69,11 +63,12 @@ export class AdminEdofertaComponent implements OnInit, DoCheck {
         console.log('Valido');
         console.log(this.menu.value);
         console.log(this.menux.INGREDIENTE);
-        
+        /*
         this.cartaService.registerCarta(this.menu.value).subscribe((res:any)=>{
            //console.log(res);
         });
         this.OnResetForm();
+        */
       }else{
         console.log('No valido');}
     

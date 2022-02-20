@@ -30,5 +30,9 @@ export class CartaService {
     registerCarta(carta:{CARTA: string, NOMBRE: string, PRECIO: string, SIZE: string,
        IMAGEN: Sanitizer, DESCRIPCION: string, INGREDIENTE: Array<string>}){
          return this.http.post(this.URL+"/pizza/registerCarta", carta);
-       }
+    }
+
+    getCarta(CARTA: string){
+      return this.http.post(this.URL+"/pizza/getCarta", CARTA);
+    }
 }
