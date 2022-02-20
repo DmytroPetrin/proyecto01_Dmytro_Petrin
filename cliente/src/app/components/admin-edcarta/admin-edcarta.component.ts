@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartaService } from 'src/app/services/carta.service';
 
@@ -7,11 +7,12 @@ import { CartaService } from 'src/app/services/carta.service';
   templateUrl: './admin-edcarta.component.html',
   styleUrls: ['./admin-edcarta.component.css']
 })
-export class AdminEdcartaComponent implements OnInit {
+export class AdminEdcartaComponent implements OnInit, DoCheck {
 
   public menu: FormGroup;
 
   menux={
+    CARTA:'',
     NOMBRE: '',
     PRECIO: '',
     SIZE: '',
@@ -20,13 +21,24 @@ export class AdminEdcartaComponent implements OnInit {
     INGREDIENTE: Array<string>()
   };
   
- 
+  public no_ingrediente = true;
   
-
   lista:{ID_INGREDIENTE:number, NOMBRE:string}[] = [];
+
     constructor( private cartaService: CartaService)
     {
         this.menu = this.createFormGroup(); 
+    }
+
+   ngOnInit(): void {
+     //console.log(this.menu);
+       
+       this.selectIngrediente();
+      
+    }
+//esta siempre pendiente de los cambios que se producen en el input
+    ngDoCheck(): void {
+       this.Noingrediente();
     }
   
     selectIngrediente(){
@@ -38,12 +50,18 @@ export class AdminEdcartaComponent implements OnInit {
           });
         });
     }
+ 
+    Noingrediente(){
+      const carta = this.menux.CARTA;
+      
+        if (carta == "pizza" || carta == "entrantes"){
+          this.no_ingrediente = false;
+        }
+        else {this.no_ingrediente = true;}
+     // console.log('haciendo cosas...   '+this.no_ingrediente);
 
-    ngOnInit(): void {
-     //console.log(this.menu);
-      this.selectIngrediente();
     }
-  
+   
     onRegister(): void{
       //console.log(this.user);
       if(this.menu.valid){
