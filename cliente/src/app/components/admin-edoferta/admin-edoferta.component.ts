@@ -1,6 +1,6 @@
-import { Component, DoCheck, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { lastValueFrom } from 'rxjs';
+
 import { CartaService } from 'src/app/services/carta.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { CartaService } from 'src/app/services/carta.service';
   templateUrl: './admin-edoferta.component.html',
   styleUrls: ['./admin-edoferta.component.css']
 })
-export class AdminEdofertaComponent implements OnInit, DoCheck {
+export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
 
   public menu: FormGroup;
 
@@ -25,16 +25,44 @@ export class AdminEdofertaComponent implements OnInit, DoCheck {
   public select_carta: string[]=[];
   public carta_old="";
 
-  //@ViewChild('nuevo_plato') title: ElementRef ;
+ @ViewChild('nuevo_plato') nuevoPlato: ElementRef | any
+ @ViewChild('select_carta') selectC: ElementRef | any
 
-    constructor( private cartaService: CartaService, private renderer2: Renderer2)
+    constructor( private cartaService: CartaService,
+       private renderer: Renderer2, nuevoPlato: ElementRef)
     {
         this.menu = this.createFormGroup(); 
+         ;
+    }
+
+/*
+
+ // What to clone
+ @ViewChild('clone') template;
+
+ // Where to insert the cloned content
+ @ViewChild('container', {read:ViewContainerRef}) container;
+
+ constructor(private resolver:ComponentFactoryResolver){}
+
+ cloneTemplate(){
+     this.container.createEmbeddedView(this.template);
+ }
+}
+*/
+
+
+
+
+    
+
+    ngAfterViewInit(): void {
+        
     }
 
    ngOnInit(): void {
      //console.log(this.menu);
-      this.crearDiv();
+      //this.crearDiv();
       
     }
 //esta siempre pendiente de los cambios que se producen en el input
@@ -63,9 +91,12 @@ export class AdminEdofertaComponent implements OnInit, DoCheck {
     }
 
     crearDiv (): void{
-      // const nuevo_plato = this.title?.nativeElement;
-       //nuevo_plato.renderer2.createElement('div');
-      // nuevo_plato.renderer2.createText('hola mundo!');
+       const nuevo_plato = this.nuevoPlato.nativeElement;
+       const selC =  this.selectC.nativeElement
+       console.log(nuevo_plato);
+       const p = this.renderer.createElement('div');
+      this.renderer.appendChild(nuevo_plato, selC);
+       //nuevo_plato.this.renderer.createText('hola mundo!');
     }
  
     onRegister(): void{
