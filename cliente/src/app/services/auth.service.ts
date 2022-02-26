@@ -2,9 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
-import { NullVisitor } from '@angular/compiler/src/render3/r3_ast';
+
 
 @Injectable({
   providedIn: 'root'   //(Injectable)ESTO PERMITE USAR AUTH SIN NECESITAD DE INCLUIR ESTE MODULO DENTRO DE APP.MODULE.TS
@@ -59,10 +58,10 @@ export class AuthService {
     }else{ return false;}
   }
 
-  async comprobarUsuario(EMAIL:string){
+  comprobarUsuario(EMAIL:string){
     
     const x = {EMAIL:EMAIL}
-    const data = await lastValueFrom(this.http.post(this.URL+"/user/comprobarUsuario", x));
+    const data =  lastValueFrom(this.http.post(this.URL+"/user/comprobarUsuario", x));
     
     return data;  
       

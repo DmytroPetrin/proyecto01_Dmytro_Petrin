@@ -73,8 +73,9 @@ router.get('/getIngrediente', (req,res)=>{
 });
 
 router.post('/getCarta', (req,res)=>{
-    const[CARTA]=req.body;
-    mysqlConnection.query('SELECT ID_'+ CARTA +', NOMBRE FROM '+ CARTA + ' ORDER BY NOMBRE ASC;',
+    //console.log(req.body);
+    const{CARTA}=req.body;
+    mysqlConnection.query('SELECT ID_' + CARTA + ', NOMBRE FROM ' + CARTA + ' ORDER BY NOMBRE ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);

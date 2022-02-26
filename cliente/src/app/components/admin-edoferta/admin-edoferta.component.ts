@@ -1,5 +1,6 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { lastValueFrom } from 'rxjs';
 import { CartaService } from 'src/app/services/carta.service';
 
 @Component({
@@ -22,38 +23,49 @@ export class AdminEdofertaComponent implements OnInit, DoCheck {
   };
   
   public select_carta: string[]=[];
+  public carta_old="";
 
-  public no_ingrediente = true;
-  
-  lista:{ID_INGREDIENTE:number, NOMBRE:string}[] = [];
+  //@ViewChild('nuevo_plato') title: ElementRef ;
 
-    constructor( private cartaService: CartaService)
+    constructor( private cartaService: CartaService, private renderer2: Renderer2)
     {
         this.menu = this.createFormGroup(); 
     }
 
    ngOnInit(): void {
      //console.log(this.menu);
-      this.selectCarta();  
-      
+      this.crearDiv();
       
     }
 //esta siempre pendiente de los cambios que se producen en el input
-    ngDoCheck(): void {
+    ngDoCheck(){
+      if(this.menux.CARTA!=this.carta_old){
+        this.selectCarta();
+        this.carta_old = this.menux.CARTA;
+      }
+        
       
     }
   
     selectCarta(){
-      if(this.menux.CARTA != null){
-         this.cartaService.getCarta(this.menux.CARTA).subscribe((res:any)=>{
-         
-          res.forEach((element:{ID: number, NOMBRE:string}) => {
-           
+      
+      if(this.menux.CARTA != ''){
+        this.select_carta = [];
+        this.cartaService.getCarta(this.menux.CARTA).subscribe((res:any) =>{
+         // console.log( res);
+          res.forEach((element: any) => {
             this.select_carta.push(element.NOMBRE);
           });
-        });
+       });
+        
       }
-       
+      
+    }
+
+    crearDiv (): void{
+      // const nuevo_plato = this.title?.nativeElement;
+       //nuevo_plato.renderer2.createElement('div');
+      // nuevo_plato.renderer2.createText('hola mundo!');
     }
  
     onRegister(): void{
@@ -152,3 +164,7 @@ export class AdminEdofertaComponent implements OnInit, DoCheck {
       
    
   }
+
+function namespace(namespace: any, arg1: string) {
+  throw new Error('Function not implemented.');
+}

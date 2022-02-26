@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, Sanitizer } from "@angular/core";
+import { lastValueFrom } from "rxjs";
 
 
 
@@ -33,6 +34,7 @@ export class CartaService {
     }
 
     getCarta(CARTA: string){
-      return this.http.post(this.URL+"/pizza/getCarta", CARTA);
+      const x = {CARTA: CARTA}
+      return this.http.post(this.URL+"/pizza/getCarta", x);
     }
 }
