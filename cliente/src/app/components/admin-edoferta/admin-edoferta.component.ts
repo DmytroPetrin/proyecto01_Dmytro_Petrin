@@ -1,4 +1,6 @@
-import { AfterViewInit, Component, DoCheck, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+
+import { AfterViewInit, Component, DoCheck, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CartaService } from 'src/app/services/carta.service';
@@ -13,23 +15,26 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
   public menu: FormGroup;
 
   menux={
-    CARTA:'',
+    CARTA: Array<string>(''),
     NOMBRE: '',
     PRECIO: '',
-    SIZE: '',
+    CANTIDAD: Array<string>(''),
     IMAGEN: '',
     DESCRIPCION:'',
-    INGREDIENTE: Array<string>()
+    NOMBRE_PLATO: Array<string>('')
   };
   
   public select_carta: string[]=[];
-  public carta_old="";
+  public carta_old: string[]=[''];
 
- @ViewChild('nuevo_plato') nuevoPlato: ElementRef | any
- @ViewChild('select_carta') selectC: ElementRef | any
+  /*
+ @ViewChild('old') template: any;
+ @ViewChild('new', {read:ViewContainerRef}) container: any;
+ */
+  
 
     constructor( private cartaService: CartaService,
-       private renderer: Renderer2, nuevoPlato: ElementRef)
+       @Inject(DOCUMENT) private document: Document | any)
     {
         this.menu = this.createFormGroup(); 
          ;
@@ -61,25 +66,30 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
     }
 
    ngOnInit(): void {
-     //console.log(this.menu);
+     console.log(this.menux.CARTA);
       //this.crearDiv();
       
     }
 //esta siempre pendiente de los cambios que se producen en el input
     ngDoCheck(){
-      if(this.menux.CARTA!=this.carta_old){
-        this.selectCarta();
-        this.carta_old = this.menux.CARTA;
+      
+      for(let i = 0; this.menux.CARTA.length > i; i++){
+         
+          if(this.menux.CARTA[i]!=this.carta_old[i]){
+             this.selectCarta(i);
+             this.carta_old[i] = this.menux.CARTA[i];
+          }
       }
+     
         
       
     }
   
-    selectCarta(){
-      
-      if(this.menux.CARTA != ''){
+    selectCarta(i: number){
+      if(this.menux.CARTA[i] != ''){
+        console.log('funcion selectCarta');
         this.select_carta = [];
-        this.cartaService.getCarta(this.menux.CARTA).subscribe((res:any) =>{
+        this.cartaService.getCarta(this.menux.CARTA[i]).subscribe((res:any) =>{
          // console.log( res);
           res.forEach((element: any) => {
             this.select_carta.push(element.NOMBRE);
@@ -91,13 +101,34 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
     }
 
     crearDiv (): void{
+      const y = document.getElementById("old");
+      if(y!=null){
+        const clone = y.cloneNode(true);
+        const x = document.getElementById("new");
+        if(x != null){
+            const z = clone.firstChild;
+            if (z!=null){
+              const zi = z.firstChild
+              if(zi!=null){
+                //zi.setAttribute("name", "helloButton");
+              }
+            }
+            
+            x.appendChild(clone) ;
+            
+      }
+    } }
+
+     //this.container.createEmbeddedView(this.template);
+      /*
        const nuevo_plato = this.nuevoPlato.nativeElement;
        const selC =  this.selectC.nativeElement
        console.log(nuevo_plato);
        const p = this.renderer.createElement('div');
       this.renderer.appendChild(nuevo_plato, selC);
        //nuevo_plato.this.renderer.createText('hola mundo!');
-    }
+       */
+    
  
     onRegister(): void{
       //console.log(this.user);
@@ -105,7 +136,7 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
         
         console.log('Valido');
         console.log(this.menu.value);
-        console.log(this.menux.INGREDIENTE);
+        
         /*
         this.cartaService.registerCarta(this.menu.value).subscribe((res:any)=>{
            //console.log(res);
@@ -138,7 +169,7 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
        this.menux.NOMBRE='';
        this.menux.PRECIO='';
        this.menux.DESCRIPCION='';
-       this.menux.SIZE='';
+       this.menux.CANTIDAD=[];
        
      }
    
@@ -158,15 +189,7 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
       };
         return precio;
       }
-
-      get SIZE(){
-        const size = this.menu.get('SIZE');
-        if(typeof(size)=="string"){
-          this.menux.SIZE = size;
-        };
-          return size;
-        }
-
+      
      get IMAGEN(){ 
       const imagen = this.menu.get('IMAGEN');
       if(typeof(imagen)=="string"){
@@ -185,17 +208,18 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
 
       get CARTA(){return this.menu.get('CARTA')}
     
-      get INGREDIENTE(){
-        const ingrediente = this.menu.get('INGREDIENTE');
-        if(typeof(ingrediente)=="string"){
-          this.menux.INGREDIENTE = ingrediente;
-        };
-         return ingrediente;
-        }
       
-   
   }
 
-function namespace(namespace: any, arg1: string) {
-  throw new Error('Function not implemented.');
+
+
+
+
+
+/*
+function myFunction() {
+  const node = document.getElementById("myList2");
+  const clone = node.cloneNode(true);
+  document.getElementById("myList1").appendChild(clone);
 }
+*/

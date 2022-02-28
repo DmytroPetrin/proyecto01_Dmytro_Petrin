@@ -42,9 +42,10 @@
                                  <div class="form-group">
                                     <textarea [(ngModel)]="menux.DESCRIPCION" formControlName="DESCRIPCION"  placeholder="Descripción" class="form-control"></textarea>
                                 </div>
-                            <div #nuevo_plato>
-                                <div #selectC class="form-group">
-                                        <select class="form-control" [(ngModel)]="menux.CARTA" formControlName="CARTA" required autoforcus>
+                            <div id="new">
+                               <div id="old">
+                                <div  class="form-group">
+                                        <select class="form-control" [(ngModel)]="menux.CARTA[0]"  required autoforcus>
                                            <!--seleccionar la tabla donde se guardaran los datos-->
                                             <option value="pizza" >Pizza</option>
                                             <option value="entrantes">Entrante</option>
@@ -53,15 +54,14 @@
                                         </select>
                                  </div>
                                 
-                                 <div class="form-inline form-group" [hidden]="false">
+                                 <div class="form-inline form-group">
                                      <input class="form-control col-3" type="number">
                                      <select class="form-control col-9">
                                          <option [value]="item" *ngFor="let item of select_carta">{{item}}</option>
                                      </select>
                                      
                                  </div>
-                                 
-                                 
+                             </div>
                             </div>
                                  <button (click)="crearDiv()">new</button> 
 
@@ -78,9 +78,7 @@
                         <img [src]="menux.IMAGEN == '' ? '/assets/no_image.png': menux.IMAGEN" class="card-img-top">
                         <h3> {{menux.NOMBRE == '' ? 'NOMBRE': menux.NOMBRE}}</h3>
                         <p>{{menux.PRECIO == '' ? 'PRECIO': menux.PRECIO}} €</p>
-                        <p>{{menux.SIZE == '' ? 'TAMAÑO': menux.SIZE}}</p>
                         <p>{{menux.DESCRIPCION == '' ? 'DESCRIPCIÓN': menux.DESCRIPCION}}</p>
-                        <p>{{menux.INGREDIENTE.length == 0 ? 'INGREDIENTE': menux.INGREDIENTE}}</p>
                         
                     </div>
                 </div>
