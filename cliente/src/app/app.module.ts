@@ -29,6 +29,7 @@ import { EntranteComponent } from './components/entrante/entrante.component';
 import { BebidaComponent } from './components/bebida/bebida.component';
 import { PostreComponent } from './components/postre/postre.component';
 import { AdminEdofertaComponent } from './components/admin-edoferta/admin-edoferta.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { AdminEdofertaComponent } from './components/admin-edoferta/admin-edofer
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, 
-    AppRoutingModule, ReactiveFormsModule
+    AppRoutingModule, ReactiveFormsModule, CommonModule
   ],
   providers: [
     //jwt

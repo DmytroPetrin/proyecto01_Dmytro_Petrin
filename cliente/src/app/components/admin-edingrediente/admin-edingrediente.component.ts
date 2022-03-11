@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {CartaService} from 'src/app/services/carta.service'
 
@@ -7,16 +7,20 @@ import {CartaService} from 'src/app/services/carta.service'
   templateUrl: './admin-edingrediente.component.html',
   styleUrls: ['./admin-edingrediente.component.css']
 })
-export class AdminEdingredienteComponent implements OnInit {
+export class AdminEdingredienteComponent implements OnInit, DoCheck {
 
   public ingrediente: FormGroup;
 
   ing={
     NOMBRE: '',
     ALERGENO: '',
-    IMAGEN: ''
+    IMAGEN: '',
+    IMAGEN2: '',
+    PRECIO: ''
   };
-  
+   
+  public isChecked:boolean = false;
+  public visible: boolean = false;
     constructor( private cartaService: CartaService)
     {
         this.ingrediente = this.createFormGroup(); 
@@ -26,7 +30,18 @@ export class AdminEdingredienteComponent implements OnInit {
     ngOnInit(): void {
       console.log(this.ingrediente);
     }
+
+    ngDoCheck(): void {
+       console.log(this.isChecked);
+       //this.isVisible();
+    }
   
+    isVisible(){
+      
+      if (this.visible ){
+         this.visible = false;
+       } else if (!this.visible ) {this.visible=true;}
+    }
     onRegister(): void{
       //console.log(this.user);
       if(this.ingrediente.valid){
@@ -50,7 +65,8 @@ export class AdminEdingredienteComponent implements OnInit {
        NOMBRE:new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
        ALERGENO:new FormControl('', Validators.maxLength(40)),
        IMAGEN:new FormControl('',  Validators.maxLength(100)),
-      
+       IMAGEN2:new FormControl('',  Validators.maxLength(100)),
+       PRECIO:new FormControl('',[ Validators.maxLength(6)])
        });
        
      }
@@ -58,8 +74,10 @@ export class AdminEdingredienteComponent implements OnInit {
      OnResetForm(){
        this.ingrediente.reset();
        this.ing.IMAGEN='';
+       this.ing.IMAGEN2='';
        this.ing.NOMBRE='';
        this.ing.ALERGENO='';
+       this.ing.PRECIO='';
      }
    
        
@@ -86,7 +104,19 @@ export class AdminEdingredienteComponent implements OnInit {
       };
        return imagen;
       }
+
+      get IMAGEN2(){ 
+        const imagen = this.ingrediente.get('IMAGEN2');
+        if(typeof(imagen)=="string"){
+          this.ing.NOMBRE = imagen;
+      };
+         return imagen;
+      }
     
+
+      get PRECIO(){
+        return this.ingrediente.get('PRECIO');
+      }
    
    
   }

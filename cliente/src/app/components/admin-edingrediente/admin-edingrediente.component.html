@@ -30,12 +30,36 @@
                                     </div>
                                  </div>
                                  <div class="form-group">
-                                     <input type='text' [(ngModel)]="ing.IMAGEN" formControlName="IMAGEN" name='dni' placeholder="Imagen de alergeno" class="form-control">
+                                     <input type='text' [(ngModel)]="ing.IMAGEN" formControlName="IMAGEN"  placeholder="Imagen de alergeno" class="form-control">
                                      <div class="alert-danger" *ngIf="IMAGEN?.invalid && (IMAGEN?.dirty || IMAGEN?.touched)"> 
                                        
                                         <div class="container-error-message" *ngIf="IMAGEN?.errors?.['maxlength']">
                                             Ruta a la imagen es demasiado larga.
                                         </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <input type='checkbox'  class="form-check-input" ng-checked="visible">
+                                    <label class="form-check-label"> ¿Este ingrediente es un extra?</label>   
+                                 </div>
+                                 <div *ngIf="visible" >
+                                    <div class="form-group">
+                                        <input type='text' [(ngModel)]="ing.IMAGEN2" formControlName="IMAGEN2" placeholder="Imagen de extra" class="form-control">
+                                        <div class="alert-danger" *ngIf="IMAGEN2?.invalid && (IMAGEN2?.dirty || IMAGEN2?.touched)"> 
+                                          
+                                           <div class="container-error-message" *ngIf="IMAGEN2?.errors?.['maxlength']">
+                                               Ruta a la imagen es demasiado larga.
+                                           </div>
+                                       </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type='number' [(ngModel)]="ing.PRECIO" formControlName="PRECIO" name='dni' placeholder="Precio" class="form-control">
+                                        <div class="alert-danger" *ngIf="PRECIO?.invalid && (PRECIO?.dirty || PRECIO?.touched)"> 
+                                          
+                                           <div class="container-error-message" *ngIf="PRECIO?.errors?.['maxlength']">
+                                               Precio es demasiado grande.
+                                           </div>
+                                       </div>
                                     </div>
                                  </div>
                                  
@@ -46,12 +70,17 @@
                 </div>
             </div>
             
-            <div class="col 5">
+            <div class="col-5">
                 <div class="card">
                     <div class="card body text-center">
-                        <img [src]="ing.IMAGEN == '' ? '/assets/no_image.png': ing.IMAGEN" class="card-img-top">
-                        <h3> {{ing.NOMBRE == '' ? 'Ingrediente': ing.NOMBRE}}</h3>
-                        <p>{{ing.ALERGENO == '' ? 'Alergeno': ing.ALERGENO}}</p>
+                        <img [src]="ing.IMAGEN2 == '' ? '/assets/no_image.png': ing.IMAGEN2" class="card-img-top">
+                        
+                        <h3 class="col-12"> {{ing.NOMBRE == '' ? 'Ingrediente': ing.NOMBRE}}</h3>
+                        <div class="col-12"> {{ing.PRECIO == '' ? 'Precio': ing.PRECIO}}  </div>
+                        <div class="col-10">{{ing.ALERGENO == '' ? 'Alergeno': ing.ALERGENO}}</div>
+                        <img class="col-2" [src]="ing.IMAGEN == '' ? '/assets/no_image.png': ing.IMAGEN" >
+                     
+                        
                        
                         
                     </div>

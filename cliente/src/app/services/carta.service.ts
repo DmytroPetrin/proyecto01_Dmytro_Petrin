@@ -29,7 +29,7 @@ export class CartaService {
     }   
 
     registerCarta(carta:{CARTA: string, NOMBRE: string, PRECIO: string, SIZE: string,
-       IMAGEN: Sanitizer, DESCRIPCION: string, INGREDIENTE: Array<string>}){
+       IMAGEN: string, DESCRIPCION: string, INGREDIENTE: Array<string>}){
          return this.http.post(this.URL+"/pizza/registerCarta", carta);
     }
 
@@ -37,4 +37,10 @@ export class CartaService {
       const x = {CARTA: CARTA}
       return this.http.post(this.URL+"/pizza/getCarta", x);
     }
+
+    registerOferta(oferta: {NOMBRE: string, PRECIO: string, IMAGEN: string, FECHA_FIN: string, DESCRIPCION: string,
+      CARTA: Array<string>, CANTIDAD: Array<number>, NOMBRE_PLATO: Array<string>}){
+        console.log(oferta);
+        return this.http.post(this.URL+"/pizza/registerOferta", oferta);
+      }
 }
