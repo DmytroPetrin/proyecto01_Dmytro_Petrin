@@ -28,6 +28,11 @@ export class CartaService {
         return this.http.get(this.URL+"/pizza/getIngrediente");
     }   
 
+    registerExtra(extra:{IMAGEN2:string, PRECIO:string}){
+      //console.log(ingrediente);
+      return this.http.post(this.URL+"/pizza/registerExtra", extra);
+    } 
+
     registerCarta(carta:{CARTA: string, NOMBRE: string, PRECIO: string, SIZE: string,
        IMAGEN: string, DESCRIPCION: string, INGREDIENTE: Array<string>}){
          return this.http.post(this.URL+"/pizza/registerCarta", carta);

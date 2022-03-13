@@ -34,6 +34,20 @@ router.post('/registerIngrediente', (req,res)=>{
      
 });
 
+router.post('/registerExtra', (req,res)=>{
+    const{IMAGEN2, PRECIO} = req.body;
+    mysqlConnection.query('INSERT INTO extras(INGREDIENTE, IMAGEN, PRECIO) SELECT MAX(ID_INGREDIENTE), ?, ? FROM ingredientes',
+     [IMAGEN2, PRECIO], 
+     (err,rows, fields) =>{
+        if(!err){
+            //res.json(rows);
+        }else{
+            console.log(err);
+        }
+     });
+     
+});
+
 router.post('/registerCarta', (req,res)=>{
     const{CARTA, NOMBRE, PRECIO, SIZE, IMAGEN, DESCRIPCION, INGREDIENTE} = req.body;
     mysqlConnection.query('INSERT INTO '+ CARTA +' (NOMBRE, PRECIO, TAMAÑO, IMAGEN, DESCRIPCION) VALUES (?, ?, ?, ?, ?)',
@@ -86,83 +100,9 @@ router.post('/getCarta',  (req,res)=>{
     });
 });
 
-/*
-router.post('/registerOferta', (req,res)=>{
-    //console.log(req.body);
-    const{NOMBRE, PRECIO, IMAGEN, FECHA_FIN, DESCRIPCION, CARTA, CANTIDAD, NOMBRE_PLATO}=req.body;
-    const num_carta= CARTA.length;
-    
-    const PIZZA = null;
-    const BEBIDA = null;
-    const POSTRES = null;
-    const ENTRANTES = null;
-    let i = 0;
-    let j = 0;
 
-  
-    
-    mysqlConnection.query('INSERT INTO oferta (NOMBRE, PRECIO, IMAGEN, FECHA_FIN, DESCRIPCION) VALUES(?,?,?,?,?);',
-    [NOMBRE, PRECIO, IMAGEN, FECHA_FIN, DESCRIPCION],
-    (err, rows, fields)=>{
-        if(!err){
-            //res.json(rows);
-        }else{
-            console.log(err);
-        }
-    });
-  
-    
-   
-    
-    i = num_carta;
-    while(i > 0){
-      mysqlConnection.query('SELECT ID_' +  CARTA[i] + ' FROM ' +  CARTA[i] + " where NOMBRE = '" +  NOMBRE_PLATO[i] + "' LIMIT 1;",
-      
-       (err, rows, fields)=>{ 
-       if(!err){
-        const x = JSON.stringify(rows[0]);
-         switch (CARTA[i]) {
-             case 'pizza': {
-               
-               PIZZA=x.slice(12, x.length-1);
-               break;
-             }
-             case 'bebida': {
-               BEBIDA=x.slice(12, x.length-1);
-               break;
-             }
-             case 'postres': {  
 
-               POSTRES=x.slice(12, x.length-1);
-               break;
-             }
-             case 'entrantes': {
-               ENTRANTES=x.slice(12, x.length-1);
-               break;
-             }
-           }
-       }else{
-            console.log(err);
-       }
-       });
-       j = CANTIDAD[i]
-        while (j>0){
-           mysqlConnection.query('INSERT INTO oferta_lista (OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES) SELECT MAX(OFERTA.ID_OFERTA), ?, ?, ?, ? FROM oferta;',
-            [await PIZZA, await BEBIDA, await ENTRANTES, await POSTRES],
-           (err, rows, fields)=>{
-            if(!err){
-                //res.json(rows);
-            }else{
-                console.log(err);
-            }
-           });
-           --j;
-       }
-       --i; 
-    }; 
-*/
-
-    router.post('/registerOferta',  async (req,res)=>{
+router.post('/registerOferta',  async (req,res)=>{
         //console.log(req.body);
         const{NOMBRE, PRECIO, IMAGEN, FECHA_FIN, DESCRIPCION, CARTA, CANTIDAD, NOMBRE_PLATO}=req.body;
        

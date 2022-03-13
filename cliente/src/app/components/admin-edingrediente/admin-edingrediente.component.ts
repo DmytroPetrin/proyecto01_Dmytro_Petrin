@@ -19,7 +19,7 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
     PRECIO: ''
   };
    
-  public isChecked:boolean = false;
+  
   public visible: boolean = false;
     constructor( private cartaService: CartaService)
     {
@@ -28,20 +28,20 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
   
   
     ngOnInit(): void {
-      console.log(this.ingrediente);
+      //console.log(this.ingrediente);
     }
 
     ngDoCheck(): void {
-       console.log(this.isChecked);
+       //console.log(this.isChecked);
        //this.isVisible();
     }
-  
-    isVisible(){
-      
-      if (this.visible ){
-         this.visible = false;
-       } else if (!this.visible ) {this.visible=true;}
+
+   
+    isVisible($event: any){
+      this.visible = $event.target.checked;
     }
+
+
     onRegister(): void{
       //console.log(this.user);
       if(this.ingrediente.valid){
@@ -53,6 +53,11 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
         this.cartaService.registerIngrediente(this.ingrediente.value).subscribe((res:any)=>{
            //console.log(res);
         });
+        if(this.visible){
+          this.cartaService.registerExtra(this.ingrediente.value).subscribe((res:any)=>{
+            
+         });
+        }
         this.OnResetForm();
       }else{
         console.log('No valido');}

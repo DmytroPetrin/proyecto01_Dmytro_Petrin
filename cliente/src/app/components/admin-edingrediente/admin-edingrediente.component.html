@@ -39,7 +39,7 @@
                                     </div>
                                  </div>
                                  <div class="form-group">
-                                    <input type='checkbox'  class="form-check-input" ng-checked="visible">
+                                    <input type='checkbox'  class="form-check-input" [checked]="visible" (change)="isVisible($event)">
                                     <label class="form-check-label"> ¿Este ingrediente es un extra?</label>   
                                  </div>
                                  <div *ngIf="visible" >
@@ -76,7 +76,7 @@
                         <img [src]="ing.IMAGEN2 == '' ? '/assets/no_image.png': ing.IMAGEN2" class="card-img-top">
                         
                         <h3 class="col-12"> {{ing.NOMBRE == '' ? 'Ingrediente': ing.NOMBRE}}</h3>
-                        <div class="col-12"> {{ing.PRECIO == '' ? 'Precio': ing.PRECIO}}  </div>
+                        <div class="col-12" *ngIf="visible"> {{ing.PRECIO == '' ? 'Precio': ing.PRECIO+'€'}}  </div>
                         <div class="col-10">{{ing.ALERGENO == '' ? 'Alergeno': ing.ALERGENO}}</div>
                         <img class="col-2" [src]="ing.IMAGEN == '' ? '/assets/no_image.png': ing.IMAGEN" >
                      
