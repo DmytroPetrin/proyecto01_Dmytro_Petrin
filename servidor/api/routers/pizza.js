@@ -1,7 +1,7 @@
 const express = require('express');
 const { stringify } = require('nodemon/lib/utils');
 const router = express.Router();
-
+const cors = require('cors');
 const mysqlConnection = require('../connections/connection');
 
 
@@ -48,6 +48,36 @@ router.post('/registerExtra', (req,res)=>{
      
 });
 
+router.get('/getCartabyid', (req,res)=>{ 
+    
+    mysqlConnection.query('(SELECT "P" AS QUE, COUNT(*) AS CANTIDAD, ol.OFERTA as OFERTA, P.ID_PIZZA AS ID, P.NOMBRE, P.TAMAÑO FROM pizza P, oferta_lista OL where P.ID_PIZZA = OL.PIZZA GROUP BY OL.PIZZA, OL.OFERTA HAVING COUNT(*)) UNION (SELECT "E" AS QUE, COUNT(*) AS CANTIDAD, ol.OFERTA as OFERTA, P.ID_ENTRANTES, P.NOMBRE, P.TAMAÑO FROM entrantes P, oferta_lista OL where P.ID_ENTRANTES = OL.ENTRANTES GROUP BY OL.ENTRANTES, OL.OFERTA HAVING COUNT(*)) UNION (SELECT "B" AS QUE, COUNT(*) AS CANTIDAD, ol.OFERTA as OFERTA, P.ID_BEBIDA, P.NOMBRE, P.TAMAÑO FROM bebida P, oferta_lista OL where P.ID_BEBIDA = OL.BEBIDA GROUP BY OL.BEBIDA, OL.OFERTA HAVING COUNT(*)) UNION (SELECT "PO" AS QUE, COUNT(*) AS CANTIDAD, ol.OFERTA as OFERTA, P.ID_POSTRES, P.NOMBRE, P.TAMAÑO FROM postres P, oferta_lista OL where P.ID_POSTRES = OL.POSTRES GROUP BY OL.POSTRES, OL.OFERTA HAVING COUNT(*));',
+     (err,rows, fields) =>{
+        if(!err){
+            
+           res.json(rows);
+           
+        }else{
+            console.log(err);
+        }
+     });
+          
+});
+
+router.get('/getIngredientebyid', (req,res)=>{ 
+    
+    mysqlConnection.query('(SELECT "P" AS PE, PI.PIZZA AS ID, I.* FROM ingredientes I, PIZZA_INGREDIENTE PI WHERE PI.INGREDIENTE=I.ID_INGREDIENTE) UNION (SELECT "E" AS PE, EI.ENTRANTES AS ID, I.* FROM ingredientes I, ENTRANTES_INGREDIENTE EI WHERE EI.INGREDIENTE=I.ID_INGREDIENTE);',
+    (err,rows, fields) =>{
+        if(!err){
+            
+           res.json(rows);
+           
+        }else{
+            console.log(err);
+        }
+     });
+          
+});
+
 router.post('/registerCarta', (req,res)=>{
     const{CARTA, NOMBRE, PRECIO, SIZE, IMAGEN, DESCRIPCION, INGREDIENTE} = req.body;
     mysqlConnection.query('INSERT INTO '+ CARTA +' (NOMBRE, PRECIO, TAMAÑO, IMAGEN, DESCRIPCION) VALUES (?, ?, ?, ?, ?)',
@@ -78,6 +108,61 @@ router.post('/registerCarta', (req,res)=>{
 
 router.get('/getIngrediente', (req,res)=>{
     mysqlConnection.query('SELECT ID_INGREDIENTE, NOMBRE FROM ingredientes ORDER BY NOMBRE ASC;',
+    (err, rows, fields)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.get('/getPizza', (req, res)=>{
+    mysqlConnection.query('SELECT * FROM PIZZA',
+    (err, rows, fields)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.get('/getOferta', (req, res)=>{
+    mysqlConnection.query('SELECT * FROM oferta',
+    (err, rows, fields)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.get('/getEntrantes', (req, res)=>{
+    mysqlConnection.query('SELECT * FROM entrantes',
+    (err, rows, fields)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.get('/getPostres', (req, res)=>{
+    mysqlConnection.query('SELECT * FROM postres',
+    (err, rows, fields)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.get('/getBebida', (req, res)=>{
+    mysqlConnection.query('SELECT * FROM bebida',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);

@@ -28,6 +28,39 @@ export class CartaService {
         return this.http.get(this.URL+"/pizza/getIngrediente");
     }   
 
+      getCarta(CARTA: string){
+      const x = {CARTA: CARTA}
+      return this.http.post(this.URL+"/pizza/getCarta", x);
+    }
+
+      getOferta(){
+        return this.http.get(this.URL+"/pizza/getOferta");
+      }
+
+      getPizza(){
+        return this.http.get(this.URL+"/pizza/getPizza");
+      }
+
+      getEntrantes(){
+        return this.http.get(this.URL+"/pizza/getEntrantes");
+      }
+
+      getPostres(){
+        return this.http.get(this.URL+"/pizza/getPostres");
+      }
+
+      getBebida(){
+        return this.http.get(this.URL+"/pizza/getBebida");
+      }
+
+      getCartabyid(){
+        return this.http.get(this.URL+'/pizza/getCartabyid');
+      }
+
+      getIngredientebyid(){
+        return this.http.get(this.URL+'/pizza/getIngredientebyid');
+      }
+      
     registerExtra(extra:{IMAGEN2:string, PRECIO:string}){
       //console.log(ingrediente);
       return this.http.post(this.URL+"/pizza/registerExtra", extra);
@@ -38,10 +71,7 @@ export class CartaService {
          return this.http.post(this.URL+"/pizza/registerCarta", carta);
     }
 
-    getCarta(CARTA: string){
-      const x = {CARTA: CARTA}
-      return this.http.post(this.URL+"/pizza/getCarta", x);
-    }
+  
 
     registerOferta(oferta: {NOMBRE: string, PRECIO: string, IMAGEN: string, FECHA_FIN: string, DESCRIPCION: string,
       CARTA: Array<string>, CANTIDAD: Array<number>, NOMBRE_PLATO: Array<string>}){
