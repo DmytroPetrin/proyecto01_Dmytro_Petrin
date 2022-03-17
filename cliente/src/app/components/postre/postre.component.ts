@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CartaService } from 'src/app/services/carta.service';
 
 @Component({
   selector: 'app-postre',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostreComponent implements OnInit {
 
-  constructor() { }
+  public postre: any[]=[];
+ 
+  
+
+  constructor( private cartaService: CartaService) { }
 
   ngOnInit(): void {
+    this.getPostres();
+    
+  }
+
+  getPostres(){
+    this.cartaService.getPostres().subscribe((res:any)=>{
+      res.forEach((element:any)=>{
+        this.postre.push(element);
+      });
+    });
   }
 
 }

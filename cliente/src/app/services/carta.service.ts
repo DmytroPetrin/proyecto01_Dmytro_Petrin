@@ -41,6 +41,14 @@ export class CartaService {
         return this.http.get(this.URL+"/pizza/getPizza");
       }
 
+      getIngredientePizza(){
+        return this.http.get(this.URL+"/pizza/getIngredientePizza");
+      }
+
+      getIngredienteEntrantes(){
+        return this.http.get(this.URL+"/pizza/getIngredienteEntrantes");
+      }
+
       getEntrantes(){
         return this.http.get(this.URL+"/pizza/getEntrantes");
       }
@@ -60,7 +68,7 @@ export class CartaService {
       getIngredientebyid(){
         return this.http.get(this.URL+'/pizza/getIngredientebyid');
       }
-      
+
     registerExtra(extra:{IMAGEN2:string, PRECIO:string}){
       //console.log(ingrediente);
       return this.http.post(this.URL+"/pizza/registerExtra", extra);

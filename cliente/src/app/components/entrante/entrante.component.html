@@ -1,1 +1,57 @@
-<p>entrante works!</p>
+
+<section>
+    <div class="container">
+        <div class="row ">
+            <ng-container *ngFor="let c of entrantes; let i = index;">
+                <div class="col-4 ">
+                    <div class="card  margin-right margin-top">
+                        <div class="card-body text-center ">
+                            <img class="card-img-top"
+                                [src]="entrantes[i].IMAGEN == '' ? '/assets/no_image.png': entrantes[i].IMAGEN">
+                            <h3 class="card-title">{{entrantes[i].NOMBRE}}</h3>
+                            <div></div>
+                            <div class="text-xl-right  font-weight-bold">{{entrantes[i].PRECIO}}€</div>
+                            <div class="text-right font-weight-light">Tamaño: {{entrantes[i].SIZE}}</div>
+                            <details class="text-left">
+                                <summary> Ver mas</summary>
+                                <div class="text-left font-weight-light font-weight-bold">{{entrantes[i].DESCRIPCION}}</div>
+                                <br>
+                                   <div class="font-weight-bold list-inline-item" >Ingredientes:</div>
+                                 <ng-container *ngFor="let c of ingrediente; let j = index;">
+                                    <ng-container *ngIf="entrantes[i].ID_ENTRANTES == ingrediente[j].ENTRANTES">
+                                        <div class="font-weight-normal list-inline-item">{{ingrediente[j].NOMBRE}},
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                                <div></div>
+                                <div class="font-weight-bold list-inline-item" >Alergenos: </div>
+                                <ng-container *ngFor="let c of ingrediente; let j = index;">
+                                    <ng-container *ngIf="entrantes[i].ID_ENTRANTES == ingrediente[j].ENTRANTES">
+                                        <div class="font-weight-normal list-inline-item">{{ingrediente[j].ALERGENOS}},
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                                <div></div>
+                                <ng-container *ngFor="let c of ingrediente; let j = index;">
+                                    <ng-container *ngIf="entrantes[i].ID_ENTRANTES == ingrediente[j].ENTRANTES">
+                                        <img id="imagen_alergeno" [src]="ingrediente[j].IMAGEN">
+                                    </ng-container>
+                                </ng-container>
+                                <div></div>
+                                <br>
+                            </details>
+                            <div class="row">
+                                <select class="col-4 align-left">
+                                    <option [value]="number" *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]">{{number}}
+                                    </option>
+                                </select>
+                                <div class="col-3"></div>
+                                <button type="button" class="btn btn-danger col-5 ">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</section>

@@ -118,7 +118,29 @@ router.get('/getIngrediente', (req,res)=>{
 });
 
 router.get('/getPizza', (req, res)=>{
-    mysqlConnection.query('SELECT * FROM PIZZA',
+    mysqlConnection.query('SELECT ID_PIZZA, NOMBRE, PRECIO, IMAGEN, DESCRIPCION, TAMAÑO AS SIZE FROM PIZZA',
+    (err, rows, fields)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.get('/getIngredientePizza', (req, res)=>{
+    mysqlConnection.query('SELECT PI.PIZZA, I.* FROM ingredientes I, pizza_ingrediente PI WHERE PI.INGREDIENTE = I.ID_INGREDIENTE; ',
+    (err, rows, fields)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.get('/getIngredienteEntrantes', (req, res)=>{
+    mysqlConnection.query('SELECT EI.ENTRANTES, I.* FROM ingredientes I, entrantes_ingrediente EI WHERE EI.INGREDIENTE = I.ID_INGREDIENTE;  ',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
