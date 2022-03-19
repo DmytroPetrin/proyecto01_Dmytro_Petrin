@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CartaService } from 'src/app/services/carta.service';
 
 @Component({
@@ -10,9 +11,13 @@ export class PizzaComponent implements OnInit {
 
   public pizza: any[]=[];
   public ingrediente: any[]=[];
+   
+  public cantidad:FormGroup;
   
-
-  constructor( private cartaService: CartaService) { }
+  constructor( private cartaService: CartaService, private formBilder: FormBuilder) { 
+    this.cantidad = formBilder.group({
+      CANTIDAD: new FormControl('')})
+  }
 
   ngOnInit(): void {
     this.getPizza();
@@ -33,6 +38,14 @@ export class PizzaComponent implements OnInit {
         this.ingrediente.push(element);
       });
     });
+  }
+
+  addProducto(id:number){
+      console.log(id);
+  }
+  
+  get CANTIDAD(){
+    return this.cantidad.get('CANTIDAD');
   }
 
 }

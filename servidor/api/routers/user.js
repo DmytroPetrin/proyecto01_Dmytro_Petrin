@@ -23,16 +23,16 @@ router.post('/signin', (req,res)=>{
     cuando lo encuentre guarda los datos en rows de query*/
     const{EMAIL, PASS} = req.body;
     const CONTRASEÑA = PASS; //ESTA CONVERSION PORQUE ANGULAR NO SABE TRABAJAR CON LETRA Ñ EN OBJETOS
-    mysqlConnection.query('select EMAIL, ROL from empleados where EMAIL=? AND CONTRASEÑA=?',
+    mysqlConnection.query('select * from empleados where EMAIL=? AND CONTRASEÑA=?',
      [EMAIL, CONTRASEÑA], 
-     (err,rows, fields) =>{
+     (err,rows, fields) =>{  
          if(!err){
              if(rows.length >0){
                  let data= JSON.stringify(rows[0]);//stringify te convierte los datos en string
                  const token = jwt.sign(data, 'palabra_secreta'); //jwt permite crear token donde los datos seran cifrados medianten la palabra secreta
                  res.json({token}); //respondemos con el token creado
              }else if(rows.length==0){
-                mysqlConnection.query('select EMAIL, ROL from cliente where EMAIL=? AND CONTRASEÑA=?',
+                mysqlConnection.query('select * from cliente where EMAIL=? AND CONTRASEÑA=?',
                 [EMAIL, CONTRASEÑA], 
                 (err,rows, fields) =>{
                     if(!err){

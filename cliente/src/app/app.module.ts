@@ -30,6 +30,7 @@ import { BebidaComponent } from './components/bebida/bebida.component';
 import { PostreComponent } from './components/postre/postre.component';
 import { AdminEdofertaComponent } from './components/admin-edoferta/admin-edoferta.component';
 import { CommonModule } from '@angular/common';
+import { CarritoCompraComponent } from './components/carrito-compra/carrito-compra.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { CommonModule } from '@angular/common';
     EntranteComponent,
     BebidaComponent,
     PostreComponent,
-    AdminEdofertaComponent
+    AdminEdofertaComponent,
+    CarritoCompraComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, 
