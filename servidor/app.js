@@ -26,4 +26,7 @@ const express = require('express');
  const pizzaRoute = require('./api/routers/pizza');
  app.use('/pizza', pizzaRoute);
 
+ const compraRoute = require('./api/routers/compra');
+ app.use('/compra', compraRoute);
+
  module.exports = app;
