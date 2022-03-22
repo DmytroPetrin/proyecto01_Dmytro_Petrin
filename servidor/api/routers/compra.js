@@ -6,7 +6,7 @@ const mysqlConnection = require('../connections/connection');
 
 
 router.post('/registrarcompraLista',(req, res)=>{
-    const{COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES	}=req.body;
+    const{COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES}=req.body;
     mysqlConnection.query('INSERT INTO compra_lista(COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES) VALUE (?, ?, ?, ?, ?, ?);',
     [COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES	],
     (err, rows, field)=>{
@@ -50,10 +50,10 @@ router.post('/registrarModificacion',(req, res)=>{
     });
 });
 
-//hay que terminar!!!!
+
 router.post('/getcompraOferta', (req, res)=>{
     const{ID}=req.body;
-    mysqlConnection.query('',
+    mysqlConnection.query('(SELECT P.ID_PIZZA AS ID, P.NOMBRE, P.PRECIO, P.TAMAÑO AS SIZE, P.DESCRIPCION, P.IMAGEN FROM oferta_lista OL, pizza P WHERE OL.OFERTA = 34 AND OL.PIZZA = P.ID_PIZZA) UNION ALL (SELECT E.* FROM oferta_lista OL, entrantes E WHERE OL.OFERTA = 34 AND OL.ENTRANTES = E.ID_ENTRANTES);',
     [ID],
     (err, rows, field)=>{
         if(!err){
@@ -62,6 +62,6 @@ router.post('/getcompraOferta', (req, res)=>{
             console.log(err);
         }
     })
-})
+});
 
 module.exports = router;

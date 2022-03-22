@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CartaService } from 'src/app/services/carta.service';
 
 @Component({
@@ -14,7 +15,9 @@ export class PizzaComponent implements OnInit {
    
   public cantidad:FormGroup;
   
-  constructor( private cartaService: CartaService, private formBilder: FormBuilder) { 
+  constructor( private cartaService: CartaService, 
+    private formBilder: FormBuilder,
+    private router: Router) { 
     this.cantidad = formBilder.group({
       CANTIDAD: new FormControl('')})
   }
@@ -42,6 +45,9 @@ export class PizzaComponent implements OnInit {
 
   addProducto(id:number){
       console.log(id);
+      if( localStorage.getItem('ROL') == 'cliente'){
+        this.router.navigate(['private']);
+      }else{this.router.navigate(['login']);}
   }
   
   get CANTIDAD(){

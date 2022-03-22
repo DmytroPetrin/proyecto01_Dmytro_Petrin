@@ -34,7 +34,7 @@ import { AuthService } from 'src/app/services/auth.service';
     this.authService.signin(this.user).subscribe((res:any)=>{
       //console.log(res);
       localStorage.setItem('token', res.token);
-     // this.router.navigate(['private']); //para poder navegar a la pagina private
+      this.router.navigate(['home']); //para poder navegar a la pagina private
       
     });
     
