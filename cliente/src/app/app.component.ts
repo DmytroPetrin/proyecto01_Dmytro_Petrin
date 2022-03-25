@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 
@@ -11,11 +11,14 @@ import { Router } from '@angular/router';
 
 
 
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, DoCheck{
 
   title = 'cliente';
   public isLogged:Boolean = true;
-    
+  public compra = 0;
+ 
+  public carr_old='';
+  
   constructor(
     private router: Router,
     private authService: AuthService
@@ -23,6 +26,19 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     this.onCheckUser();
+  }
+
+  ngDoCheck(): void {
+    if (localStorage.getItem('carrito') != this.carr_old){
+      this.compra = 0;
+      this.contarCompra();
+      const x = localStorage.getItem('carrito');
+      if (x){
+         this.carr_old = x;
+      }
+      
+    }
+      
   }
 
   logOut(){
@@ -44,5 +60,19 @@ export class AppComponent implements OnInit{
       }else{this.isLogged = true;}
   }
 
+  contarCompra(){
+    const carr_sting = localStorage.getItem('carrito');
+    var num = 0;
+    if(carr_sting){
+      var arr = carr_sting.split(",");
+      arr.forEach(element => {
+         if(num%2!=0){
+           this.compra = this.compra + parseInt(element);
+         }
+          num++;
+      });
+    }
+    else if (!carr_sting){this.compra = 0;}
+  }
 }
 

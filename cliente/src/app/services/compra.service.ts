@@ -8,7 +8,7 @@ import { Injectable } from "@angular/core";
 export class CompraService {
   
     private URL ="http://localhost:3000";
-  
+    private arr_carrito: string[] =[];
     
   
     constructor(
@@ -29,6 +29,24 @@ export class CompraService {
 
      getcompraOferta(ID:number){
         return this.http.post(this.URL+"/compra/getcompraOferta", ID);
+     }
+
+     guardarCarrito(ID:string, cantidad:string){
+         const carr = localStorage.getItem('carrito');
+         if(carr){
+             this.arr_carrito= carr.split(",");
+             this.arr_carrito.push(ID);
+             this.arr_carrito.push(cantidad);
+             localStorage.setItem('carrito', this.arr_carrito.toString()) ;
+         }
+         else if(!carr){
+             this.arr_carrito.push(ID);
+             this.arr_carrito.push(cantidad);
+             localStorage.setItem('carrito', this.arr_carrito.toString()) ;
+         }
+             
+        
+
      }
 
 

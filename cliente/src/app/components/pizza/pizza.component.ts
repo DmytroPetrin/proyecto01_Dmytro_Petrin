@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartaService } from 'src/app/services/carta.service';
+import { CompraService } from 'src/app/services/compra.service';
 
 @Component({
   selector: 'app-pizza',
@@ -17,9 +18,10 @@ export class PizzaComponent implements OnInit {
   
   constructor( private cartaService: CartaService, 
     private formBilder: FormBuilder,
-    private router: Router) { 
+    private router: Router,
+    private compraService: CompraService) { 
     this.cantidad = formBilder.group({
-      CANTIDAD: new FormControl('')})
+      CANTIDAD: new FormControl('1')})
   }
 
   ngOnInit(): void {
@@ -45,9 +47,12 @@ export class PizzaComponent implements OnInit {
 
   addProducto(id:number){
       console.log(id);
-      if( localStorage.getItem('ROL') == 'cliente'){
-        this.router.navigate(['private']);
-      }else{this.router.navigate(['login']);}
+        var cantidad = this.cantidad.get('CANTIDAD')?.value;
+        console.log(cantidad);
+        if(!cantidad){ cantidad = "1"}
+        this.compraService.guardarCarrito("p"+id, cantidad);
+        //this.router.navigate(['private']);
+      
   }
   
   get CANTIDAD(){
