@@ -52,7 +52,6 @@ export class PizzaComponent implements OnInit {
         if(!cantidad){ cantidad = "1"}
         this.compraService.guardarCarrito("p"+id, cantidad);
         //this.router.navigate(['private']);
-      
   }
   
   get CANTIDAD(){

@@ -1,6 +1,8 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CartaService } from 'src/app/services/carta.service';
+import { CompraService } from 'src/app/services/compra.service';
 
 @Component({
   selector: 'app-oferta',
@@ -12,13 +14,23 @@ export class OfertaComponent implements OnInit {
   public oferta: any[]=[];
   public carta: any[]=[];
   public ingrediente: any[]=[];
-  constructor(private cartaService: CartaService) { }
+
+  public cantidad:FormGroup;
+  
+  constructor( private cartaService: CartaService, 
+    private formBuilder: FormBuilder,
+    private compraService: CompraService) { 
+    this.cantidad = formBuilder.group({
+      CANTIDAD:this.formBuilder.array([ this.formBuilder.control('')])
+  });
+
+}
 
   ngOnInit(): void {
     this.getOfertas();
     this.getCartabyid();
     this.getIngredientebyid();
-    console.log(this.carta);  
+    //console.log(this.carta);  
   }
 
   getOfertas(){
@@ -27,7 +39,7 @@ export class OfertaComponent implements OnInit {
       res.forEach((element:any)=>{
         
         this.oferta.push(element);
-        
+        this.CANTIDAD.push(this.formBuilder.control(''));
       });
     });
     //console.log(this.carta);
@@ -49,5 +61,19 @@ export class OfertaComponent implements OnInit {
 
     });
   }
+
+  addProducto(id:number, i:number){
+    console.log(id);
+      var cantidad = this.CANTIDAD.value[i];
+      console.log(cantidad);
+     /*
+      if(!cantidad[i]){ cantidad[i] = "1"}
+      this.compraService.guardarCarrito("o"+id, cantidad[i]);
+      */
+}
+
+get CANTIDAD(){
+  return this.cantidad.get('CANTIDAD') as FormArray;
+}
    
 }
