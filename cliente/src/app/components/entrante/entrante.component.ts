@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CartaService } from 'src/app/services/carta.service';
 import { CompraService } from 'src/app/services/compra.service';
 
@@ -17,10 +17,11 @@ export class EntranteComponent implements OnInit {
   public cantidad:FormGroup;
   
   constructor( private cartaService: CartaService, 
-    private formBilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private compraService: CompraService) { 
-    this.cantidad = formBilder.group({
-      CANTIDAD: new FormControl('1')})
+      this.cantidad = formBuilder.group({
+        CANTIDAD:this.formBuilder.array([ this.formBuilder.control('1')])
+    });
   }
 
   ngOnInit(): void {
@@ -32,6 +33,7 @@ export class EntranteComponent implements OnInit {
     this.cartaService.getEntrantes().subscribe((res:any)=>{
       res.forEach((element:any)=>{
         this.entrantes.push(element);
+        this.CANTIDAD.push(this.formBuilder.control('1'));
       });
     });
   }
@@ -44,19 +46,15 @@ export class EntranteComponent implements OnInit {
     });
   }
 
-  addProducto(id:number){
-    console.log(id);
-      var cantidad = this.cantidad.get('CANTIDAD')?.value;
-      console.log(cantidad);
+  addProducto(id:number, i:number){
+      var cantidad = this.CANTIDAD.value[i];
       if(!cantidad){ cantidad = "1"}
       this.compraService.guardarCarrito("e"+id, cantidad);
-      //this.cantidad.reset(this.cantidad.value);
-      this.cantidad.patchValue({CANTIDAD:1});
       
 }
 
 get CANTIDAD(){
-  return this.cantidad.get('CANTIDAD');
+  return this.cantidad.get('CANTIDAD') as FormArray;
 }
 
 }

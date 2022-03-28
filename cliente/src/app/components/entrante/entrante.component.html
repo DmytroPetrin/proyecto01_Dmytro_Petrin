@@ -41,12 +41,14 @@
                                 <br>
                             </details>
                             <div class="row" [formGroup]="cantidad">
-                                <select class="col-4 align-left" formControlName="CANTIDAD">
+                                <ng-container formArrayName="CANTIDAD">
+                                <select class="col-4 align-left" [formControlName]="i">
                                     <option [value]="number" *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]">{{number}} 
                                     </option>
                                 </select>
+                                </ng-container>
                                 <div class="col-3"></div>
-                                <button type="button" class="btn btn-danger col-5 " (click)="addProducto(entrantes[i].ID_ENTRANTES)">Añadir</button>
+                                <button type="button" class="btn btn-danger col-5 " (click)="addProducto(entrantes[i].ID_ENTRANTES, i)">Añadir</button>
                             </div>
                         </div>
                     </div>

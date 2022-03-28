@@ -21,7 +21,7 @@ export class OfertaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private compraService: CompraService) { 
     this.cantidad = formBuilder.group({
-      CANTIDAD:this.formBuilder.array([ this.formBuilder.control('')])
+      CANTIDAD:this.formBuilder.array([ this.formBuilder.control('1')])
   });
 
 }
@@ -39,7 +39,7 @@ export class OfertaComponent implements OnInit {
       res.forEach((element:any)=>{
         
         this.oferta.push(element);
-        this.CANTIDAD.push(this.formBuilder.control(''));
+        this.CANTIDAD.push(this.formBuilder.control('1'));
       });
     });
     //console.log(this.carta);
@@ -63,13 +63,10 @@ export class OfertaComponent implements OnInit {
   }
 
   addProducto(id:number, i:number){
-    console.log(id);
       var cantidad = this.CANTIDAD.value[i];
-      console.log(cantidad);
-     /*
-      if(!cantidad[i]){ cantidad[i] = "1"}
-      this.compraService.guardarCarrito("o"+id, cantidad[i]);
-      */
+      if(!cantidad){ cantidad = "1"}
+      this.compraService.guardarCarrito("o"+id, cantidad);
+      
 }
 
 get CANTIDAD(){

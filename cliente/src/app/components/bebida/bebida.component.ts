@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CartaService } from 'src/app/services/carta.service';
 import { CompraService } from 'src/app/services/compra.service';
 
@@ -16,10 +16,11 @@ export class BebidaComponent implements OnInit {
   public cantidad:FormGroup;
   
   constructor( private cartaService: CartaService, 
-    private formBilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private compraService: CompraService) { 
-    this.cantidad = formBilder.group({
-      CANTIDAD: new FormControl('1')})
+      this.cantidad = formBuilder.group({
+        CANTIDAD:this.formBuilder.array([ this.formBuilder.control('1')])
+    });
   }
 
   ngOnInit(): void {
@@ -31,20 +32,20 @@ export class BebidaComponent implements OnInit {
     this.cartaService.getBebida().subscribe((res:any)=>{
       res.forEach((element:any)=>{
         this.bebida.push(element);
+        this.CANTIDAD.push(this.formBuilder.control('1'));
       });
     });
   }
 
-  addProducto(id:number){
-    console.log(id);
-      var cantidad = this.cantidad.get('CANTIDAD')?.value;
-      console.log(cantidad);
+  addProducto(id:number, i:number){
+      var cantidad = this.CANTIDAD.value[i];
       if(!cantidad){ cantidad = "1"}
       this.compraService.guardarCarrito("b"+id, cantidad);
-      //this.router.navigate(['private']);
+      
 }
 
 get CANTIDAD(){
-  return this.cantidad.get('CANTIDAD');
+  return this.cantidad.get('CANTIDAD') as FormArray;
 }
+
 }
