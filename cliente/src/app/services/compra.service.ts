@@ -15,16 +15,19 @@ export class CompraService {
       private http: HttpClient
      ) { }
 
-     registrarcompraLista(compraLista: {COMPRA: number, OFERTA: number, PIZZA: number, BEBIDA: number, ENTRANTES: number, POSTRES: number}){
-         return this.http.post(this.URL+"/compra/registrarcompraLista", compraLista);
+     registrarcompraLista(arr: string){
+         return this.http.post(this.URL+"/compra/registrarcompraLista", arr);
      }
 
-     registrarCompra(compra: {RECOGIDA: boolean, CLIENTE: number, DESCRIPCION: string}){
-        return this.http.post(this.URL+"/compra/registrarCompra", compra);
+     registrarCompra( CLIENTE: number){
+        return this.http.post(this.URL+"/compra/registrarCompra",CLIENTE);
      }
 
      registrarModificacion(mod: {COMPRA:number, PIZZA:number, ENTRANTES:number, EXTRAS:number, COMENTARIO:string, NUM_MOD:number}){
         return this.http.post(this.URL+"/compra/registrarModificacion", mod);
+     }
+     getIdCliente(){
+         return this.http.get(this.URL+"/compra/getIdCliente");
      }
 
      getcompraOferta(ID:number){

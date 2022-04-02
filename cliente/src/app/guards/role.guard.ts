@@ -24,10 +24,10 @@ export class RoleGuard implements CanActivate {
     if(token!==null ){
     //console.log(decode(token));
     const {NOMBRE, ROL}: {NOMBRE:string, ROL:string} = decode(token); //en typescript las constantes se declaran asi, sino da error porque aplicación desconoce tipo de variable
-    if (ROL == 'admin'){
-        const {ID_EMPLEADO}: {ID_EMPLEADO:string} = decode(token);
+    if (ROL == 'cliente'){
+        const {ID_CLIENTE}: {ID_CLIENTE:string} = decode(token);
         localStorage.setItem('NOMBRE', NOMBRE);
-        localStorage.setItem('ID', ID_EMPLEADO);
+        localStorage.setItem('ID', ID_CLIENTE);
         localStorage.setItem('ROL', ROL);
         // a ver si esto se puede hacer en otra pestaña
     }

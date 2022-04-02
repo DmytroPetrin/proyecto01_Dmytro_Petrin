@@ -6,6 +6,7 @@ const mysqlConnection = require('../connections/connection');
 
 
 router.post('/registrarcompraLista',(req, res)=>{
+
     const{COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES}=req.body;
     mysqlConnection.query('INSERT INTO compra_lista(COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES) VALUE (?, ?, ?, ?, ?, ?);',
     [COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES	],
@@ -19,22 +20,25 @@ router.post('/registrarcompraLista',(req, res)=>{
 });
 
 router.post('/registrarCompra',(req, res)=>{
-    const{RECOGIDA, CLIENTE, DESCRIPCION}=req.body;
-    mysqlConnection.query('INSERT INTO compra (RECOGIDA, CLIENTE, DESCRIPCION) VALUES (?,?,?);',
-    [RECOGIDA, CLIENTE, DESCRIPCION],
+    const{CLIENTE}=req.body;
+    mysqlConnection.query('INSERT INTO compra (CLIENTE) VALUES (?);',
+    [CLIENTE],
     (err, rows, field)=>{
         if(!err){
-            mysqlConnection.query('SELECT MAX(ID_COMPRA) AS ID FROM compra;', (err, rows, field)=>{ 
+            //res.json('guardado');
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.get('/getIdCliente', (req, res)=>{
+    mysqlConnection.query('SELECT MAX(ID_COMPRA) AS ID FROM compra;', (err, rows, field)=>{ 
                 if(!err){
                     res.json(rows);
                 }
                 else{console.log(err);}
             });
-            //res.json(rows);
-        }else{
-            console.log(err);
-        }
-    });
 });
 
 router.post('/registrarModificacion',(req, res)=>{
