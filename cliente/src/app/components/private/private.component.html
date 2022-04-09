@@ -3,15 +3,20 @@
 <section>
     <div class="container">
         <div class="row">
-            <ng-container>
-                <div class="col-12">
-                    <div class="card margin-top">
-                        <div class="card-body">
-                            <button class="col-6" (click)="crearCompra()">titulo</button>
-                        </div>
-                    </div>
-                </div>
-            </ng-container>
-        </div>
+        <ng-container *ngFor="let item of carta; let i = index;">
+            <div class="col-12 border border-primary" *ngIf="item">
+                <img id="img_carrito" class="col-3  d-inline"
+                    [src]="carta[i].IMAGEN == '' ? '/assets/no_image.png': carta[i].IMAGEN">
+                <h4 class=" col-3 d-inline">{{arr_cantidad[i]}} x </h4>
+                <h4 class=" col-3 d-inline">{{carta[i].NOMBRE}}</h4>
+                <div class="col-2 d-inline bold">{{carta[i].PRECIO}} €</div>
+                <div class="col-2 d-inline"></div>
+                <button class="col-2  d-inline btn btn-secondary">Modificar</button>
+                <button class="col-2   d-inline btn btn-danger " (click)="borrarProducto(i)">Borrar</button>
+            </div>
+        </ng-container>
+        <div class="col-7 display-4">Precio Total: {{precioT}} €</div>
+        <button class="btn btn-primary" (click)="precioTotal()"> Seguir Comprando</button>
+    </div>
     </div>
 </section>

@@ -66,7 +66,7 @@ export class AppComponent implements OnInit, DoCheck{
     if(carr_sting){
       var arr = carr_sting.split(",");
       arr.forEach(element => {
-         if(num%2!=0){
+         if(num%2!=0 && element != ''){
            this.compra = this.compra + parseInt(element);
          }
           num++;

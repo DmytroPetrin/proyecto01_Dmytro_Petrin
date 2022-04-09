@@ -47,7 +47,17 @@ export class CompraService {
              this.arr_carrito.push(cantidad);
              localStorage.setItem('carrito', this.arr_carrito.toString()) ;
          }
-             
+       }
+
+     borrarCarrito(i: number){
+        const carr = localStorage.getItem('carrito');
+        if(carr){
+            this.arr_carrito= carr.split(",");
+            delete this.arr_carrito[2*i];
+            delete this.arr_carrito[(2*i)+1];
+            localStorage.setItem('carrito', this.arr_carrito.toString()) ;
+        }
+     }
         
 
      }
@@ -56,4 +66,3 @@ export class CompraService {
 
 
 
- }

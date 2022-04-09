@@ -1,7 +1,6 @@
 const express = require('express');
-const { stringify } = require('nodemon/lib/utils');
 const router = express.Router();
-const cors = require('cors');
+
 const mysqlConnection = require('../connections/connection');
 
 
