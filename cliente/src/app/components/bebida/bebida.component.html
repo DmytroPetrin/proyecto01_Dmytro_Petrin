@@ -10,7 +10,7 @@
                                 [src]="bebida[i].IMAGEN == '' ? '/assets/no_image.png': bebida[i].IMAGEN">
                             <h3 class="card-title">{{bebida[i].NOMBRE}}</h3>
                             <div></div>
-                            <div class="text-xl-right  font-weight-bold">{{bebida[i].PRECIO}}€</div>
+                            <div class="text-xl-right  font-weight-bold">{{bebida[i].PRECIO.toFixed(2)}}€</div>
                             <div class="text-right font-weight-light">Tamaño: {{bebida[i].SIZE}}</div>
                             <details class="text-left">
                                 <summary> Ver mas</summary>

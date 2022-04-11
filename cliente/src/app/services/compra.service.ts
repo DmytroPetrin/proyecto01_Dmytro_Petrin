@@ -58,6 +58,15 @@ export class CompraService {
             localStorage.setItem('carrito', this.arr_carrito.toString()) ;
         }
      }
+
+     borrarCantidad(i:number){
+        const carr = localStorage.getItem('carrito');
+        if(carr){
+            this.arr_carrito= carr.split(",");
+            this.arr_carrito[(2*i)+1] = (parseInt(this.arr_carrito[(2*i)+1]) - 1).toString();
+            localStorage.setItem('carrito', this.arr_carrito.toString()) ;
+        }
+     }
         
 
      }

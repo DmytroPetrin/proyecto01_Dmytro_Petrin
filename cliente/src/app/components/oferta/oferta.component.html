@@ -9,7 +9,7 @@
                                 [src]="oferta[i].IMAGEN == '' ? '/assets/no_image.png': oferta[i].IMAGEN">
                             <h3 class="card-title">{{oferta[i].NOMBRE}}</h3>
                             <div></div>
-                            <div class="text-xl-right  font-weight-bold">{{oferta[i].PRECIO}}€</div>
+                            <div class="text-xl-right  font-weight-bold">{{oferta[i].PRECIO.toFixed(2)}}€</div>
 
                             <details class="text-left">
                                 <summary> Ver mas</summary>

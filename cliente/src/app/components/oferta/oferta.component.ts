@@ -33,17 +33,14 @@ export class OfertaComponent implements OnInit {
     //console.log(this.carta);  
   }
 
-  getOfertas(){
-  
-    this.cartaService.getOferta().subscribe((res:any)=>{
-      res.forEach((element:any)=>{
-        
+  getOfertas() {
+    this.cartaService.getOferta().subscribe((res: any) => {
+      res.forEach((element: any) => {
         this.oferta.push(element);
         this.CANTIDAD.push(this.formBuilder.control('1'));
       });
     });
-    //console.log(this.carta);
-   }
+  }
   
   getCartabyid() {
     this.cartaService.getCartabyid().subscribe((res: any) => {

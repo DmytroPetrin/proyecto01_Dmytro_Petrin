@@ -28,6 +28,7 @@ export class PizzaComponent implements OnInit {
   ngOnInit(): void {
     this.getPizza();
     this.getIngredientePizza();
+    console.log(this.ingrediente);
   }
 
   getPizza(){

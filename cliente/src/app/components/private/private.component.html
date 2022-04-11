@@ -3,20 +3,34 @@
 <section>
     <div class="container">
         <div class="row">
-        <ng-container *ngFor="let item of carta; let i = index;">
-            <div class="col-12 border border-primary" *ngIf="item">
-                <img id="img_carrito" class="col-3  d-inline"
-                    [src]="carta[i].IMAGEN == '' ? '/assets/no_image.png': carta[i].IMAGEN">
-                <h4 class=" col-3 d-inline">{{arr_cantidad[i]}} x </h4>
-                <h4 class=" col-3 d-inline">{{carta[i].NOMBRE}}</h4>
-                <div class="col-2 d-inline bold">{{carta[i].PRECIO}} €</div>
-                <div class="col-2 d-inline"></div>
-                <button class="col-2  d-inline btn btn-secondary">Modificar</button>
-                <button class="col-2   d-inline btn btn-danger " (click)="borrarProducto(i)">Borrar</button>
-            </div>
-        </ng-container>
-        <div class="col-7 display-4">Precio Total: {{precioT}} €</div>
-        <button class="btn btn-primary" (click)="precioTotal()"> Seguir Comprando</button>
-    </div>
+            <ng-container *ngFor="let item of carta; let i = index;">
+                <div class="col-12 border border-primary" *ngIf="item">
+                    <img id="img_carrito" class="col-3  d-inline"
+                        [src]="carta[i].IMAGEN == '' ? '/assets/no_image.png': carta[i].IMAGEN">
+                    <h4 class=" col-3 d-inline">{{arr_cantidad[i]}} x </h4>
+                    <h4 class=" col-3 d-inline">{{carta[i].NOMBRE}}</h4>
+                    <div class="col-2 d-inline ">{{(carta[i].PRECIO * arr_cantidad[i]).toFixed(2)}} €</div>
+                    <div class="col-2 d-inline"></div>
+                    <button class="col-2  d-inline btn btn-secondary" *ngIf="arr_cantidad[i]==1 && (carta[i].ID_PIZZA || carta[i].ID_ENTRANTES )"> Modificar</button>
+                    <button class="col-2  d-inline btn btn-secondary" *ngIf="arr_cantidad[i]>1 || carta[i].ID_OFERTA"> Detalles</button>
+                    <button class="col-2  d-inline btn btn-danger " (click)="borrarProducto(i)">Borrar</button>
+                    <div class="col-12" *ngIf="carta[i].ID_PIZZA || carta[i].ID_ENTRANTES || carta[i].ID_OFERTA">
+                        <div *ngIf="arr_cantidad[i]>1">
+                            <div id = "pest" *ngFor="let item of counter(arr_cantidad[i]); let j = index;">
+                                <img id="img_carrito" class="col-3  d-inline"
+                                    [src]="carta[i].IMAGEN == '' ? '/assets/no_image.png': carta[i].IMAGEN">
+                                <h4 class=" col-3 d-inline">1 x </h4>
+                                <h4 class=" col-3 d-inline">{{carta[i].NOMBRE}}</h4>
+                                <div class="col-2 d-inline bold">{{carta[i].PRECIO}} €</div>
+                                <button class="col-2  d-inline btn btn-secondary" *ngIf="(carta[i].ID_PIZZA || carta[i].ID_ENTRANTES )"> Modificar</button>
+                                <button class="col-2  d-inline btn btn-danger" (click)="borrarProducto2(i)">Borrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="col-7 display-4">Precio Total: {{precioT.toFixed(2)}} €</div>
+            <button class="btn btn-primary"> Seguir Comprando</button>
+        </div>
     </div>
 </section>

@@ -7,12 +7,14 @@ import { CompraService } from 'src/app/services/compra.service';
   templateUrl: './private.component.html',
   styleUrls: ['./private.component.css']
 })
-export class PrivateComponent implements OnInit, DoCheck, OnChanges {
+export class PrivateComponent implements OnInit, DoCheck {
   
   public arr_carrito:string[]=[];
   public arr_cantidad:number[]=[];
-  public carta:any[]=[]
+  public carta:any[]=[];
+  public ingrediente:any[]=[];
   public precioT: number = 0;
+  public precioT_old = -1;
   
   constructor(private cartaService: CartaService, private compraService: CompraService) { }
 
@@ -23,29 +25,23 @@ export class PrivateComponent implements OnInit, DoCheck, OnChanges {
     this.getEntrantes();
     this.getBebida();
     this.getPostres();
+    this.getIngredientePizza();
     
-    
-    
-    console.log(this.arr_cantidad);
+    console.log(this.ingrediente);
     console.log(this.carta);
   }
   
   ngDoCheck(): void {
-    if(this.precioT!=0){
+    if(this.carta.length>0 && this.precioT!=this.precioT_old){
       this.precioTotal();
+      this.precioT_old = this.precioT;
     }
-      
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-      if(this.carta){
-        this.precioTotal();
-      }
-  }
-
-
-  
-
+counter(i: number) {
+    return new Array(i);
+}
+ 
   getIdCliente(){
     this.compraService.getIdCliente().subscribe((res:any)=>{
       //console.log(res[0].ID);
@@ -61,6 +57,11 @@ export class PrivateComponent implements OnInit, DoCheck, OnChanges {
       this.compraService.borrarCarrito(i);
   }
 
+  borrarProducto2(i:number){
+   this.arr_cantidad[i]=this.arr_cantidad[i]-1;
+   this.compraService.borrarCantidad(i);
+  }
+
   precioTotal(){
     this.precioT=0;
     for(let i = 0; i<this.carta.length; i++){ 
@@ -68,6 +69,22 @@ export class PrivateComponent implements OnInit, DoCheck, OnChanges {
           this.precioT = this.precioT + (this.carta[i].PRECIO * this.arr_cantidad[i]);
         }  
     }
+  }
+
+  getIngredientePizza(){
+    this.cartaService.getIngredientePizza().subscribe((res:any)=>{
+      res.forEach((element:any)=>{
+        this.ingrediente.push(element);
+      });
+    });
+  }
+
+  getIngredienteEntrantes(){
+    this.cartaService.getIngredienteEntrantes().subscribe((res:any)=>{
+      res.forEach((element:any)=>{
+        this.ingrediente.push(element);
+      });
+    });
   }
 
   getPizza() {
@@ -128,7 +145,7 @@ export class PrivateComponent implements OnInit, DoCheck, OnChanges {
     });
   }
 
-  getPostres(){
+   getPostres(){
     this.cartaService.getPostres().subscribe((res:any)=>{
       res.forEach((element:any)=>{
         var num = -1;
