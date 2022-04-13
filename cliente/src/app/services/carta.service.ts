@@ -69,6 +69,10 @@ export class CartaService {
         return this.http.get(this.URL+'/pizza/getIngredientebyid');
       }
 
+      getExtra(){
+        return this.http.get(this.URL+'/pizza/getExtra');
+      }
+
     registerExtra(extra:{IMAGEN2:string, PRECIO:string}){
       //console.log(ingrediente);
       return this.http.post(this.URL+"/pizza/registerExtra", extra);

@@ -11,26 +11,71 @@
                     <h4 class=" col-3 d-inline">{{carta[i].NOMBRE}}</h4>
                     <div class="col-2 d-inline ">{{(carta[i].PRECIO * arr_cantidad[i]).toFixed(2)}} €</div>
                     <div class="col-2 d-inline"></div>
-                    <button class="col-2  d-inline btn btn-secondary" *ngIf="arr_cantidad[i]==1 && (carta[i].ID_PIZZA || carta[i].ID_ENTRANTES )"> Modificar</button>
-                    <button class="col-2  d-inline btn btn-secondary" *ngIf="arr_cantidad[i]>1 || carta[i].ID_OFERTA"> Detalles</button>
-                    <button class="col-2  d-inline btn btn-danger " (click)="borrarProducto(i)">Borrar</button>
+                    <button class="col-2  d-inline btn btn-secondary"
+                        *ngIf="arr_cantidad[i]==1 && (carta[i].ID_PIZZA || carta[i].ID_ENTRANTES )"
+                        (click)="isVisibleModificar(i, 0)"> Modificar</button>
+                        <div class="col-1  d-inline" *ngIf="arr_cantidad[i]==1 && (carta[i].ID_PIZZA || carta[i].ID_ENTRANTES ) && cantidadTotal_producto[i][0] > 0">
+                            {{cantidadTotal_producto[i][0]}}</div>    
+                    <button class="col-2  d-inline btn btn-secondary"
+                        *ngIf="(arr_cantidad[i]>1 && !carta[i].ID_POSTRES && !carta[i].ID_BEBIDA) || carta[i].ID_OFERTA"
+                        (click)="isVisible(i)"> Detalles</button>
+                    <button class="col-1  d-inline btn btn-success" (click)="addProducto(i)">+</button>
+                    <button class="col-1  d-inline btn btn-danger " (click)="borrarProducto2(i, (arr_cantidad[i]-1))">-</button>
+                    <!--BOTON DETALLE-->
                     <div class="col-12" *ngIf="carta[i].ID_PIZZA || carta[i].ID_ENTRANTES || carta[i].ID_OFERTA">
-                        <div *ngIf="arr_cantidad[i]>1">
-                            <div id = "pest" *ngFor="let item of counter(arr_cantidad[i]); let j = index;">
+                        <div *ngIf="arr_cantidad[i]>1 && visible[i]">
+                            <div id="pest" *ngFor="let item of counter(arr_cantidad[i]); let j = index;">
                                 <img id="img_carrito" class="col-3  d-inline"
                                     [src]="carta[i].IMAGEN == '' ? '/assets/no_image.png': carta[i].IMAGEN">
-                                <h4 class=" col-3 d-inline">1 x </h4>
                                 <h4 class=" col-3 d-inline">{{carta[i].NOMBRE}}</h4>
                                 <div class="col-2 d-inline bold">{{carta[i].PRECIO}} €</div>
-                                <button class="col-2  d-inline btn btn-secondary" *ngIf="(carta[i].ID_PIZZA || carta[i].ID_ENTRANTES )"> Modificar</button>
-                                <button class="col-2  d-inline btn btn-danger" (click)="borrarProducto2(i)">Borrar</button>
+                                <button class="col-2  d-inline btn btn-secondary"
+                                    *ngIf="(carta[i].ID_PIZZA || carta[i].ID_ENTRANTES )" (click)="isVisibleModificar(i, j)"> Modificar </button>
+                                <div class="col-1  d-inline" *ngIf="(carta[i].ID_PIZZA || carta[i].ID_ENTRANTES ) && cantidadTotal_producto[i][j] > 0">{{cantidadTotal_producto[i][j]}}</div>    
+                                <button class="col-1  d-inline btn btn-danger" (click)="borrarProducto2(i, j)">-</button>
+                                <!--BOTON MODIFICAR DENTRO DEL DETALLE-->
+                                <div class="col-12" *ngIf=" visible2[i][j] ">
+                                    <ng-container *ngIf="carta[i].ID_PIZZA || carta[i].ID_ENTRANTES">
+                                        <ng-container *ngFor="let item of ingrediente; let p = index;" class="d-inline">
+                                            <div class="col-3 text-center list-inline-item">
+                                                <div *ngIf="cantidad_ingrediente[i][j][p]!=0">{{cantidad_ingrediente[i][j][p]}}</div>
+                                                <img class="col-12"
+                                                    [src]="ingrediente[p].IMAGEN == '' ? '/assets/no_image.png': ingrediente[p].IMAGEN">
+                                                <div>{{ingrediente[p].NOMBRE}}</div>
+                                                <div>{{ingrediente[p].PRECIO.toFixed(2)}} €</div>
+                                                <div>
+                                                    <button class="col-2  d-inline btn btn-success" [disabled]="cantidad_ingrediente[i][j][p]==3 || cantidadTotal_producto[i][j]==10" (click)="ingredienteSumaResta(i, j, p, 0)">+</button>
+                                                    <button class="col-2  d-inline btn btn-danger" [disabled]="cantidad_ingrediente[i][j][p]==0" (click)="ingredienteSumaResta(i, j, p, 1)">-</button>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <!--BOTON MODIFICAR-->
+                    <div class="col-12" *ngIf=" visible2[i][0] && arr_cantidad[i] == 1">
+                        <ng-container *ngIf="carta[i].ID_PIZZA || carta[i].ID_ENTRANTES">
+                            <ng-container *ngFor="let item of ingrediente; let p = index;" class="d-inline">
+                                <div class="col-3 text-center list-inline-item">
+                                    <div *ngIf="cantidad_ingrediente[i][0][p]!=0">{{cantidad_ingrediente[i][0][p]}}</div>
+                                    <img class="col-12"
+                                        [src]="ingrediente[p].IMAGEN == '' ? '/assets/no_image.png': ingrediente[p].IMAGEN">
+                                    <div>{{ingrediente[p].NOMBRE}}</div>
+                                    <div>{{ingrediente[p].PRECIO.toFixed(2)}} €</div>
+                                    <div>
+                                        <button class="col-2  d-inline btn btn-success" [disabled]="cantidad_ingrediente[i][0][p]==3 || cantidadTotal_producto[i][0]==10" (click)="ingredienteSumaResta(i, 0, p, 0)">+</button>
+                                        <button class="col-2  d-inline btn btn-danger" [disabled]="cantidad_ingrediente[i][0][p]==0" (click)="ingredienteSumaResta(i, 0, p, 1)">-</button>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
                     </div>
                 </div>
             </ng-container>
             <div class="col-7 display-4">Precio Total: {{precioT.toFixed(2)}} €</div>
-            <button class="btn btn-primary"> Seguir Comprando</button>
+            <button class="btn btn-primary" (click)="precioTotal()"> Seguir Comprando</button>
         </div>
     </div>
 </section>
