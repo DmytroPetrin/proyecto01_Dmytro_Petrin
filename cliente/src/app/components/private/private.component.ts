@@ -15,16 +15,29 @@ export class PrivateComponent implements OnInit, DoCheck {
   public arr_cantidad:number[]=[];
   public arr_cantidadOld: number[]=[0];
   public carta:any[]=[];
+  public cartaOferta: any[]=[];
+  public menuOferta: any[][]=[];
+
+  public pizza:any[]=[];
+  public entrante:any[]=[];
+  public bebida:any[]=[];
+  public postre:any[]=[];
+  public oferta:any[]=[];
  
   public ingrediente:any[]=[];
   public cantidad_ingrediente: number[][][]=[];
-  
+  public cantidad_ingredienteOferta: number[][][][]=[];
   public botonPulsado:boolean = false;
   public precioT: number = 0;
   public precioE: number = 0;
+  public precioEO: number = 0;
   public visible:boolean[]=[];
   public visible2:boolean[][]=[];
+  public visibleOferta: boolean[][]=[];
+  public visible2Oferta:boolean[][][]=[];
   public cantidadTotal_producto: number[][] = [];
+  public cantidadTotalOferta_producto: number[][][]=[];
+  public unionCartaOferta: number[]=[];
 
   public getExtraTerminado = false;
   public getPizzaTerminado = false;
@@ -32,6 +45,7 @@ export class PrivateComponent implements OnInit, DoCheck {
   public getPostreTerminado = false;
   public getEntranteTerminado = false;
   public getBebidaTerminado = false;
+  public getCartaOferta = false;
 
   constructor(private cartaService: CartaService, private compraService: CompraService) { }
 
@@ -44,10 +58,13 @@ export class PrivateComponent implements OnInit, DoCheck {
     this.getBebida();
     this.getPostres();
     this.getExtra();
+    this.carta_Oferta();
     
     
     console.log(this.carta);
-    
+    console.log(this.pizza);
+    console.log(this.entrante);
+    console.log(this.cartaOferta);
     console.log(this.arr_cantidad);
     console.log(this.ingrediente);
   }
@@ -55,26 +72,26 @@ export class PrivateComponent implements OnInit, DoCheck {
   ngDoCheck(): void {
     if((this.getOfertaTerminado && this.getPizzaTerminado && 
       this.getEntranteTerminado && this.getBebidaTerminado &&
-      this.getPostreTerminado && this.getExtraTerminado) || this.botonPulsado){
+      this.getPostreTerminado && this.getExtraTerminado && this.getCartaOferta) || this.botonPulsado){
      
       if(this.getExtraTerminado){
          this.cantidadIngrediente();
+         this.productoOferta();
          this.getExtraTerminado = false;
       }
       this.precioTotal();
       this.botonPulsado = false;
       console.log(this.cantidad_ingrediente);
     }
+    
+    
     //console.log('es un evento');
-    console.log(this.visible2);
+   
    }
 
 counter(i: number) {
     return new Array(i);
 }
- 
-//prueba de callback
-
 
   getIdCliente(){
     this.compraService.getIdCliente().subscribe((res:any)=>{
@@ -131,8 +148,29 @@ counter(i: number) {
     this.compraService.addCantidad(i);
     this.visible2[i].push(false);
     this.cantidadTotal_producto[i].push(0);
+    
+    const x = this.posicionOferta(i);
+    if(x>-1){
+      this.visibleOferta[x].push(false);
+    }
     this.botonPulsado = true;
    }
+  
+
+  posicionOferta(j: number): number {
+    var num = 0;
+    for (let k = 0; k < this.carta.length; k++) {
+      for (let i = num; i < this.unionCartaOferta.length; i++) {
+        if (this.carta[k].ID_OFERTA) {
+          if (k == j) {
+            return num;
+          }
+          num++;
+        }
+      }
+    }
+    return -1;
+  }
 
    // visibilidad del boton detalle
    isVisible(i:number){
@@ -152,6 +190,26 @@ counter(i: number) {
        else if(this.visible2[i][j]==true){
         this.visible2[i][j]=false;
        }
+   }
+
+   isVisibleOferta(i:number, j:number){
+     if(this.visibleOferta[i][j]==false){
+      this.visibleOferta[i][j]= true;
+     }
+     else if(this.visibleOferta[i][j]==true){
+      this.visibleOferta[i][j]=false;
+     }
+   }
+
+   isVisibleModificarOferta(i:number, j:number, k:number){
+       if(this.visible2Oferta[i][j][k]==false){
+        this.visible2Oferta[i][j][k]=true;
+       }
+       else if(this.visible2Oferta[i][j][k]==true){
+        this.visible2Oferta[i][j][k]=false;
+       }
+       console.log(this.visible2Oferta);
+       console.log(this.visible2Oferta[i][j][k]);
    }
 
   precioTotal(){
@@ -178,6 +236,20 @@ counter(i: number) {
         }
       }
     }
+    this.precioEO = 0;
+    this.cantidad_ingredienteOferta.forEach(element =>{
+      element.forEach(element2 =>{
+        element2.forEach(element3 =>{
+          for(let i = 0; i<element3.length; i++){
+            if(element3[i] >0){
+              this.precioEO = this.precioEO + (this.ingrediente[i].PRECIO * element3[i]);
+            }
+          }
+        });
+      });
+    });
+    this.precioE = this.precioE + this.precioEO;
+    // precio extra de oferta , botones detalle-->visibleOfeta, detalle-->detalle-->modificar
   }
 
   /* subscribe contiene tres modos de funcionamiento next, error, complete */
@@ -224,6 +296,145 @@ counter(i: number) {
         this.botonPulsado = true;
       }
     }
+
+    ingredienteSumaRestaOferta(i:number, j:number, k:number, z:number, operador:number){
+      if(operador == 0){
+        this.cantidad_ingredienteOferta[i][j][k][z]++;
+        this.cantidadTotalOferta_producto[i][j][k]++;
+        this.botonPulsado=true;
+      }
+      else if(operador == 1){
+        this.cantidad_ingredienteOferta[i][j][k][z]--;
+        this.cantidadTotalOferta_producto[i][j][k]--
+        this.botonPulsado = true;
+      }
+    }
+    
+    //genera los array necesarios para botones de oferta
+  visible_Oferta() {
+    var arr = new Array;
+    var xarr = new Array;
+    var marr = new Array;
+    for (let k = 0; k < this.carta.length; k++) {
+      arr=[];
+      var element = this.carta[k];
+      if (element) {
+        if (element.ID_OFERTA) {
+          for (let j = 0; j < this.arr_cantidad[k]; j++) {
+            xarr = [];
+            this.cartaOferta.forEach(element2 => {
+              if (element.ID_OFERTA == element2.OFERTA) {
+                for (let i = 0; i < element2.CANTIDAD; i++) {
+                  xarr.push(false);
+                }
+              }
+            });
+            arr.push(xarr);
+          }
+          marr.push(arr);
+        }
+      }
+    }
+    this.visible2Oferta = marr;
+    this.getCartaOferta = false;
+  }
+
+  ingredienteOferta() {
+    var arr1 = new Array;
+    var arr2 = new Array;
+    var arr3 = new Array;
+   
+    var arrb = new Array;
+    var arrc = new Array;
+    this.visible2Oferta.forEach(element => {
+      arr1=[];
+      arrb=[];
+      element.forEach(element2 => {
+        arr2=[];
+        arrc=[];
+        element2.forEach(element3 => {
+          arr3=[];
+          arrc.push(0);
+          this.ingrediente.forEach(element4 => {
+            arr3.push(0);  
+          });
+         arr2.push(arr3);
+        });
+        arr1.push(arr2);
+        arrb.push(arrc);
+      });
+      this.cantidad_ingredienteOferta.push(arr1);
+      this.cantidadTotalOferta_producto.push(arrb);
+    });
+  }
+
+  productoOferta() {
+    if (this.getCartaOferta && this.getOfertaTerminado && this.getPizzaTerminado && this.getEntranteTerminado &&
+      this.getBebidaTerminado && this.getPostreTerminado ) {
+      this.carta.forEach(element => {
+        if (element.ID_OFERTA) {
+          var arr = new Array;
+          this.unionCartaOferta.push(element.ID_OFERTA);
+          this.cartaOferta.forEach(element2 => {
+            if (element.ID_OFERTA == element2.OFERTA) {
+              for (let i = 0; i < element2.CANTIDAD; i++) {
+                switch (element2.QUE) {
+                  case 'P': {
+                    this.pizza.forEach(p => {
+                      if (p.ID_PIZZA == element2.ID) {
+                        arr.push(p);
+                      }
+                    });
+                    break;
+                  }
+                  case 'E': {
+                    this.entrante.forEach(p => {
+                      if (p.ID_ENTRANTES == element2.ID) {
+                        arr.push(p);
+                      }
+                    });
+                    break;
+                  }
+                  case 'B': {
+                    this.bebida.forEach(p => {
+                      if (p.ID_BEBIDA == element2.ID) {
+                        arr.push(p);
+                      }
+                    });
+                    break;
+                  }
+                  case 'PO': {
+                    this.postre.forEach(p => {
+                      if (p.ID_POSTRES == element2.ID) {
+                        arr.push(p);
+                      }
+                    });
+                    break;
+                  }
+                }
+              }
+            }
+          });
+          this.menuOferta.push(arr);
+        }
+      });
+      this.visible_Oferta();
+      this.ingredienteOferta();
+    console.log(this.menuOferta);
+    console.log(this.visible2Oferta);
+    console.log(this.cantidadTotalOferta_producto);
+    }
+  }
+
+  carta_Oferta() {
+    this.cartaService.getCartabyid().subscribe({next: (res:any)=>{
+      res.forEach((element:any)=>{
+        this.cartaOferta.push(element);
+      })
+    }, 
+    error: (err)=>{console.log(err);}, 
+    complete: ()=>{this.getCartaOferta = true;}});
+  }  
   
     //{next: (res:any)=>{}, error: (err)=>{console.log(err);}, complete: ()=>{}}
   getPizza() {
@@ -238,6 +449,7 @@ counter(i: number) {
                 this.carta[num / 2] = element;
               }
             });
+            this.pizza.push(element);
           });
         },
         error: (err) => { console.log(err); },
@@ -258,6 +470,7 @@ counter(i: number) {
                 this.carta[num / 2] = element;
               }
             });
+            this.oferta.push(element);
           });
         },
         error: (err) => { console.log(err); },
@@ -280,6 +493,7 @@ counter(i: number) {
                 this.carta[num / 2] = element;
               }
             });
+            this.entrante.push(element);
           });
         },
         error: (err) => { console.log(err); },
@@ -302,6 +516,7 @@ counter(i: number) {
                 this.carta[num / 2] = element;
               }
             });
+            this.bebida.push(element);
           });
         },
         error: (err) => { console.log(err); },
@@ -322,6 +537,7 @@ counter(i: number) {
                 this.carta[num / 2] = element;
               }
             });
+            this.postre.push(element);
           });
         },
         error: (err) => { console.log(err); },
