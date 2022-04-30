@@ -134,6 +134,28 @@ router.post('/comprobarUsuario', (req,res)=>{
      });
 });
 
+router.get('/getEmpleado', (req,res)=>{
+    mysqlConnection.query('SELECT * FROM empleados;',
+    (err, rows)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
 
+router.post('/borrarEmpleado', (req, res)=>{
+    const{EMAIL}=req.body;
+    mysqlConnection.query('DELETE FROM empleados WHERE EMAIL = ?;',
+    [EMAIL],
+    (err, rows)=>{
+        if(!err){
+            //res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+})
 
 module.exports = router;

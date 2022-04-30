@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-03-2022 a las 20:13:38
+-- Tiempo de generación: 30-04-2022 a las 01:59:06
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.10
 
@@ -42,11 +42,12 @@ CREATE TABLE `bebida` (
 
 INSERT INTO `bebida` (`ID_BEBIDA`, `NOMBRE`, `PRECIO`, `DESCRIPCION`, `TAMAÑO`, `IMAGEN`) VALUES
 (1, 'coca-cola', 1.25, 'Bebida refrescante', '500 ml', 'https://www.cocacola.es/content/dam/one/es/es2/coca-cola/products/productos/dic-2021/CC_Origal.jpg'),
-(2, 'margarita', 3.00, 'ES LA HOSTIA', 'BIG', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
+(2, 'FANTA', 3.00, 'ES LA HOSTIA', 'BIG', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
 (3, 'coca-cola', 1.25, 'Bebida refrescante', '500 ml', 'https://www.cocacola.es/content/dam/one/es/es2/coca-cola/products/productos/dic-2021/CC_Origal.jpg'),
 (4, 'margarita', 3.00, 'ES LA HOSTIA', 'BIG', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
 (5, 'margarita', 3.00, 'ES LA HOSTIA', 'BIG', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
-(6, 'margarita', 3.00, 'ES LA HOSTIA', 'BIG', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png');
+(6, 'margarita', 3.00, 'ES LA HOSTIA', 'BIG', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
+(7, 'es un test', 3.00, '', 'etc', 'https://www.ngenespanol.com/wp-content/uploads/2018/08/La-primera-imagen-de-la-historia.jpg');
 
 -- --------------------------------------------------------
 
@@ -94,6 +95,17 @@ CREATE TABLE `compra` (
   `DESCRIPCION` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `compra`
+--
+
+INSERT INTO `compra` (`ID_COMPRA`, `FECHA_HORA`, `RECOGIDA`, `CLIENTE`, `DESCRIPCION`) VALUES
+(1, '2022-03-22 20:31:03', 0, 1, 'sin lechuga'),
+(2, '2022-03-22 20:31:55', 1, 1, 'sin lechuga'),
+(3, '2022-03-30 21:23:22', NULL, 1, NULL),
+(4, '2022-03-31 20:30:15', NULL, 1, NULL),
+(5, '2022-04-05 19:52:20', NULL, 1, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -119,7 +131,7 @@ CREATE TABLE `empleados` (
   `ID_EMPLEADO` int(4) NOT NULL,
   `NOMBRE` varchar(40) NOT NULL,
   `APELLIDO` varchar(40) NOT NULL,
-  `DNI` varchar(8) NOT NULL,
+  `DNI` varchar(9) NOT NULL,
   `DIRECCION` varchar(40) NOT NULL,
   `EMAIL` varchar(40) NOT NULL,
   `CONTRASEÑA` varchar(40) NOT NULL,
@@ -134,10 +146,13 @@ CREATE TABLE `empleados` (
 --
 
 INSERT INTO `empleados` (`ID_EMPLEADO`, `NOMBRE`, `APELLIDO`, `DNI`, `DIRECCION`, `EMAIL`, `CONTRASEÑA`, `ROL`, `FECHA_ALTA`, `FECHA_BAJA`, `TELEFONO`) VALUES
-(1, 'test', 'test', 'X1234567', 'MURCIA', 'admin@gmail.com', '1234hola', 'admin', NULL, NULL, 0),
-(2, 'test2', 'test2', 'X1234567', 'MURCIA', 'empleado@gmail.com', '1234hola', 'empleado', NULL, NULL, 0),
-(3, 'S', 'S', 'X7677468', 'Plaza Bohemia 15, 3C', 'dimaperin91@gmail.co', 'dA11111115', 'empleado', '2022-02-03', NULL, 688398382),
-(5, 'F', 'F', 'X7677468', 'Plaza Bohemia 15, 3C', 'test2@gmail.com', 'Aa111111', 'empleado', '2022-02-05', NULL, 688398382);
+(25, 'admin', 'admin', '12345678X', 'MURCIA', 'admin@gmail.com', '1234Hola', 'admin', '2022-04-23', NULL, 111111111),
+(26, 'empleado', 'empleado', '12345678X', 'MURCIA', 'empleado@gmail.com', '1234Hola', 'empleado', '2022-04-23', NULL, 666555666),
+(32, 'Sandra ', 'Bullock', 'X5566688T', 'EEUU', 'bullock@email.com', '1234Hola', 'empleado', '2021-11-10', NULL, 987456120),
+(36, 'Cleopatra', 'VII', '11111111O', 'Egipto', 'cleo@gmail.com', '1234Hola', 'empleado', '2022-04-27', NULL, 111111111),
+(39, 'Antonio ', 'Banderas', '78594612F', 'Madrid', 'banderas@gmail.com', '1234Hola', 'empleado', '2022-04-10', NULL, 877569123),
+(40, 'test', 'nada', '12345678E', 'Cartagena', 'test@gmail.com', '1234Hola', 'empleado', '2022-04-23', NULL, 111222333),
+(42, 'Julio', 'César', '12345658G', 'Roma', 'cesar@gmail.com', '1234Hola', 'empleado', '2020-12-01', NULL, 222333888);
 
 -- --------------------------------------------------------
 
@@ -159,7 +174,7 @@ CREATE TABLE `entrantes` (
 --
 
 INSERT INTO `entrantes` (`ID_ENTRANTES`, `NOMBRE`, `PRECIO`, `TAMAÑO`, `DESCRIPCION`, `IMAGEN`) VALUES
-(1, 'margarita', 3.00, 'BIG', 'ES LA HOSTIA', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
+(1, 'ENSALADA', 3.00, 'BIG', 'ES LA HOSTIA', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
 (2, 'ensalada', 3.00, 'BIG', 'ES LA HOSTIA', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
 (3, 'ensalada', 3.00, 'BIG', 'ES LA HOSTIA', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
 (4, 'salsa', 5.00, 'big', '', '');
@@ -175,14 +190,6 @@ CREATE TABLE `entrantes_ingrediente` (
   `INGREDIENTE` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `entrantes_ingrediente`
---
-
-INSERT INTO `entrantes_ingrediente` (`ENTRANTES`, `INGREDIENTE`) VALUES
-(3, 2),
-(3, 10);
-
 -- --------------------------------------------------------
 
 --
@@ -195,6 +202,22 @@ CREATE TABLE `extras` (
   `IMAGEN` varchar(100) DEFAULT NULL,
   `INGREDIENTE` int(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `extras`
+--
+
+INSERT INTO `extras` (`ID_EXTRA`, `PRECIO`, `IMAGEN`, `INGREDIENTE`) VALUES
+(4, 1.15, 'http://127.0.0.1:8081/ingredientes/mejillones.jpg', 21),
+(5, 0.50, 'http://127.0.0.1:8081/ingredientes/salsa_barbacoa.jpg', 22),
+(6, 0.50, 'http://127.0.0.1:8081/ingredientes/ketchup.jpg', 24),
+(9, 0.30, 'http://127.0.0.1:8081/ingredientes/aceite_vinagre.jpg', 27),
+(10, 0.30, 'http://127.0.0.1:8081/ingredientes/mayonesa.jpg', 28),
+(11, 0.60, 'http://127.0.0.1:8081/ingredientes/aceituna_negra.png', 29),
+(14, 0.60, 'http://127.0.0.1:8081/ingredientes/aceitunas_verdes.jpg', 33),
+(15, 0.45, 'http://127.0.0.1:8081/ingredientes/aguacate.jpg', 34),
+(16, 0.20, 'http://127.0.0.1:8081/ingredientes/ajo.jpg', 35),
+(17, 0.25, 'http://127.0.0.1:8081/ingredientes/albahaca.jpg', 36);
 
 -- --------------------------------------------------------
 
@@ -214,17 +237,18 @@ CREATE TABLE `ingredientes` (
 --
 
 INSERT INTO `ingredientes` (`ID_INGREDIENTE`, `NOMBRE`, `ALERGENOS`, `IMAGEN`) VALUES
-(1, 'harina', 'gluten', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
-(2, 'salsa', 'gluten', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
-(3, 'perejil', '', ''),
-(4, 'gambas', 'crustaseo', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
-(5, 'nueses', 'fruto seco', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
-(6, 'masa', 'gluten, huevo', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
-(7, 'pimiento', '', ''),
-(8, 'pepino', 'pep', NULL),
-(9, 'salsa tomate', 'gluten', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
-(10, 'test', 'test', ''),
-(11, 'huevo', 'huevo', '');
+(20, 'Masa de Pizza', 'gluten', 'http://127.0.0.1:8081/alergenos/IconoAlergenoGluten-Gluten_icon-icons.com_67600.svg'),
+(21, 'Mejillones', 'moluscos', 'http://127.0.0.1:8081/alergenos/IconoAlergenoMoluscos-Mollusks_icon-icons.com_67596.svg'),
+(22, 'Salsa barbacoa', 'gluten', 'http://127.0.0.1:8081/alergenos/IconoAlergenoGluten-Gluten_icon-icons.com_67600.svg'),
+(23, 'Salsa tomate', '', ''),
+(24, 'Ketchup', NULL, NULL),
+(27, 'Aceite y Vinagre', '', ''),
+(28, 'Mayonesa', NULL, NULL),
+(29, 'Aceitunas Negras', '', ''),
+(33, 'Aceitunas Verdes', NULL, NULL),
+(34, 'aguacate', '', ''),
+(35, 'Ajo', NULL, NULL),
+(36, 'Albahaca', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -264,33 +288,16 @@ INSERT INTO `oferta` (`ID_OFERTA`, `NOMBRE`, `FECHA_FIN`, `IMAGEN`, `DESCRIPCION
 (1, 'DOS POR UNO', NULL, '', 'NO PIERDA LA OPORTUNIDAD', 2.35),
 (2, 'En Pareja', '2022-04-10', '', 'Vente con tu pareja. La oferta valida hasta 10 de abril.', 12.95),
 (3, 'En Pareja', '2022-04-10', '', 'Vente con tu pareja. Valido hasta 10 de abril', 16.95),
-(4, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(5, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(6, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(7, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(8, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(9, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(10, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(11, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(12, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(13, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(14, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(15, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(16, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(17, 'salsa', '2022-03-25', '', 'asfsdf', 2.00),
-(18, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
-(19, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
-(20, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
-(21, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
-(22, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
-(23, 'ff', '2022-03-09', 'sfd', 'sfsfs', 2.00),
-(24, 'salsa', '2022-03-18', '', 'dasdsad', 3.00),
-(25, 'salsa', '2022-03-17', 'asdfdsa', 'asdfasdf', 3.00),
-(26, 'salsa', '2022-03-17', 'asdfdsa', 'asdfasdf', 3.00),
-(27, 'salsa', '2022-03-17', 'asdfdsa', 'asdfasdf', 3.00),
-(28, 'salsa', '2022-03-17', 'asdfdsa', 'asdfasdf', 3.00),
-(29, 'salsa', '2022-03-17', 'asdfdsa', 'asdfasdf', 3.00),
-(30, 'salsa', '2022-03-17', 'asdfdsa', 'asdfasdf', 3.00);
+(31, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
+(32, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
+(33, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
+(34, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
+(35, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
+(36, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
+(37, 'salsa', '2022-03-25', 'lol', 'asfsdf', 2.00),
+(38, 'Dos x uno', '2022-09-23', '', 'Tus pizzas favoritas a mejor precio', 13.99),
+(39, 'salsa', '2022-03-24', '', 'hello world', 4.00),
+(40, 'prueba', '2022-03-31', '', '31/03/2022', 4.65);
 
 -- --------------------------------------------------------
 
@@ -312,7 +319,43 @@ CREATE TABLE `oferta_lista` (
 
 INSERT INTO `oferta_lista` (`OFERTA`, `PIZZA`, `ENTRANTES`, `BEBIDA`, `POSTRES`) VALUES
 (1, 1, NULL, NULL, NULL),
-(1, 1, NULL, NULL, NULL);
+(1, 1, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL),
+(31, NULL, NULL, NULL, NULL),
+(32, NULL, 1, NULL, NULL),
+(32, NULL, NULL, 1, NULL),
+(32, NULL, NULL, NULL, 1),
+(32, NULL, NULL, NULL, 1),
+(32, NULL, NULL, NULL, 1),
+(33, 1, NULL, NULL, NULL),
+(33, 1, NULL, NULL, NULL),
+(33, NULL, 1, NULL, NULL),
+(33, NULL, NULL, 1, NULL),
+(34, 1, NULL, NULL, NULL),
+(34, 1, NULL, NULL, NULL),
+(34, NULL, 1, NULL, NULL),
+(34, NULL, NULL, 1, NULL),
+(37, NULL, 2, NULL, NULL),
+(37, NULL, 2, NULL, NULL),
+(37, 1, NULL, NULL, NULL),
+(37, NULL, NULL, NULL, 1),
+(37, NULL, NULL, 1, NULL),
+(37, NULL, NULL, 1, NULL),
+(37, NULL, NULL, 1, NULL),
+(38, NULL, NULL, 1, NULL),
+(38, NULL, NULL, 1, NULL),
+(38, 1, NULL, NULL, NULL),
+(38, 6, NULL, NULL, NULL),
+(40, 7, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -352,10 +395,11 @@ INSERT INTO `pizza` (`ID_PIZZA`, `NOMBRE`, `PRECIO`, `TAMAÑO`, `DESCRIPCION`, `
 (2, 'margarita', 3.00, 'BIG', 'ES LA HOSTIA', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
 (3, 'margarita', 3.00, 'BIG', 'ES LA HOSTIA', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
 (4, 'margarita', 3.00, 'BIG', 'ES LA HOSTIA', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
-(5, 'helado', 3.00, 'BIG', 'ES LA HOSTIA', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
+(5, 'PROSQUIUTO', 3.00, 'BIG', 'ES LA HOSTIA', 'https://cdn.icon-icons.com/icons2/852/PNG/512/IconoAlergenoGluten-Gluten_icon-icons.com_67600.png'),
 (6, 'Peperoni', 8.95, 'Mediano', 'Pizza picante', 'https://cdn7.kiwilimon.com/recetaimagen/28087/640x426/th5-640x426-27404.jpg.webp'),
-(7, 'salsa', 2.00, 'kjlñ', 'b,b,bnm', 'b,bm,'),
-(8, 'Peperoni', 8.45, 'mediana', 'Una pizza picante.', '');
+(7, 'California', 2.00, 'kjlñ', 'b,b,bnm', 'b,bm,'),
+(8, 'Peperoni', 8.45, 'mediana', 'Una pizza picante.', ''),
+(9, 'test tomate', 3.00, 'ES SOLO UN TOMATE', 'TEST', 'http://127.0.0.1:8081/tomate.jpg');
 
 -- --------------------------------------------------------
 
@@ -367,31 +411,6 @@ CREATE TABLE `pizza_ingrediente` (
   `PIZZA` int(4) NOT NULL,
   `INGREDIENTE` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `pizza_ingrediente`
---
-
-INSERT INTO `pizza_ingrediente` (`PIZZA`, `INGREDIENTE`) VALUES
-(1, 1),
-(1, 1),
-(1, 3),
-(1, 10),
-(2, 11),
-(2, 1),
-(3, 11),
-(3, 1),
-(4, 11),
-(4, 1),
-(6, 1),
-(6, 11),
-(6, 6),
-(6, 7),
-(6, 9),
-(8, 1),
-(8, 11),
-(8, 6),
-(8, 9);
 
 -- --------------------------------------------------------
 
@@ -500,10 +519,10 @@ ALTER TABLE `oferta`
 -- Indices de la tabla `oferta_lista`
 --
 ALTER TABLE `oferta_lista`
+  ADD KEY `COD_OFERTA_LISTA_BEBIDA_FK` (`BEBIDA`),
+  ADD KEY `COD_OFERTA_LISTA_ENTRANTES_FK` (`ENTRANTES`),
   ADD KEY `COD_OFERTA_LISTA_OFERTA_FK` (`OFERTA`),
   ADD KEY `COD_OFERTA_LISTA_PIZZA_FK` (`PIZZA`),
-  ADD KEY `COD_OFERTA_LISTA_ENTRANTES_FK` (`ENTRANTES`),
-  ADD KEY `COD_OFERTA_LISTA_BEBIDA_FK` (`BEBIDA`),
   ADD KEY `COD_OFERTA_LISTA_POSTRES_FK` (`POSTRES`);
 
 --
@@ -540,7 +559,7 @@ ALTER TABLE `postres`
 -- AUTO_INCREMENT de la tabla `bebida`
 --
 ALTER TABLE `bebida`
-  MODIFY `ID_BEBIDA` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID_BEBIDA` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -552,13 +571,13 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `ID_COMPRA` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_COMPRA` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `ID_EMPLEADO` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID_EMPLEADO` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `entrantes`
@@ -570,25 +589,25 @@ ALTER TABLE `entrantes`
 -- AUTO_INCREMENT de la tabla `extras`
 --
 ALTER TABLE `extras`
-  MODIFY `ID_EXTRA` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_EXTRA` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `ingredientes`
 --
 ALTER TABLE `ingredientes`
-  MODIFY `ID_INGREDIENTE` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID_INGREDIENTE` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `oferta`
 --
 ALTER TABLE `oferta`
-  MODIFY `ID_OFERTA` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `ID_OFERTA` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `pizza`
 --
 ALTER TABLE `pizza`
-  MODIFY `ID_PIZZA` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID_PIZZA` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `postres`
@@ -607,47 +626,27 @@ ALTER TABLE `compra`
   ADD CONSTRAINT `COD_COMPRA_CLIENTE_FK` FOREIGN KEY (`CLIENTE`) REFERENCES `cliente` (`ID_CLIENTE`);
 
 --
--- Filtros para la tabla `compra_lista`
---
-ALTER TABLE `compra_lista`
-  ADD CONSTRAINT `COD_COMPRA_LISTA_BEBIDA_FK` FOREIGN KEY (`BEBIDA`) REFERENCES `bebida` (`ID_BEBIDA`),
-  ADD CONSTRAINT `COD_COMPRA_LISTA_COMPRA_FK` FOREIGN KEY (`COMPRA`) REFERENCES `compra` (`ID_COMPRA`),
-  ADD CONSTRAINT `COD_COMPRA_LISTA_ENTRANTES_FK` FOREIGN KEY (`ENTRANTES`) REFERENCES `entrantes` (`ID_ENTRANTES`),
-  ADD CONSTRAINT `COD_COMPRA_LISTA_OFERTA_FK` FOREIGN KEY (`OFERTA`) REFERENCES `oferta` (`ID_OFERTA`),
-  ADD CONSTRAINT `COD_COMPRA_LISTA_PIZZA_FK` FOREIGN KEY (`PIZZA`) REFERENCES `pizza` (`ID_PIZZA`),
-  ADD CONSTRAINT `COD_COMPRA_LISTA_POSTRES_FK` FOREIGN KEY (`POSTRES`) REFERENCES `postres` (`ID_POSTRES`);
-
---
 -- Filtros para la tabla `entrantes_ingrediente`
 --
 ALTER TABLE `entrantes_ingrediente`
-  ADD CONSTRAINT `COD_ENTRANTE_INGREDIENTE_FK` FOREIGN KEY (`ENTRANTES`) REFERENCES `entrantes` (`ID_ENTRANTES`),
-  ADD CONSTRAINT `COD_INGREDIENTE_ENTRANTE_FK` FOREIGN KEY (`INGREDIENTE`) REFERENCES `ingredientes` (`ID_INGREDIENTE`);
+  ADD CONSTRAINT `COD_ENTRANTE_INGREDIENTE_FK` FOREIGN KEY (`ENTRANTES`) REFERENCES `entrantes` (`ID_ENTRANTES`) ON DELETE CASCADE,
+  ADD CONSTRAINT `COD_INGREDIENTE_ENTRANTE_FK` FOREIGN KEY (`INGREDIENTE`) REFERENCES `ingredientes` (`ID_INGREDIENTE`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `extras`
 --
 ALTER TABLE `extras`
-  ADD CONSTRAINT `COD_INGREDIENTES_EXTRAS_FK` FOREIGN KEY (`INGREDIENTE`) REFERENCES `ingredientes` (`ID_INGREDIENTE`);
-
---
--- Filtros para la tabla `modificado`
---
-ALTER TABLE `modificado`
-  ADD CONSTRAINT `COD_MOD_COMPRA_FK` FOREIGN KEY (`COMPRA`) REFERENCES `compra` (`ID_COMPRA`),
-  ADD CONSTRAINT `COD_MOD_ENTRANTES_FK` FOREIGN KEY (`ENTRANTES`) REFERENCES `entrantes` (`ID_ENTRANTES`),
-  ADD CONSTRAINT `COD_MOD_EXTRAS_FK` FOREIGN KEY (`EXTRAS`) REFERENCES `extras` (`ID_EXTRA`),
-  ADD CONSTRAINT `COD_MOD_PIZZA_FK` FOREIGN KEY (`PIZZA`) REFERENCES `pizza` (`ID_PIZZA`);
+  ADD CONSTRAINT `COD_INGREDIENTES_EXTRAS_FK` FOREIGN KEY (`INGREDIENTE`) REFERENCES `ingredientes` (`ID_INGREDIENTE`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `oferta_lista`
 --
 ALTER TABLE `oferta_lista`
-  ADD CONSTRAINT `COD_OFERTA_LISTA_BEBIDA_FK` FOREIGN KEY (`BEBIDA`) REFERENCES `bebida` (`ID_BEBIDA`),
-  ADD CONSTRAINT `COD_OFERTA_LISTA_ENTRANTES_FK` FOREIGN KEY (`ENTRANTES`) REFERENCES `entrantes` (`ID_ENTRANTES`),
-  ADD CONSTRAINT `COD_OFERTA_LISTA_OFERTA_FK` FOREIGN KEY (`OFERTA`) REFERENCES `oferta` (`ID_OFERTA`),
-  ADD CONSTRAINT `COD_OFERTA_LISTA_PIZZA_FK` FOREIGN KEY (`PIZZA`) REFERENCES `pizza` (`ID_PIZZA`),
-  ADD CONSTRAINT `COD_OFERTA_LISTA_POSTRES_FK` FOREIGN KEY (`POSTRES`) REFERENCES `postres` (`ID_POSTRES`);
+  ADD CONSTRAINT `COD_OFERTA_LISTA_BEBIDA_FK` FOREIGN KEY (`BEBIDA`) REFERENCES `bebida` (`ID_BEBIDA`) ON DELETE CASCADE,
+  ADD CONSTRAINT `COD_OFERTA_LISTA_ENTRANTES_FK` FOREIGN KEY (`ENTRANTES`) REFERENCES `entrantes` (`ID_ENTRANTES`) ON DELETE CASCADE,
+  ADD CONSTRAINT `COD_OFERTA_LISTA_OFERTA_FK` FOREIGN KEY (`OFERTA`) REFERENCES `oferta` (`ID_OFERTA`) ON DELETE CASCADE,
+  ADD CONSTRAINT `COD_OFERTA_LISTA_PIZZA_FK` FOREIGN KEY (`PIZZA`) REFERENCES `pizza` (`ID_PIZZA`) ON DELETE CASCADE,
+  ADD CONSTRAINT `COD_OFERTA_LISTA_POSTRES_FK` FOREIGN KEY (`POSTRES`) REFERENCES `postres` (`ID_POSTRES`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `pago`
@@ -659,8 +658,8 @@ ALTER TABLE `pago`
 -- Filtros para la tabla `pizza_ingrediente`
 --
 ALTER TABLE `pizza_ingrediente`
-  ADD CONSTRAINT `COD_INGREDIENTE_PIZZA_FK` FOREIGN KEY (`INGREDIENTE`) REFERENCES `ingredientes` (`ID_INGREDIENTE`),
-  ADD CONSTRAINT `COD_PIZZA_INGREDIENTE_FK` FOREIGN KEY (`PIZZA`) REFERENCES `pizza` (`ID_PIZZA`);
+  ADD CONSTRAINT `COD_INGREDIENTE_PIZZA_FK` FOREIGN KEY (`INGREDIENTE`) REFERENCES `ingredientes` (`ID_INGREDIENTE`) ON DELETE CASCADE,
+  ADD CONSTRAINT `COD_PIZZA_INGREDIENTE_FK` FOREIGN KEY (`PIZZA`) REFERENCES `pizza` (`ID_PIZZA`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

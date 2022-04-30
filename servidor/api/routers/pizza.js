@@ -117,10 +117,23 @@ router.post('/registerCarta', (req,res)=>{
 });
 
 router.get('/getIngrediente', (req,res)=>{
-    mysqlConnection.query('SELECT ID_INGREDIENTE, NOMBRE FROM ingredientes ORDER BY NOMBRE ASC;',
+    mysqlConnection.query('SELECT * FROM ingredientes ORDER BY NOMBRE ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.post('/borrarIngrediente',(req, res)=>{
+    const{ID_INGREDIENTE}=req.body;
+    mysqlConnection.query('DELETE FROM ingredientes WHERE ID_INGREDIENTE = ?',
+    [ID_INGREDIENTE],
+    (err,rows)=>{
+        if(!err){
+           // res.json(rows);
         }else{
             console.log(err);
         }

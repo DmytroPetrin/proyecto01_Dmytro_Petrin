@@ -28,6 +28,10 @@ export class CartaService {
         return this.http.get(this.URL+"/pizza/getIngrediente");
     }   
 
+    borrarIngrediente(ID:number){
+      return this.http.post(this.URL+"/pizza/borrarIngrediente", ID)
+    }
+
       getCarta(CARTA: string){
       const x = {CARTA: CARTA}
       return this.http.post(this.URL+"/pizza/getCarta", x);

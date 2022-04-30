@@ -24,7 +24,7 @@
                                  </div>
                                  <div class="form-group">
                                     <input  type="text" formControlName="APELLIDO" class="form-control"  placeholder="Apellidos">
-                                    <div class="alert-danger" *ngIf="APELLIDO?.invalid && (APELLIDO?.dirty || APELLIDO?.touched)"> 
+                                    <div class="alert-danger" *ngIf="APELLIDO?.invalid && (APELLIDO?.dirty || APELLIDO?.touched) "> 
                                         <div class="container-error-message" *ngIf="APELLIDO?.errors?.['required']">
                                             Introduzca los apellidos.
                                         </div>
@@ -82,7 +82,7 @@
                                     </div>
                                  </div>
                                  <div class="form-group">
-                                    <input  type="password" formControlName="PASS" class="form-control" placeholder="Contraseña">
+                                    <input  type="text" formControlName="PASS" class="form-control" placeholder="Contraseña">
                                     <div class="alert-danger" *ngIf="PASS?.invalid && (PASS?.dirty || PASS?.touched)"> 
                                         <div class="container-error-message" *ngIf="PASS?.errors?.['required']">
                                             Introduzca la contraseña.
@@ -130,4 +130,49 @@
             </div>
         </div>
     </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+              <div class="col-12 auto-mx">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Contraseña</th>
+                    <th scope="col">Fecha Alta</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of empleado; let i = index;">
+                    <td>{{empleado[i].NOMBRE}}</td>
+                    <td>{{empleado[i].APELLIDO}}</td>
+                    <td>{{empleado[i].DNI}}</td>
+                    <td>{{empleado[i].EMAIL}}</td>
+                    <td>{{empleado[i].TELEFONO}}</td>
+                    <td>{{empleado[i].ROL}}</td>
+                    <td>{{empleado[i].PASS}}</td>
+                    <td>{{empleado[i].FECHA_ALTA | date:'dd/MM/yyyy'}}</td>
+                    <td>{{empleado[i].DIRECCION}}</td>
+                    <td>
+                        <button class="btn btn-primary" (click)="modificarEmpleado(i)">Modificar</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" (click)="borrarEmpleado(i)">Borrar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        </div>
+    </div>
+   
 </section>

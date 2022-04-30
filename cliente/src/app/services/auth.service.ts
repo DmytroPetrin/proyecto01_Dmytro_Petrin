@@ -62,9 +62,16 @@ export class AuthService {
     
     const x = {EMAIL:EMAIL}
     const data =  lastValueFrom(this.http.post(this.URL+"/user/comprobarUsuario", x));
-    
     return data;  
-      
-  }
+   }
+
+   getEmpleado(){
+     return this.http.get(this.URL+"/user/getEmpleado");
+   }
+
+   borrarEmpleado(EMAIL:string){
+     const x = {EMAIL:EMAIL}
+     return this.http.post(this.URL+"/user/borrarEmpleado", x);
+   }
 
 }

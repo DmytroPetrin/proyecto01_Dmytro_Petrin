@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {CartaService} from 'src/app/services/carta.service'
@@ -10,6 +11,9 @@ import {CartaService} from 'src/app/services/carta.service'
 export class AdminEdingredienteComponent implements OnInit, DoCheck {
 
   public ingrediente: FormGroup;
+  public arr_ingrediente:any[] = [];
+  public arr_extra:any[] = [];
+  public arr_ing_ex:boolean[] = [];
 
   ing={
     NOMBRE: '',
@@ -28,7 +32,11 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
   
   
     ngOnInit(): void {
-      //console.log(this.ingrediente);
+      
+      this.getExtra();
+      console.log(this.arr_ingrediente);
+      console.log(this.arr_extra);
+      console.log(this.arr_ing_ex);
     }
 
     ngDoCheck(): void {
@@ -45,11 +53,7 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
     onRegister(): void{
       //console.log(this.user);
       if(this.ingrediente.valid){
-        /*
-        console.log('Valido');
-        console.log(this.ingrediente.value);
-        console.log(this.ing);
-        */
+        
         this.cartaService.registerIngrediente(this.ingrediente.value).subscribe((res:any)=>{
            //console.log(res);
         });
@@ -59,6 +63,7 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
          });
         }
         this.OnResetForm();
+        this.getExtra();
       }else{
         console.log('No valido');}
     
@@ -124,5 +129,66 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
       }
    
    
+  getIngrediente() {
+    this.arr_ingrediente = [];
+    this.arr_ing_ex = [];
+    this.cartaService.getIngrediente().subscribe({
+      next: (res: any) => {
+        res.forEach((element: any) => {
+          this.arr_ingrediente.push(element);
+          this.arr_ing_ex.push(true);
+          this.arr_extra.forEach(element2 => {
+            if (element.ID_INGREDIENTE == element2.INGREDIENTE) {
+              this.arr_ing_ex[this.arr_ing_ex.length-1] = false;
+            } 
+          });
+        });
+      },
+      error: (err: any) => { console.log(err); },
+      complete: () => { }
+    });
+  }
+
+      getExtra(){
+        this.arr_extra = [];
+        this.cartaService.getExtra().subscribe({
+          next: (res:any)=>{
+            res.forEach((element:any)=>{
+              this.arr_extra.push(element);
+            });
+          },
+          error: (err)=>{console.log(err);},
+          complete:() =>{this.getIngrediente();}
+        });
+      }
+
+      modificarIngrediente(i:number){
+        const arr = this.arr_ingrediente[i];
+        var arrEx; 
+        this.arr_extra.forEach(element =>{
+           if(element.INGREDIENTE == arr.ID_INGREDIENTE){
+             arrEx = element;
+           }
+        });
+        if(!arrEx){
+          arrEx = {IMAGEN: '', PRECIO: ''}
+        }
+        this.ingrediente.setValue({
+          NOMBRE: arr.NOMBRE,
+          ALERGENO: arr.ALERGENOS,
+          IMAGEN: arr.IMAGEN,
+          IMAGEN2: arrEx.IMAGEN,
+          PRECIO: arrEx.PRECIO
+        });
+        this.borrarIngrediente(i);
+      }
+
+      borrarIngrediente(i:number){
+        const ID = this.arr_ingrediente[i];
+        delete this.arr_ingrediente[i];
+        this.cartaService.borrarIngrediente(ID).subscribe();
+        
+      }
+
   }
 

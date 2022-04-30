@@ -32,8 +32,7 @@
                                  <div class="form-group">
                                      <input type='text' [(ngModel)]="ing.IMAGEN" formControlName="IMAGEN"  placeholder="Imagen de alergeno" class="form-control">
                                      <div class="alert-danger" *ngIf="IMAGEN?.invalid && (IMAGEN?.dirty || IMAGEN?.touched)"> 
-                                       
-                                        <div class="container-error-message" *ngIf="IMAGEN?.errors?.['maxlength']">
+                                       <div class="container-error-message" *ngIf="IMAGEN?.errors?.['maxlength']">
                                             Ruta a la imagen es demasiado larga.
                                         </div>
                                     </div>
@@ -46,8 +45,7 @@
                                     <div class="form-group">
                                         <input type='text' [(ngModel)]="ing.IMAGEN2" formControlName="IMAGEN2" placeholder="Imagen de extra" class="form-control">
                                         <div class="alert-danger" *ngIf="IMAGEN2?.invalid && (IMAGEN2?.dirty || IMAGEN2?.touched)"> 
-                                          
-                                           <div class="container-error-message" *ngIf="IMAGEN2?.errors?.['maxlength']">
+                                          <div class="container-error-message" *ngIf="IMAGEN2?.errors?.['maxlength']">
                                                Ruta a la imagen es demasiado larga.
                                            </div>
                                        </div>
@@ -70,24 +68,77 @@
                 </div>
             </div>
             
-            <div class="col-5">
+            <div class="col-4">
                 <div class="card">
                     <div class="card body text-center">
                         <img [src]="ing.IMAGEN2 == '' ? '/assets/no_image.png': ing.IMAGEN2" class="card-img-top">
                         
                         <h3 class="col-12"> {{ing.NOMBRE == '' ? 'Ingrediente': ing.NOMBRE}}</h3>
-                        <div class="col-12" *ngIf="visible"> {{ing.PRECIO == '' ? 'Precio': ing.PRECIO+'€'}}  </div>
+                        <div class="col-12" *ngIf="visible"> {{ing.PRECIO == '' ? 'Precio': ing.PRECIO +' €'}}  </div>
                         <div class="col-10">{{ing.ALERGENO == '' ? 'Alergeno': ing.ALERGENO}}</div>
-                        <img class="col-2" [src]="ing.IMAGEN == '' ? '/assets/no_image.png': ing.IMAGEN" >
-                     
-                        
-                       
-                        
-                    </div>
+                        <img class="col-3" [src]="ing.IMAGEN == '' ? '/assets/no_image.png': ing.IMAGEN" >
+                     </div>
                 </div>
             </div>
          
             
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Alergeno</th>
+                            <th scope="col">Img Alergeno</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Img Extra</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of arr_ingrediente; let i = index;">
+                            <ng-container *ngIf="item">
+                                <td scope="col">{{item.NOMBRE}}</td>
+                                <td scope="col">{{item.ALERGENOS}}</td>
+                                <td scope="col">
+                                    <img id="img_tabla" [src]="item.IMAGEN == '' ? '/assets/no_image.png': item.IMAGEN">
+                                </td>
+                                <ng-container *ngIf="!arr_extra">
+                                    <td scope="col"></td>
+                                    <td scope="col"></td>
+                                </ng-container>
+                                <ng-container *ngFor="let item2 of arr_extra; let j = index;">
+                                    <ng-container *ngIf="item.ID_INGREDIENTE == item2.INGREDIENTE">
+                                        <td scope="col">{{item2.PRECIO.toFixed(2)}} €</td>
+                                        <td scope="col">
+                                            <img id="img_tabla"
+                                                [src]="item2.IMAGEN == '' ? '/assets/no_image.png': item2.IMAGEN">
+                                        </td>
+                                    </ng-container>
+                                    <ng-container *ngIf="arr_extra.length == (j + 1) && arr_ing_ex[i]">
+                                        <ng-container *ngIf="item.ID_INGREDIENTE != item2.INGREDIENTE">
+                                            <td scope="col"></td>
+                                            <td scope="col"></td>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                                <td>
+                                    <button class="btn btn-primary" (click)="modificarIngrediente(i)">Modificar</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger" (click)="borrarIngrediente(i)">Borrar</button>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>

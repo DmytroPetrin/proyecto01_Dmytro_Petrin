@@ -38,6 +38,7 @@ export class PrivateComponent implements OnInit, DoCheck {
   public cantidadTotal_producto: number[][] = [];
   public cantidadTotalOferta_producto: number[][][]=[];
   public unionCartaOferta: number[]=[];
+  public posOferta: number[] = [];
 
   public getExtraTerminado = false;
   public getPizzaTerminado = false;
@@ -117,24 +118,43 @@ counter(i: number) {
        this.borrarCantidad_ingrediente(i, j);
        this.arr_cantidad[i]=this.arr_cantidad[i]-1;
        this.compraService.borrarCantidad(i);
+       const x = this.posicionOferta(i);
+       if(x>-1){
+           this.borrarCantidad_ingredienteOferta(x,j);
+       }
        this.botonPulsado = true;
     }else if(this.arr_cantidad[i]==1){this.borrarProducto(i);}
   }
   
   //esta funcion es mas rapida que .filter
   borrarCantidad_ingrediente(i: number, j: number){
-    var num = 0;
+   
     var arr = new Array;
     var cant_arr = new Array;
     for(let k = 0; k<this.cantidad_ingrediente[i].length; k++){
       if(k!=j){
           arr.push(this.cantidad_ingrediente[i][k]);
           cant_arr.push(this.cantidadTotal_producto[i][k]);
-          num++;
+         
       }
     }
     this.cantidad_ingrediente[i] = arr;
     this.cantidadTotal_producto[i] = cant_arr;
+  }
+
+  borrarCantidad_ingredienteOferta(x:number, j:number){
+    
+    var arr = new Array;
+    var cant_arr = new Array;
+    for(let k = 0; k<this.cantidad_ingredienteOferta[x].length; k++){
+      if(k!=j){
+        arr.push(this.cantidad_ingredienteOferta[x][k]);
+        cant_arr.push(this.cantidadTotalOferta_producto[x][k]);
+        
+      }
+    }
+    this.cantidad_ingredienteOferta[x] = arr;
+    this.cantidadTotalOferta_producto[x] = cant_arr;
   }
 
   //AÑADE CANTIDAD DE PRODUCTO
@@ -150,26 +170,60 @@ counter(i: number) {
     this.cantidadTotal_producto[i].push(0);
     
     const x = this.posicionOferta(i);
+    console.log(i);
     if(x>-1){
-      this.visibleOferta[x].push(false);
+      console.log(this.visible2Oferta);
+     
+      var d = new Array;
+      var b = new Array;
+      var c = new Array;
+      this.cantidad_ingredienteOferta[x][0].forEach(element2=>{
+        var a = new Array;
+        d.push(false);
+        c.push(0);
+        this.ingrediente.forEach(element =>{
+         a.push(0);
+      });
+      b.push(a);
+      });
+      this.cantidad_ingredienteOferta[x].push(b);
+      this.cantidadTotalOferta_producto[x].push(c);
+      this.visible2Oferta[x].push(d);
     }
     this.botonPulsado = true;
+    console.log(this.visible2Oferta);
+    console.log(this.cantidadTotalOferta_producto);
+    console.log(this.cantidad_ingredienteOferta);
    }
   
-
+ //aqui hay error
+ 
   posicionOferta(j: number): number {
     var num = 0;
+    var num2 = -1;
+    var num3 = 0;
     for (let k = 0; k < this.carta.length; k++) {
+      this.posOferta.push(-1);
       for (let i = num; i < this.unionCartaOferta.length; i++) {
-        if (this.carta[k].ID_OFERTA) {
-          if (k == j) {
-            return num;
+        console.log('esto es: ' + k+ ' '+ j);
+        if (this.carta[k]) {
+          if (this.carta[k].ID_OFERTA) {
+            if (k == j) {
+              num2 = num;
+             break;
+            }
+            num++;
           }
-          num++;
+        }console.log(num);
+      }
+      if (this.carta[k]) {
+        if (this.carta[k].ID_OFERTA) {
+          this.posOferta[k] = num3;
+          num3++
         }
       }
-    }
-    return -1;
+    }console.log(num2);
+    return num2;
   }
 
    // visibilidad del boton detalle
@@ -315,23 +369,27 @@ counter(i: number) {
     var arr = new Array;
     var xarr = new Array;
     var marr = new Array;
+    var num  = 0;
     for (let k = 0; k < this.carta.length; k++) {
       arr=[];
       var element = this.carta[k];
+      
       if (element) {
         if (element.ID_OFERTA) {
-          for (let j = 0; j < this.arr_cantidad[k]; j++) {
+          for (let j = 0; j < this.arr_cantidad[num]; j++) {
             xarr = [];
             this.cartaOferta.forEach(element2 => {
-              if (element.ID_OFERTA == element2.OFERTA) {
+              if (element.ID_OFERTA == element2.OFERTA) {console.log('valor k:' +k);
                 for (let i = 0; i < element2.CANTIDAD; i++) {
                   xarr.push(false);
+                  console.log(k + ' ' + this.carta.length+ ' '+element.ID_OFERTA + ' '+element2.CANTIDAD + ' '+ xarr );
                 }
               }
             });
             arr.push(xarr);
           }
           marr.push(arr);
+          num++;
         }
       }
     }
@@ -420,7 +478,8 @@ counter(i: number) {
       });
       this.visible_Oferta();
       this.ingredienteOferta();
-    console.log(this.menuOferta);
+      this.posicionOferta(-1);
+    console.log(this.posOferta);
     console.log(this.visible2Oferta);
     console.log(this.cantidadTotalOferta_producto);
     }
@@ -433,7 +492,9 @@ counter(i: number) {
       })
     }, 
     error: (err)=>{console.log(err);}, 
-    complete: ()=>{this.getCartaOferta = true;}});
+    complete: ()=>{
+      this.getCartaOferta = true;
+    }});
   }  
   
     //{next: (res:any)=>{}, error: (err)=>{console.log(err);}, complete: ()=>{}}

@@ -10,6 +10,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AdminEdempleadoComponent implements OnInit {
 
   public user: FormGroup;
+  
+  public empleado: any[] = [];
+  
 
   constructor(private authService: AuthService)
   {
@@ -18,20 +21,17 @@ export class AdminEdempleadoComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getEmpleado();
+    console.log(this.empleado);
   }
 
   onRegister(): void{
-    //console.log(this.user);
     if(this.user.valid){
-      //this.OnResetForm();
-      
-      console.log('Valido');
-      console.log(this.user.value);
-      
       this.authService.registerEmpleado(this.user.value).subscribe((res:any)=>{
-         //console.log(res);
       });
-      
+      console.log(this.user.value);
+      this.OnResetForm();
+      this.getEmpleado();
     }else{
       console.log('No valido');}
   
@@ -84,6 +84,47 @@ export class AdminEdempleadoComponent implements OnInit {
    get DIRECCION(){ return this.user.get('DIRECCION');}
    get DNI(){ return this.user.get('DNI');}
    get ROL(){ return this.user.get('ROL');}
+
+   getEmpleado(){
+     this.empleado = [];
+     this.authService.getEmpleado().subscribe((res:any) =>{
+       res.forEach((element:any) => {
+        element.PASS = element.CONTRASEÑA;
+         console.log(element);
+         this.empleado.push(element);
+       });
+     });
+   }
+
+   borrarEmpleado(i:number){
+     this.authService.borrarEmpleado(this.empleado[i].EMAIL).subscribe();
+     var arr = new Array;
+     for(let j = 0; j < this.empleado.length; j++){
+       if(i!=j){
+         arr.push(this.empleado[j]);
+       }
+     }
+     this.empleado = arr;
+   }
+
+   modificarEmpleado(i:number){
+       const arr = this.empleado[i];
+       this.borrarEmpleado(i);
+       const date = new Date(arr.FECHA_ALTA);
+       const mes = ['01','02','03','04','05','06','07','08','09','10','11','12']
+       this.user.setValue({
+         NOMBRE: arr.NOMBRE,
+         APELLIDO: arr.APELLIDO,
+         EMAIL: arr.EMAIL,
+         PASS: arr.PASS,
+         TELEFONO: arr.TELEFONO,
+         FECHA_ALTA: date.getFullYear() + '-' + mes[date.getMonth()] + '-' + date.getDate(),
+         DIRECCION: arr.DIRECCION,
+         DNI: arr.DNI,
+         ROL: arr.ROL
+        });
+        
+   }
  
  }
  
