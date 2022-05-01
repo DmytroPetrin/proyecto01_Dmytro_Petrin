@@ -97,7 +97,7 @@ router.put('/registerEmpleado', (req, res)=>{
      [NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, FECHA_ALTA, DIRECCION, DNI, ROL],
      (err,rows, fields) =>{
         if(!err){
-            //console.log(rows);
+            res.json(rows);
         }else console.log(err);  
     });
 

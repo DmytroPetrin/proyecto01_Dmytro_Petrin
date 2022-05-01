@@ -14,6 +14,8 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
   public arr_ingrediente:any[] = [];
   public arr_extra:any[] = [];
   public arr_ing_ex:boolean[] = [];
+  public visible: boolean = false;
+
 
   ing={
     NOMBRE: '',
@@ -23,8 +25,6 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
     PRECIO: ''
   };
    
-  
-  public visible: boolean = false;
     constructor( private cartaService: CartaService)
     {
         this.ingrediente = this.createFormGroup(); 
@@ -53,21 +53,29 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
     onRegister(): void{
       //console.log(this.user);
       if(this.ingrediente.valid){
-        
-        this.cartaService.registerIngrediente(this.ingrediente.value).subscribe((res:any)=>{
-           //console.log(res);
+        this.cartaService.registerIngrediente(this.ingrediente.value).subscribe({
+          next: (res: any) => {
+            //console.log(res);
+          },
+          error: (err) => { console.log(err); },
+          complete: () => {
+            if (this.visible && this.ingrediente.value.IMAGEN2 && this.ingrediente.value.PRECIO) {
+              this.cartaService.registerExtra(this.ingrediente.value).subscribe({
+                next:(res:any)=>{},
+                error:(err)=>{console.log(err);},
+                complete:()=>{
+                 
+                }
+            });
+            }
+            this.OnResetForm();
+            this.getExtra();
+          }
         });
-        if(this.visible){
-          this.cartaService.registerExtra(this.ingrediente.value).subscribe((res:any)=>{
-            
-         });
-        }
-        this.OnResetForm();
-        this.getExtra();
-      }else{
+    }else{
         console.log('No valido');}
-    
     }
+
      //se valida el input
     
      createFormGroup(){
@@ -163,12 +171,13 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
       }
 
       modificarIngrediente(i:number){
+        this.visible = true;
         const arr = this.arr_ingrediente[i];
         var arrEx; 
         this.arr_extra.forEach(element =>{
            if(element.INGREDIENTE == arr.ID_INGREDIENTE){
              arrEx = element;
-           }
+            }
         });
         if(!arrEx){
           arrEx = {IMAGEN: '', PRECIO: ''}
@@ -181,6 +190,7 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
           PRECIO: arrEx.PRECIO
         });
         this.borrarIngrediente(i);
+        this.onActivate();
       }
 
       borrarIngrediente(i:number){
@@ -188,6 +198,17 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
         delete this.arr_ingrediente[i];
         this.cartaService.borrarIngrediente(ID).subscribe();
         
+      }
+
+      onActivate() {
+        let scrollToTop = window.setInterval(() => {
+            let pos = window.pageYOffset;
+            if (pos > 0) {
+                window.scrollTo(0, pos - 200); // how far to scroll on each step
+            } else {
+                window.clearInterval(scrollToTop);
+            }
+        }, 16);
       }
 
   }

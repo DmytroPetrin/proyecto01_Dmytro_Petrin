@@ -107,7 +107,7 @@
                                 <td scope="col">{{item.NOMBRE}}</td>
                                 <td scope="col">{{item.ALERGENOS}}</td>
                                 <td scope="col">
-                                    <img id="img_tabla" [src]="item.IMAGEN == '' ? '/assets/no_image.png': item.IMAGEN">
+                                    <img id="img_tabla" [src]="item.IMAGEN">
                                 </td>
                                 <ng-container *ngIf="!arr_extra">
                                     <td scope="col"></td>
@@ -129,7 +129,7 @@
                                     </ng-container>
                                 </ng-container>
                                 <td>
-                                    <button class="btn btn-primary" (click)="modificarIngrediente(i)">Modificar</button>
+                                    <button class="btn btn-primary" (click)="modificarIngrediente(i)" >Modificar</button>
                                 </td>
                                 <td>
                                     <button class="btn btn-danger" (click)="borrarIngrediente(i)">Borrar</button>

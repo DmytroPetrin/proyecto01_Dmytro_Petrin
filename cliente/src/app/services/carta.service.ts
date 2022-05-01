@@ -65,6 +65,10 @@ export class CartaService {
         return this.http.get(this.URL+"/pizza/getBebida");
       }
 
+      borrarCarta(i: {CARTA:string, ID:number}){
+        return this.http.post(this.URL+"/pizza/borrarCarta", i);
+      }
+
       getCartabyid(){
         return this.http.get(this.URL+'/pizza/getCartabyid');
       }

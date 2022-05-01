@@ -27,15 +27,19 @@ export class AdminEdempleadoComponent implements OnInit {
 
   onRegister(): void{
     if(this.user.valid){
-      this.authService.registerEmpleado(this.user.value).subscribe((res:any)=>{
+      this.authService.registerEmpleado(this.user.value).subscribe({
+        next:(res:any)=>{},
+        error:(err)=>{console.log(err);},
+        complete:()=>{
+          this.OnResetForm();
+          this.getEmpleado();
+        }
       });
-      console.log(this.user.value);
-      this.OnResetForm();
-      this.getEmpleado();
     }else{
       console.log('No valido');}
-  
   }
+
+
    //se valida el input
    private emailPattern:string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
    private passPattern =/^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d)[A-Za-z\d!$%@#£ñÑ€*?&]{8,40}$/gm;
@@ -124,7 +128,19 @@ export class AdminEdempleadoComponent implements OnInit {
          ROL: arr.ROL
         });
         
+        this.onActivate();
    }
+
+   onActivate() {
+    let scrollToTop = window.setInterval(() => {
+        let pos = window.pageYOffset;
+        if (pos > 0) {
+            window.scrollTo(0, pos - 200); // how far to scroll on each step
+        } else {
+            window.clearInterval(scrollToTop);
+        }
+    }, 16);
+  }
  
  }
  

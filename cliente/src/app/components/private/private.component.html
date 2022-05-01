@@ -42,9 +42,9 @@
                                 <div class="col-12" *ngIf=" visible2[i][j] ">
                                     <ng-container *ngIf="carta[i].ID_PIZZA || carta[i].ID_ENTRANTES">
                                         <ng-container *ngFor="let item of ingrediente; let p = index;" class="d-inline">
-                                            <div class="col-3 text-center list-inline-item">
+                                            <div class="col text-center list-inline-item">
                                                 <div *ngIf="cantidad_ingrediente[i][j][p]!=0">{{cantidad_ingrediente[i][j][p]}}</div>
-                                                <img class="col-12"
+                                                <img class="col-6"
                                                     [src]="ingrediente[p].IMAGEN == '' ? '/assets/no_image.png': ingrediente[p].IMAGEN">
                                                 <div>{{ingrediente[p].NOMBRE}}</div>
                                                 <div>{{ingrediente[p].PRECIO.toFixed(2)}} €</div>
@@ -146,7 +146,7 @@
                     <div class="col-12" *ngIf=" visible2[i][0] && arr_cantidad[i] == 1">
                         <ng-container *ngIf="carta[i].ID_PIZZA || carta[i].ID_ENTRANTES">
                             <ng-container *ngFor="let item of ingrediente; let p = index;" class="d-inline">
-                                <div class="col-3 text-center list-inline-item">
+                                <div class="col-2 text-center list-inline-item">
                                     <div *ngIf="cantidad_ingrediente[i][0][p]!=0">{{cantidad_ingrediente[i][0][p]}}</div>
                                     <img class="col-12"
                                         [src]="ingrediente[p].IMAGEN == '' ? '/assets/no_image.png': ingrediente[p].IMAGEN">

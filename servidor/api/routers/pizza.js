@@ -25,7 +25,7 @@ router.post('/registerIngrediente', (req,res)=>{
      [NOMBRE, ALERGENO, IMAGEN], 
      (err,rows, fields) =>{
         if(!err){
-            //res.json(rows);
+            res.json(rows);
         }else{
             console.log(err);
         }
@@ -39,7 +39,7 @@ router.post('/registerExtra', (req,res)=>{
      [IMAGEN2, PRECIO], 
      (err,rows, fields) =>{
         if(!err){
-            //res.json(rows);
+            res.json(rows);
         }else{
             console.log(err);
         }
@@ -93,20 +93,24 @@ router.post('/registerCarta', (req,res)=>{
     mysqlConnection.query('INSERT INTO '+ CARTA +' (NOMBRE, PRECIO, TAMAÑO, IMAGEN, DESCRIPCION) VALUES (?, ?, ?, ?, ?)',
     [NOMBRE, PRECIO, SIZE, IMAGEN, DESCRIPCION],
     (err, rows, fields)=>{
-        if(err){
-            console.log(err);
-        }
+        if(!err){
+           if(CARTA != "pizza"|| CARTA != "entrantes"){
+               res.json(rows);
+           }
+        }else{ console.log(err);}
     });
-    console.log(CARTA);
-    console.log(typeof CARTA);
+    //console.log(INGREDIENTE[2]);
     
     if(CARTA == "pizza"|| CARTA == "entrantes"){
         INGREDIENTE.forEach((element)=> {
             mysqlConnection.query('INSERT INTO ' + CARTA +
             '_ingrediente (INGREDIENTE, ' + CARTA + ') SELECT ID_INGREDIENTE, MAX(ID_' + CARTA + ') FROM ingredientes, ' + CARTA + ' WHERE ingredientes.NOMBRE = ?;',
             [element],
-            (err, rows, fileds)=>{
-                if(err){
+            (err, rows)=>{
+                if(!err){
+                    //res.json(rows);
+                }
+                else{
                     console.log(err);
                 }
             });
@@ -153,7 +157,7 @@ router.get('/getPizza', (req, res)=>{
 
 router.get('/getIngredientePizza', (req, res)=>{
     mysqlConnection.query('SELECT PI.PIZZA, I.* FROM ingredientes I, pizza_ingrediente PI WHERE PI.INGREDIENTE = I.ID_INGREDIENTE; ',
-    (err, rows, fields)=>{
+    (err, rows)=>{
         if(!err){
             res.json(rows);
         }else{
@@ -209,6 +213,18 @@ router.get('/getPostres', (req, res)=>{
 router.get('/getBebida', (req, res)=>{
     mysqlConnection.query('SELECT * FROM bebida',
     (err, rows, fields)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.post('/borrarCarta', (req, res)=>{
+    const{CARTA, ID}=req.body;
+    mysqlConnection.query('DELETE FROM '+ CARTA +' WHERE ID_' + CARTA + ' = ' + ID,
+    (err, rows)=>{
         if(!err){
             res.json(rows);
         }else{

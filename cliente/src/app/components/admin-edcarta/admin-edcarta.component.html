@@ -57,12 +57,29 @@
                                  <div class="form-group">
                                     <textarea [(ngModel)]="menux.DESCRIPCION" formControlName="DESCRIPCION"  placeholder="Descripción" class="form-control"></textarea>
                                 </div>
+                                
                                 <div class="form-group">
-                                    
-                                    <select [hidden]="no_ingrediente" class=" form-control selectpiker "  [(ngModel)]="menux.INGREDIENTE" formControlName="INGREDIENTE" multiple >
+                                    <select [hidden]="no_ingrediente" class=" form-control selectpiker "  [(ngModel)]="menux.INGREDIENTE" formControlName="INGREDIENTE"  multiple >
                                         <option [value]="item.NOMBRE" *ngFor="let item of lista">{{item.NOMBRE}}</option>
                                     </select>
                                 </div>
+                                
+                                <!-- probando cosas-->
+                                <!--
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Ingrediente</mat-label>
+                                    <mat-select formControlName="INGREDIENTE" [(ngModel)]="menux.INGREDIENTE" multiple>
+                                      <mat-select-trigger>
+                                        {{menu.INGREDIENTE.value ? menu.INGREDIENTE.value[0] : ''}}
+                                        <span *ngIf="menu.INGREDIENTE.value?.length > 1" class="example-additional-selection">
+                                          (+{{menu.INGREDIENTE.value.length - 1}} {{menu.INGREDIENTE.value?.length === 2 ? 'other' : 'others'}})
+                                        </span>
+                                      </mat-select-trigger>
+                                      <mat-option *ngFor="let topping of lista" [value]="topping">{topping}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                  -->
                                  <button  type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="menu.invalid">Guardar</button>
                              </form>
                         </div>
@@ -70,7 +87,7 @@
                 </div>
             </div>
             
-            <div class="col 5">
+            <div class="col-5">
                 <div class="card">
                     <div class="card body text-center">
                         <img [src]="menux.IMAGEN == '' ? '/assets/no_image.png': menux.IMAGEN" class="card-img-top">
@@ -78,12 +95,63 @@
                         <p>{{menux.PRECIO == '' ? 'PRECIO': menux.PRECIO}} €</p>
                         <p>{{menux.SIZE == '' ? 'TAMAÑO': menux.SIZE}}</p>
                         <p>{{menux.DESCRIPCION == '' ? 'DESCRIPCIÓN': menux.DESCRIPCION}}</p>
-                        <p>{{menux.INGREDIENTE.length == 0 ? 'INGREDIENTE': menux.INGREDIENTE}}</p>
+                        <p>{{menux.INGREDIENTE ? menux.INGREDIENTE : 'INGREDIENTE'}}</p>
                     </div>
                 </div>
             </div>
-         
-            
+         </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <h3>Pizza</h3>
+        <div class="row">
+            <ng-container *ngFor="let c of pizza; let i = index;">
+                <div class="col-4 " *ngIf="c">
+                    <div class="card  margin-right margin-top">
+                        <div class="card-body text-center ">
+                            <img class="card-img-top"
+                                [src]="pizza[i].IMAGEN == '' ? '/assets/no_image1.png': pizza[i].IMAGEN">
+                            <h3 class="card-title">{{pizza[i].NOMBRE}}</h3>
+                            <div></div>
+                            <div class="text-xl-right  font-weight-bold">{{pizza[i].PRECIO.toFixed(2)}}€</div>
+                            <div class="text-right font-weight-light">Tamaño: {{pizza[i].SIZE}}</div>
+                            <details class="text-left">
+                                <summary> Ver mas</summary>
+                                <div class="text-left font-weight-light font-weight-bold">{{pizza[i].DESCRIPCION}}</div>
+                                <br>
+                                <div class="font-weight-bold list-inline-item">Ingredientes:</div>
+                                <ng-container *ngFor="let c of ingredientePizza; let j = index;">
+                                    <ng-container *ngIf="pizza[i].ID_PIZZA == ingredientePizza[j].PIZZA">
+                                        <div class="font-weight-normal list-inline-item">{{ingredientePizza[j].NOMBRE}},
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                                <div></div>
+                                <div class="font-weight-bold list-inline-item">Alergenos: </div>
+                                <ng-container *ngFor="let c of ingredientePizza; let j = index;">
+                                    <ng-container *ngIf="pizza[i].ID_PIZZA == ingredientePizza[j].PIZZA">
+                                        <div class="font-weight-normal list-inline-item" *ngIf="ingredientePizza[j].ALERGENOS">
+                                            {{ingredientePizza[j].ALERGENOS}}, 
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                                <div></div>
+                                <ng-container *ngFor="let c of ingredientePizza; let j = index;">
+                                    <ng-container *ngIf="pizza[i].ID_PIZZA == ingredientePizza[j].PIZZA">
+                                        <img id="imagen_alergeno" [src]="ingredientePizza[j].IMAGEN">
+                                    </ng-container>
+                                </ng-container>
+                                <div></div>
+                                <br>
+                            </details>
+                            <br>
+                            <button class="btn btn-primary col-6" (click)="modificarCarta(pizza[i].CARTA, i)">Modficar</button>
+                            <button class="btn btn-danger col-6" (click)="borrarCarta(pizza[i].CARTA, i)">Borrar</button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
         </div>
     </div>
 </section>
