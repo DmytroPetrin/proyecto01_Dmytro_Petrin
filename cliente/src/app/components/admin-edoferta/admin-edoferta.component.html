@@ -66,7 +66,7 @@
                                                 <option value="bebida">Bebida</option>
                                                 <option value="postres">Postre</option>
                                             </select>
-                                            <div class="col-1 " (click)="deleteDiv(i)">x</div>
+                                            <div class="col-1 btn btn-danger" (click)="deleteDiv(i)">-</div>
                                         </div>
                                      </ng-container>
                                
@@ -83,11 +83,11 @@
                                 </div>
                                </div> 
                    
-
-                        <button type="button" (click)="crearDiv()">new</button>
-
-                        <button type="submit" class="btn btn-lg btn-primary btn-block"
-                            [disabled]="menu.invalid">Guardar</button>
+                        <div class="row">
+                            <button type="button" class="btn btn-success inline col-1" (click)="crearDiv()">+</button>
+                            <button type="submit" class="btn btn-lg btn-primary btn-block col-11" [disabled]="menu.invalid">Guardar</button>
+                        </div>
+                        
                         </form>
                     </div>
                 </div>
@@ -105,8 +105,49 @@
                 </div>
             </div>
         </div>
-
-
+     </div>
     </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row ">
+            <ng-container *ngFor="let c of oferta; let i = index;">
+                <div class="col-4 ">
+                    <div class="card  margin-right margin-top">
+                        <div class="card-body text-center ">
+                            <img class="card-img-top"
+                                [src]="oferta[i].IMAGEN == '' ? '/assets/no_image.png': oferta[i].IMAGEN">
+                            <h3 class="card-title">{{oferta[i].NOMBRE}}</h3>
+                            <div></div>
+                            <div class="text-xl-right  font-weight-bold">{{oferta[i].PRECIO.toFixed(2)}}€</div>
+
+                            <details class="text-left">
+                                <summary> Ver mas</summary>
+                                <ng-container *ngFor="let c of carta; let j = index">
+                                    <ng-container *ngIf="carta[j].OFERTA == oferta[i].ID_OFERTA">
+                                        <div class="font-weight-bold">{{carta[j].CANTIDAD}} x {{carta[j].NOMBRE}},
+                                            Tamaño: {{carta[j].SIZE}}</div>
+                                        <ng-container *ngFor="let c of ingrediente; let k = index">
+                                            <ng-container *ngIf="carta[j].ID==ingrediente[k].ID">
+                                                <ng-container *ngIf="carta[j].QUE==ingrediente[k].PE && ingrediente[k].IMAGEN">
+                                                    <img id="imagen_alergeno" [src]="ingrediente[k].IMAGEN">
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                                <div class="text-left font-weight-light">{{oferta[i].DESCRIPCION}}</div>
+                                <div *ngIf="oferta[i].FECHA_FIN" class="text-left small">Valido hasta:
+                                    {{oferta[i].FECHA_FIN | date: 'dd/MM/yyyy'}}</div>
+                            </details>
+                            <button type="button" class="btn btn-primary col-6 " (click)="modificarOferta(i)">Modificar</button>
+                            <button type="button" class="btn btn-danger col-6 " (click)="borrarOferta(i)">Borrar</button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
     </div>
 </section>

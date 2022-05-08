@@ -145,7 +145,7 @@ router.post('/borrarIngrediente',(req, res)=>{
 });
 
 router.get('/getPizza', (req, res)=>{
-    mysqlConnection.query('SELECT ID_PIZZA, NOMBRE, PRECIO, IMAGEN, DESCRIPCION, TAMAÑO AS SIZE FROM PIZZA',
+    mysqlConnection.query('SELECT ID_PIZZA, NOMBRE, PRECIO, IMAGEN, DESCRIPCION, TAMAÑO AS SIZE FROM PIZZA ORDER BY NOMBRE ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -178,7 +178,7 @@ router.get('/getIngredienteEntrantes', (req, res)=>{
 });
 
 router.get('/getOferta', (req, res)=>{
-    mysqlConnection.query('SELECT * FROM oferta',
+    mysqlConnection.query('SELECT * FROM oferta ORDER BY NOMBRE ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -189,7 +189,7 @@ router.get('/getOferta', (req, res)=>{
 });
 
 router.get('/getEntrantes', (req, res)=>{
-    mysqlConnection.query('SELECT * FROM entrantes',
+    mysqlConnection.query('SELECT * FROM entrantes ORDER BY NOMBRE ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -200,7 +200,7 @@ router.get('/getEntrantes', (req, res)=>{
 });
 
 router.get('/getPostres', (req, res)=>{
-    mysqlConnection.query('SELECT * FROM postres',
+    mysqlConnection.query('SELECT * FROM postres ORDER BY NOMBRE ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -211,7 +211,7 @@ router.get('/getPostres', (req, res)=>{
 });
 
 router.get('/getBebida', (req, res)=>{
-    mysqlConnection.query('SELECT * FROM bebida',
+    mysqlConnection.query('SELECT * FROM bebida ORDER BY NOMBRE ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -257,7 +257,7 @@ router.post('/registerOferta',  async (req,res)=>{
         [NOMBRE, PRECIO, IMAGEN, FECHA_FIN, DESCRIPCION],
         (err, rows, fields)=>{
             if(!err){
-                //res.json(rows);
+                res.json(rows);
             }else{
                 console.log(err);
             }

@@ -138,7 +138,7 @@ export class AdminEdingredienteComponent implements OnInit, DoCheck {
    
    
   getIngrediente() {
-    this.arr_ingrediente = [];
+    this.arr_ingrediente = [];  
     this.arr_ing_ex = [];
     this.cartaService.getIngrediente().subscribe({
       next: (res: any) => {

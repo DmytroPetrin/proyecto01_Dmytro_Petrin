@@ -1,6 +1,7 @@
 
-import { AfterViewInit, Component, DoCheck, OnInit } from '@angular/core';
+import {Component, DoCheck, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 
 import { CartaService } from 'src/app/services/carta.service';
@@ -10,7 +11,7 @@ import { CartaService } from 'src/app/services/carta.service';
   templateUrl: './admin-edoferta.component.html',
   styleUrls: ['./admin-edoferta.component.css']
 })
-export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
+export class AdminEdofertaComponent implements OnInit, DoCheck {
 
   
 
@@ -25,8 +26,11 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
   
   public select_carta: any[0][0]=[''];
   public carta_old: string [] = [''];
-  public html_cod: string= '';
+ 
   public isHidden: boolean= false;
+  public oferta: any[]=[];
+  public carta: any[]=[];
+  public ingrediente: any[]=[];
 
   public menu: FormGroup;
  
@@ -48,39 +52,30 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
          
     }
 
-
-
-
-    ngAfterViewInit(): void {
-        
-    }
-
    ngOnInit(): void {
-     //console.log(this.menux.CARTA);
-      //this.crearDiv();
-      
+     this.getOferta();
+     console.log(this.oferta); 
+     
     }
 //esta siempre pendiente de los cambios que se producen en el input
-    ngDoCheck(){
+  ngDoCheck() {
+    if (this.menu.get('CARTA')) {
       const carta_val = this.menu.get('CARTA')?.value
-      for(let i = 0; carta_val.length > i; i++){
-      
-          if(carta_val[i]!=this.carta_old[i]){
-           
-             this.selectCarta(i);
-             this.carta_old[i] = carta_val[i];
-          }
+      for (let i = 0; carta_val.length > i; i++) {
+        if (carta_val[i] != this.carta_old[i]) {
+          this.selectCarta(i);
+          this.carta_old[i] = carta_val[i];
+        }
       }
-     
-      //console.log(this.menu.value);  
-      
     }
+    //console.log(this.menu.value);  
+  }
     
  
     selectCarta(i: number){
       const carta_val = this.menu.get('CARTA')?.value
       const arr: string[]=[];
-      if(carta_val[i] != ''){
+      if(carta_val[i] != '' && carta_val[i]){
        this.select_carta[i]=arr;
         this.cartaService.getCarta(carta_val[i]).subscribe((res:any) =>{
          //console.log( res);
@@ -90,47 +85,44 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
           });
        });
        for (let j= 0; arr.length<j; j++){
-         this.select_carta[i][j] =arr[j];
+         this.select_carta[i][j] =arr[j]; 
        }
       }
      }
 
     
     crearDiv (){
-      
        this.CARTA.push(this.formBuilder.control(''));
        this.CANTIDAD.push(this.formBuilder.control(''));
        this.NOMBRE_PLATO.push(this.formBuilder.control(''));
        this.carta_old.push('');
-    
     }
      
     deleteDiv (index: number){
       this.CARTA.removeAt(index);
       this.CANTIDAD.removeAt(index);
       this.NOMBRE_PLATO.removeAt(index);
-
     }
 
     
  
-    onRegister(): void{
-      //console.log(this.user);
-      if(this.menu.valid){
-        
-        console.log('Valido');
-        console.log(this.menu.value);
-        
-        
-        this.cartaService.registerOferta(this.menu.value).subscribe((res:any)=>{
-           console.log(res);
-        });
-        this.OnResetForm();
-       
-      }else{
-        console.log('No valido');}
-    
+  onRegister(): void {
+    if (this.menu.valid) {
+
+      this.cartaService.registerOferta(this.menu.value).subscribe({
+        next: (res: any) => { },
+        error: (err) => { console.log(err); },
+        complete: () => {
+          this.OnResetForm();
+          this.getOferta();
+        }
+      });
+
+    } else {
+      console.log('No valido');
     }
+
+  }
      
    
      OnResetForm(){
@@ -139,8 +131,6 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
        this.menux.NOMBRE='';
        this.menux.PRECIO='';
        this.menux.DESCRIPCION='';
-       
-       
      }
    
        
@@ -195,17 +185,137 @@ export class AdminEdofertaComponent implements OnInit, DoCheck, AfterViewInit {
 
       get NOMBRE_PLATO(){ 
         return this.menu.get('NOMBRE_PLATO') as FormArray}
+
+
+  getOferta(){
+    this.oferta = [];
+    this.cartaService.getOferta().subscribe({
+      next: (res:any)=>{
+        res.forEach((element:any) =>{
+            this.oferta.push(element);
+        });
+      },
+      error: (err)=>{console.log(err);},
+      complete: ()=>{this.getCartabyid();}
+    });
+  }
+
+  getCartabyid() {
+    this.carta = [];
+    this.cartaService.getCartabyid().subscribe({
+      next: (res: any) => {
+        res.forEach((element: any) => {
+          element.SIZE = element.TAMAÑO;
+          this.carta.push(element);
+        });
+      },
+      error: (err) => { console.log(err); },
+      complete: () => {
+        console.log(this.carta); 
+        this.getIngredientebyid();
+      }
+    });
+  }
+
+  getIngredientebyid() {
+    this.ingrediente = [];
+    this.cartaService.getIngredientebyid().subscribe({
+      next: (res: any) => {
+        res.forEach((element: any) => {
+          this.ingrediente.push(element);
+        });
+      },
+      error: (err) => { console.log(err); },
+      complete: () => {console.log(this.ingrediente);}
+    });
+  }
+
+  borrarOferta(i:number){
+    const ID = this.oferta[i].ID_OFERTA;
+    const x = {CARTA: "oferta", ID: ID}
+    this.cartaService.borrarCarta(x).subscribe({
+      next: (res:any)=>{},
+      error: (err)=>{console.log(err);},
+      complete: ()=>{this.getOferta();}
+    });
+  }
+
+  modificarOferta(i:number){ 
+    this.menu.reset();
+    const id = this.oferta[i].ID_OFERTA;
+    console.log(this.menu.value.CARTA);
+    const num = this.menu.value.CARTA.length
+     for (let j = 0; j< num; j++){
+      this.CARTA.removeAt(num - (j+1));
+      this.CANTIDAD.removeAt(num - (j+1));
+      this.NOMBRE_PLATO.removeAt(num - (j+1));
+    }
+    /*
+    this.menu.controls['CARTA'].setValue([]);
+    this.menu.controls['CANTIDAD'].setValue([]);
+    this.menu.controls['NUEVO_PLATO'].setValue([]);
+    */
+   
+    
+    console.log(this.menu.value.CARTA);
+    
+    this.carta.forEach((element:any) =>{
+      if(element.OFERTA == id){
+        switch(element.QUE){
+          case "P" : {
+            this.CARTA.push(this.formBuilder.control('pizza'));
+            break;
+          }
+          case "B" : {
+            this.CARTA.push(this.formBuilder.control('bebida'));
+            break;
+          }
+          case "E" : {
+            this.CARTA.push(this.formBuilder.control('entrantes'));
+            break;
+          }
+          case "PO" : {
+            this.CARTA.push(this.formBuilder.control('postres'));
+            break;
+          }
+        }
+        this.CANTIDAD.push(this.formBuilder.control(element.CANTIDAD));
+        this.NOMBRE_PLATO.push(this.formBuilder.control(element.NOMBRE));
+      }
+    });
+    console.log(this.menu.value.CARTA);
+
+    const date = new Date(this.oferta[i].FECHA_FIN);
+    const mes = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+    this.menu.controls['NOMBRE'].setValue(this.oferta[i].NOMBRE);
+    this.menu.controls['PRECIO'].setValue(this.oferta[i].PRECIO);
+    this.menu.controls['IMAGEN'].setValue(this.oferta[i].IMAGEN);
+    this.menu.controls['DESCRIPCION'].setValue(this.oferta[i].DESCRIPCION);
+    this.menu.controls['FECHA_FIN'].setValue(date.getFullYear() + '-' + mes[date.getMonth()] + '-' + date.getDate());
+        
+    this.onActivate();
+    this.borrarOferta(i);         
   }
 
 
 
+  onActivate() {
+    let scrollToTop = window.setInterval(() => {
+        let pos = window.pageYOffset;
+        if (pos > 0) {
+            window.scrollTo(0, pos - 200); // how far to scroll on each step
+        } else {
+            window.clearInterval(scrollToTop);
+        }
+    }, 16);
+  }
+
+  }
+
+
+ 
 
 
 
-/*
-function myFunction() {
-  const node = document.getElementById("myList2");
-  const clone = node.cloneNode(true);
-  document.getElementById("myList1").appendChild(clone);
-}
-*/
+
+

@@ -1,40 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top sticky-top">
-  <a class="navbar-brand" routerLink="home" routerLinkActive="active">Navbar</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <a class="navbar-brand" routerLink="oferta" routerLinkActive="active">
+    <div class="row">
+      <img id="logo" [src]="'/assets/logo.png'">
+    <div class="row">
+      <div id="logo-texto1" class="col-12 h3" >Pizzeria</div>
+      <div id="logo-texto2" class="col-12 display-3" >entro</div>
+    </div>
+    </div>
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="home" routerLinkActive="active">Home <span class="sr-only">(current)</span></a>
-      </li>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 align-right">
       
-      <li class="nav-item ">
-        <a class="nav-link" routerLink="admin" routerLinkActive="active" id="admin" style="display:block;">Admin</a>
-      </li>
-      <li class="nav-item ">
-        <a class="nav-link" routerLink="empleado" routerLinkActive="active" id="empleado" style="display:block;">Empleado</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="login" routerLinkActive="active">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="registrar" routerLinkActive="active"  >Registrate</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" (click)="logOut()" *ngIf="isLogged" >Salir</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="private" routerLinkActive="active" id="private" style="display:block;">Carrito{{compra}}</a>
-      </li>
-    </ul>
-   
-  </div>
-  </nav>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-  <div class="collapse navbar-collapse " id="navbarTogglerDemo02">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> 
       <li class="nav-item active">
         <a class="nav-link" routerLink="oferta">Oferta </a>
       </li>
@@ -50,13 +30,100 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="postre">Postre</a>
       </li>
+      <li class="nav-item " *ngIf="title == 'admin'">
+        <a class="nav-link" routerLink="admin" routerLinkActive="active"  >Admin</a>
+      </li>
+      <li class="nav-item " *ngIf="title == 'empleado'">
+        <a class="nav-link" routerLink="empleado" routerLinkActive="active"  >Empleado</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="login" routerLinkActive="active">Login</a>
+      </li>
+      <li class="nav-item" *ngIf="title != 'admin' && title != 'empleado'">
+        <a class="nav-link" routerLink="registrar" routerLinkActive="active"  >Registrate</a>
+      </li>
+      <li class="nav-item" *ngIf="nombre && (title == 'admin' || title == 'empleado' || title=='cliente')">
+        <a class="nav-link" >¡Hola {{nombre}}!</a>
+      </li>
+      <li class="nav-item" *ngIf="title != 'admin' && title != 'empleado'">
+        <a class="nav-link" routerLink="private" routerLinkActive="active" >
+          <div class="row">
+            <div id="num-carrito"  *ngIf="compra>0">{{compra}}</div>
+            <img id="img-carrito"  [src]="'/assets/carrito.svg'">
+          </div> 
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="title == 'admin' || title == 'empleado' || title=='cliente'">
+        <a class="nav-link" (click)="logOut()">
+          <img id="img_salir" [src]="'/assets/switch_off.svg'">
+        </a>
+      </li>
     </ul>
-    
+   
   </div>
-</nav>
+  </nav>
+  
 
 
 <div class="conteiner mt-5">
   <router-outlet></router-outlet>
 </div>
+
+<!-- Footer -->
+<footer class="bg-dark text-center text-white">
+  <!-- Grid container -->
+  <div class="container p-4">
+    
+    
+    <!-- Section: Text -->
+    <section class="mb-4">
+      <p>
+        Esta página web esta creada con el objetivo de estudiar el framework “Angular” basado en el Node.js.
+      </p>
+    </section>
+    
+    <!-- Section: Links -->
+    <section class="">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase ">Productos</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li class="nav-item active">
+              <a class="nav-link text-white" routerLink="oferta">Oferta </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" routerLink="pizza">Pizza</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" routerLink="entrante">Entrante</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" routerLink="bebida">Bebida</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" routerLink="postre">Postre</a>
+            </li>
+          </ul>
+        </div>
+       
+        
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </section>
+    <!-- Section: Links -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2022 Copyright:
+    <a class="text-white" href="#">pizzeriaCentro.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
 

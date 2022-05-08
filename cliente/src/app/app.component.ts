@@ -13,11 +13,13 @@ import { Router } from '@angular/router';
 
 export class AppComponent implements OnInit, DoCheck{
 
-  title = 'cliente';
+  public title = "";
+  public title_old = "algo";
   public isLogged:Boolean = true;
   public compra = 0;
- 
   public carr_old='';
+  public nombre = '';
+
   
   constructor(
     private router: Router,
@@ -26,6 +28,7 @@ export class AppComponent implements OnInit, DoCheck{
 
   ngOnInit(){
     this.onCheckUser();
+    this.checkUser();
   }
 
   ngDoCheck(): void {
@@ -36,23 +39,28 @@ export class AppComponent implements OnInit, DoCheck{
       if (x){
          this.carr_old = x;
       }
+    }
+
+    if(localStorage.getItem("ROL")!=this.title_old){
+      this.checkUser();
+      if(this.title!=''){
+        this.title_old=this.title;
+      }
       
     }
       
   }
 
   logOut(){
-    const token = localStorage.getItem('token');
-    if(token ){
-      localStorage.removeItem('token');
-      this.router.navigate(['home']);
-      
-    }else if(!token){
-      this.router.navigate(['home']);
-      
-    }
- 
-  }
+    localStorage.removeItem('ROL');
+    localStorage.removeItem('token');
+    localStorage.removeItem('NOMBRE');
+    localStorage.removeItem('ID');
+    this.router.navigate(['login']);
+    this.checkUser();
+   }
+
+
   onCheckUser():void{
     console.log("oncheckUser");
       if(this.authService.getCurrentUser()){
@@ -74,5 +82,21 @@ export class AppComponent implements OnInit, DoCheck{
     }
     else if (!carr_sting){this.compra = 0;}
   }
+
+  checkUser(){
+    const rol = localStorage.getItem("ROL");
+    const nom = localStorage.getItem('NOMBRE');
+    if(nom){
+      this.nombre = nom;
+    }
+    
+    if(rol){
+      this.title = rol;
+    }
+    else if(!rol){
+      this.title = '';
+    }
+  }
+
 }
 

@@ -115,7 +115,7 @@ export class AdminEdempleadoComponent implements OnInit {
        const arr = this.empleado[i];
        this.borrarEmpleado(i);
        const date = new Date(arr.FECHA_ALTA);
-       const mes = ['01','02','03','04','05','06','07','08','09','10','11','12']
+       const mes = ['01','02','03','04','05','06','07','08','09','10','11','12'];
        this.user.setValue({
          NOMBRE: arr.NOMBRE,
          APELLIDO: arr.APELLIDO,

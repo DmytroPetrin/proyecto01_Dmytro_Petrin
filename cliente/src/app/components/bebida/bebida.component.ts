@@ -31,6 +31,7 @@ export class BebidaComponent implements OnInit {
   getBebida(){
     this.cartaService.getBebida().subscribe((res:any)=>{
       res.forEach((element:any)=>{
+        element.SIZE = element.TAMAÑO;
         this.bebida.push(element);
         this.CANTIDAD.push(this.formBuilder.control('1'));
       });

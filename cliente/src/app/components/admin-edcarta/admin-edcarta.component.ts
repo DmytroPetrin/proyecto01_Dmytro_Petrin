@@ -2,6 +2,7 @@ import { Component, OnInit, DoCheck} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartaService } from 'src/app/services/carta.service';
 
+
 @Component({
   selector: 'app-admin-edcarta',
   templateUrl: './admin-edcarta.component.html',
@@ -18,7 +19,8 @@ export class AdminEdcartaComponent implements OnInit, DoCheck {
   public ingredienteEntrante: any[] = [];
   public bebida:any[]=[];
   public postre: any[] = [];
- 
+  
+
 
   menux={
     CARTA:'',
@@ -43,7 +45,7 @@ export class AdminEdcartaComponent implements OnInit, DoCheck {
        this.getPizza();
        this.selectIngrediente();
        console.log(this.pizza);
-       //console.log(this.ingredientePizza);
+       console.log(this.ingredienteEntrante);
       
     }
 //esta siempre pendiente de los cambios que se producen en el input
@@ -192,6 +194,7 @@ export class AdminEdcartaComponent implements OnInit, DoCheck {
             next:(res:any)=>{
               res.forEach((element:any)=>{
                 element.CARTA = "entrantes";
+                element.SIZE = element.TAMAÑO;
                 this.entrante.push(element);
               });
             },
@@ -233,6 +236,7 @@ export class AdminEdcartaComponent implements OnInit, DoCheck {
             next:(res:any)=>{
               res.forEach((element:any)=>{
                 element.CARTA = "postres";
+                element.SIZE = element.TAMAÑO;
                 this.postre.push(element);
               });
             },
@@ -249,12 +253,15 @@ export class AdminEdcartaComponent implements OnInit, DoCheck {
             next:(res:any)=>{
               res.forEach((element:any)=>{
                 element.CARTA = "bebida";
+                element.SIZE = element.TAMAÑO;
                 this.bebida.push(element);
               });
             },
             error:(err)=>{console.log(err);},
             complete:()=>{
               console.log(this.ingredientePizza);
+              console.log(this.ingredienteEntrante);
+              console.log(this.entrante);
             }
           });
         }
@@ -330,7 +337,7 @@ export class AdminEdcartaComponent implements OnInit, DoCheck {
                   ing = ing + ',' + element.NOMBRE;
                 }
               });
-              console.log(this.menu.get('INGREDIENTE'));
+              
               break;
             }
             case 'entrantes':{
@@ -339,6 +346,12 @@ export class AdminEdcartaComponent implements OnInit, DoCheck {
               size = this.entrante[i].SIZE;
               imagen = this.entrante[i].IMAGEN;
               descripcion = this.entrante[i].DESCRIPCION;
+              this.ingredienteEntrante.forEach(element=>{
+                if(element.ENTRANTES==this.entrante[i].ID_ENTRANTES){
+                  ing = ing + ',' + element.NOMBRE;
+                }
+              });
+              console.log(this.menu.get('INGREDIENTE'));
               break;
             }
             case 'bebida':{
@@ -383,6 +396,7 @@ export class AdminEdcartaComponent implements OnInit, DoCheck {
           }, 16);
         }
 
+       
   }
 
 

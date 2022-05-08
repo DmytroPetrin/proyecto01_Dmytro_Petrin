@@ -29,28 +29,39 @@ import { AuthService } from 'src/app/services/auth.service';
   ngOnInit(): void {
   }
 
-  logIn(){
+  logIn() {
     //console.log(this.user);
-    this.authService.signin(this.user).subscribe((res:any)=>{
-      //console.log(res);
-      localStorage.setItem('token', res.token);
-      this.router.navigate(['home']); //para poder navegar a la pagina private
-      
+    this.authService.signin(this.user).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        if (res != 'Usuario o clave incorrectos') {
+          localStorage.setItem('token', res.token);
+        }
+      },
+      error: (err) => { console.log(err); },
+      complete: () => { 
+        this.authService.descifrarToken();
+        const x = localStorage.getItem('ROL');
+        switch (x){
+          case "cliente": {
+            this.router.navigate(['private']);
+            break;
+          }
+          case "empleado": {
+            this.router.navigate(['empleado']);
+            break;
+          }
+          case "admin": {
+            this.router.navigate(['admin']);
+            break;
+          }
+        }
+        
+      }
     });
-    
-    
-   
   }
   
-  panel(){
-     this.router.navigate(['admin']);
-     (<HTMLInputElement>document.getElementById('salir')).style.display="block"; 
-     (<HTMLInputElement>document.getElementById('admin')).style.display="block"; 
-     (<HTMLInputElement>document.getElementById('private')).style.display="none"; 
-
-  }
-
- 
+  
 }
 
 

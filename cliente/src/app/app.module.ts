@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
@@ -31,6 +31,8 @@ import { PostreComponent } from './components/postre/postre.component';
 import { AdminEdofertaComponent } from './components/admin-edoferta/admin-edoferta.component';
 import { CommonModule } from '@angular/common';
 import { CarritoCompraComponent } from './components/carrito-compra/carrito-compra.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,7 @@ import { CarritoCompraComponent } from './components/carrito-compra/carrito-comp
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, 
-    AppRoutingModule, ReactiveFormsModule, CommonModule
+    AppRoutingModule, ReactiveFormsModule, CommonModule, BrowserAnimationsModule
   ],
   providers: [
     //jwt
@@ -68,8 +70,19 @@ import { CarritoCompraComponent } from './components/carrito-compra/carrito-comp
     //token interceptor
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
   
 })
+export class AppModule {};
 
-export class AppModule { }
+
+
+@NgModule({
+  imports:[MatFormFieldModule],
+  exports:[MatFormFieldModule]
+
+})
+
+export class MaterialModule{};
+

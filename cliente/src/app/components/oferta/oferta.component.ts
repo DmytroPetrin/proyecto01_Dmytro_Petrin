@@ -45,6 +45,7 @@ export class OfertaComponent implements OnInit {
   getCartabyid() {
     this.cartaService.getCartabyid().subscribe((res: any) => {
       res.forEach((element: any) => {
+        element.SIZE = element.TAMAÑO
         this.carta.push(element);
       });
     });

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
+import decode  from 'jwt-decode';
 import { lastValueFrom } from 'rxjs';
 
 
@@ -34,6 +34,21 @@ export class AuthService {
     }else if(token==null) return false;
     
     return true;
+  }
+
+  descifrarToken() {
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      const { NOMBRE, ROL }: { NOMBRE: string, ROL: string } = decode(token);
+      if (ROL) {
+        localStorage.setItem('NOMBRE', NOMBRE);
+        localStorage.setItem('ROL', ROL);
+      }
+      if (ROL == 'cliente') {
+        const { ID_CLIENTE }: { ID_CLIENTE: string } = decode(token);
+        localStorage.setItem('ID', ID_CLIENTE);
+      }
+    }
   }
 
   registerUser(user:{NOMBRE: string, APPELLIDO:string, EMAIL:string, PASS:string,

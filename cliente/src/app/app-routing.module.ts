@@ -59,7 +59,7 @@ const routes: Routes = [
   {path:'entrante', component: EntranteComponent},
   {path:'bebida', component: BebidaComponent},
   {path:'postre', component: PostreComponent},
-  {path:'**', pathMatch: 'full', redirectTo: 'home'}
+  {path:'**', pathMatch: 'full', redirectTo: 'oferta'}
 ];
 
 @NgModule({

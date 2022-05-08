@@ -19,7 +19,7 @@
                                             Tamaño: {{carta[j].SIZE}}</div>
                                         <ng-container *ngFor="let c of ingrediente; let k = index">
                                             <ng-container *ngIf="carta[j].ID==ingrediente[k].ID">
-                                                <ng-container *ngIf="carta[j].QUE==ingrediente[k].PE">
+                                                <ng-container *ngIf="carta[j].QUE==ingrediente[k].PE && ingrediente[k].IMAGEN">
                                                     <img id="imagen_alergeno" [src]="ingrediente[k].IMAGEN">
                                                 </ng-container>
                                             </ng-container>
