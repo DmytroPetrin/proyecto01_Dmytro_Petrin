@@ -15,7 +15,7 @@ export class CompraService {
       private http: HttpClient
      ) { }
 
-     registrarcompraLista(arr: string){
+     registrarcompraLista(arr: {COMPRA: number, OFERTA: any[], PIZZA: any[], BEBIDA: any[], ENTRANTES: any[], POSTRES:any[]}){
          return this.http.post(this.URL+"/compra/registrarcompraLista", arr);
      }
 
@@ -23,7 +23,7 @@ export class CompraService {
         return this.http.post(this.URL+"/compra/registrarCompra",CLIENTE);
      }
 
-     registrarModificacion(mod: {COMPRA:number, PIZZA:number, ENTRANTES:number, EXTRAS:number, COMENTARIO:string, NUM_MOD:number}){
+     registrarModificacion(mod: {COMPRA:number, arr_extra: any[], DESCRIPCION: string}){
         return this.http.post(this.URL+"/compra/registrarModificacion", mod);
      }
      getIdCliente(){
@@ -38,6 +38,13 @@ export class CompraService {
          const carr = localStorage.getItem('carrito');
          if(carr){
              this.arr_carrito= carr.split(",");
+             for(let i = 0; i<this.arr_carrito.length; i++){
+                 if(this.arr_carrito[i]==ID){  
+                     this.arr_carrito[i+1] = (parseInt(this.arr_carrito[i+1]) + parseInt(cantidad)).toString(); console.log("dentro de if carrito" + this.arr_carrito[i+1]);
+                     localStorage.setItem('carrito', this.arr_carrito.toString()) ;
+                     return;
+                 }
+             }
              this.arr_carrito.push(ID);
              this.arr_carrito.push(cantidad);
              localStorage.setItem('carrito', this.arr_carrito.toString()) ;
@@ -51,11 +58,15 @@ export class CompraService {
 
      borrarCarrito(i: number){
         const carr = localStorage.getItem('carrito');
+        var arr = new Array;
         if(carr){
             this.arr_carrito= carr.split(",");
-            delete this.arr_carrito[2*i];
-            delete this.arr_carrito[(2*i)+1];
-            localStorage.setItem('carrito', this.arr_carrito.toString()) ;
+            for(let j = 0; j<this.arr_carrito.length; j++){
+            if(j!=(2*i) && j!=((2*i)+1)){
+                arr.push(this.arr_carrito[j]);
+            }
+            };
+            localStorage.setItem('carrito', arr.toString());
         }
      }
 

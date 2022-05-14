@@ -48,7 +48,7 @@ router.post('/registerExtra', (req,res)=>{
 });
 
 router.get('/getExtra', (req, res)=>{
-    mysqlConnection.query('SELECT E.*, I.NOMBRE, I.IMAGEN AS IMAGEN2, I.ALERGENOS FROM extras E, INGREDIENTES I WHERE E.INGREDIENTE = I.ID_INGREDIENTE;',
+    mysqlConnection.query('SELECT E.*, I.NOMBRE, I.IMAGEN AS IMAGEN2, I.ALERGENOS FROM extras E, INGREDIENTES I WHERE E.INGREDIENTE = I.ID_INGREDIENTE ORDER BY I.NOMBRE;',
     (err, rows, field)=>{
         if(!err){
             res.json(rows);

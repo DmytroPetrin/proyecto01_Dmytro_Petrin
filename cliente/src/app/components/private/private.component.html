@@ -58,6 +58,7 @@
                                         </ng-container>
                                     </ng-container>
                                      <!-- BOTON DETALLE OFERTA -> DETALLE -->
+                                      <!---->
                                      <ng-container *ngIf="carta[i].ID_OFERTA && arr_cantidad[i]>0">
                                         <ng-container *ngFor="let item of visible2Oferta; let z = index;">
 
@@ -103,6 +104,7 @@
                                                     </ng-container>
                                                 </ng-container>
                                       </ng-container>
+                                    
                                  </div>
                              </div>
                         </div>
@@ -118,13 +120,16 @@
                                             <ng-container *ngIf="menuOferta[z][k].ID_PIZZA || menuOferta[z][k].ID_ENTRANTES">
                                                 <button class="col-2  d-inline btn btn-secondary" (click)="isVisibleModificarOferta(z, 0, k)">
                                                     Modificar</button>
+                                               
                                                 <div class="col  d-inline" *ngIf="cantidadTotalOferta_producto[z][0][k]>0" >
                                                     <div class="cant_total" id="cantidad_color">
                                                         {{cantidadTotalOferta_producto[z][0][k]}}
                                                     </div>
                                                 </div>
+                                                <!-- -->
                                             </ng-container>
                                             <!--BOTON MODIFICAR DENTRO DE OFERTA-->
+                                            <!---->
                                             <div class="col-12" *ngIf="visible2Oferta[z][0][k]">
                                                 <ng-container *ngIf="menuOferta[z][k].ID_PIZZA || menuOferta[z][k].ID_ENTRANTES">
                                                     <ng-container *ngFor="let item of ingrediente; let p = index;" class="d-inline">
@@ -146,6 +151,7 @@
                                                     </ng-container>
                                                 </ng-container>
                                             </div>
+                                            
                                         </div>
                                     </ng-container>
                                 </ng-container>

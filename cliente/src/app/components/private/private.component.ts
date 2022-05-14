@@ -54,13 +54,15 @@ export class PrivateComponent implements OnInit, DoCheck {
    
     this.getCarrito();
     this.getPizza();
+    /*
     this.getOfertas();
     this.getEntrantes();
     this.getBebida();
     this.getPostres();
     this.getExtra();
     this.carta_Oferta();
-    
+    */
+   
     
     console.log(this.carta);
     console.log(this.pizza);
@@ -68,38 +70,141 @@ export class PrivateComponent implements OnInit, DoCheck {
     console.log(this.cartaOferta);
     console.log(this.arr_cantidad);
     console.log(this.ingrediente);
+    console.log(this.cantidad_ingredienteOferta);
+    console.log(this.menuOferta);
+
   }
   
   ngDoCheck(): void {
-    if((this.getOfertaTerminado && this.getPizzaTerminado && 
-      this.getEntranteTerminado && this.getBebidaTerminado &&
-      this.getPostreTerminado && this.getExtraTerminado && this.getCartaOferta) || this.botonPulsado){
-     
-      if(this.getExtraTerminado){
-         this.cantidadIngrediente();
-         this.productoOferta();
-         this.getExtraTerminado = false;
-      }
+    
+    if(this.botonPulsado){
       this.precioTotal();
       this.botonPulsado = false;
       console.log(this.cantidad_ingrediente);
     }
-    
-    
-    //console.log('es un evento');
-   
+        //console.log('es un evento');
+        console.log("visible2Oferta");
+        console.log( this.visible2Oferta);
    }
+
+
+   guardarCompra(){
+     //creamos id de la compra y asociamos a cliente
+     const id = localStorage.getItem('ID');
+     if(id){
+       var COMPRA = 0;
+       this.compraService.registrarCompra(parseInt(id)).subscribe({
+       next: (res:any)=>{COMPRA = res;},
+       error: (err)=>{console.log(err);},
+       complete: ()=>{
+         var PIZZA = new Array;
+         var ENTRANTES = new Array;
+         var OFERTA = new Array;
+         var BEBIDA = new Array;
+         var POSTRES = new Array;
+         var extra = new Array;
+         var arr_extra = new Array;
+         var producto = ''; 
+         var pizzaOferta = 0;
+         var entranteOferta = 0;
+        for(let i = 0; i<this.carta.length; i++){
+           for(let j = 0; j<this.arr_cantidad[i]; j++){
+             if(this.carta[i].ID_PIZZA){
+               PIZZA.push(this.carta[i].ID_PIZZA);
+               for (let k = 0; k<this.cantidad_ingrediente[i][j].length; k++){
+                 if(this.cantidad_ingrediente[i][j][k] > 0){
+                   for(let z = 0; z<this.cantidad_ingrediente[i][j][k]; z++){
+                     extra.push(this.ingrediente[k].INGREDIENTE);
+                   }
+                 }
+               } 
+               producto = "PIZZA";
+               arr_extra.push({id: this.carta[i].ID_PIZZA, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra});
+              }
+             else if(this.carta[i].ID_ENTRANTES){
+              ENTRANTES.push(this.carta[i].ID_ENTRANTES);
+              for (let k = 0; k<this.cantidad_ingrediente[i][j].length; k++){
+                if(this.cantidad_ingrediente[i][j][k] > 0){
+                  for(let z = 0; z<this.cantidad_ingrediente[i][j][k]; z++){
+                    extra.push(this.ingrediente[k].INGREDIENTE);
+                  }
+                }
+              } 
+              producto = "ENTRANTES";
+              arr_extra.push({id: this.carta[i].ID_ENTRANTES, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra});
+            }
+            else if(this.carta[i].ID_OFERTA){
+              OFERTA.push(this.carta[i].ID_OFERTA);
+              const x = this.posicionOferta(i);
+              producto = "OFERTA";
+              if(x>-1){
+                for(let k = 0; k<this.menuOferta[x].length; k++){
+                    pizzaOferta = 0;
+                    entranteOferta = 0;
+                    if(this.menuOferta[x][k].ID_PIZZA){
+                        pizzaOferta = this.menuOferta[x][k].ID_PIZZA;
+                        for(let z = 0; z<this.cantidad_ingredienteOferta[x][j][k].length; z++){
+                          if(this.cantidad_ingredienteOferta[x][j][k][z]>0){
+                            for(let y = 0; y<this.cantidad_ingredienteOferta[x][j][k][z]; y++){
+                              extra.push(this.ingrediente[z].INGREDIENTE);
+                            }
+                          }
+                        }
+                        arr_extra.push({id: this.carta[i].ID_OFERTA, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra});
+                    }
+                    else if(this.menuOferta[x][k].ID_ENTRANTES){
+                      entranteOferta = this.menuOferta[x][k].ID_ENTRANTES;
+                      for(let z = 0; z<this.cantidad_ingredienteOferta[x][j][k].length; z++){
+                        if(this.cantidad_ingredienteOferta[x][j][k][z]>0){
+                          for(let y = 0; y<this.cantidad_ingredienteOferta[x][j][k][z]; y++){
+                            extra.push(this.ingrediente[z].INGREDIENTE);
+                          }
+                        }
+                      }
+                      arr_extra.push({id: this.carta[i].ID_OFERTA, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra});
+                  }
+                }
+              }
+            }
+            else if(this.carta[i].ID_BEBIDA){
+              BEBIDA.push(this.carta[i].ID_BEBIDA);
+            }
+            else if(this.carta[i].ID_POSTRES){
+              POSTRES.push(this.carta[i].ID_POSTRES);
+            }
+           } 
+            producto = ''; 
+            pizzaOferta = 0;
+            entranteOferta = 0;
+         };
+        var arr = {COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES}
+         this.compraService.registrarcompraLista(arr).subscribe({
+           next: (res:any)=>{},
+           error: (err)=>{console.log(err);},
+           complete: ()=>{
+             var DESCRIPCION = '';
+              var mod = {COMPRA, arr_extra, DESCRIPCION};
+              this.compraService.registrarModificacion(mod).subscribe({
+                next: (res:any)=>{},
+                error: (err)=>{console.log(err);},
+                complete: ()=>{}
+              });
+           }
+       });
+         
+       }
+     }); 
+     }
+    
+   }
+
+
 
 counter(i: number) {
     return new Array(i);
 }
 
-  getIdCliente(){
-    this.compraService.getIdCliente().subscribe((res:any)=>{
-      //console.log(res[0].ID);
-      localStorage.setItem('ID_compra', res[0].ID);
-    });
-  }
+  
 
   //BORRA PRODUCTO DEL CARRITO
   borrarProducto(i:number){
@@ -135,7 +240,6 @@ counter(i: number) {
       if(k!=j){
           arr.push(this.cantidad_ingrediente[i][k]);
           cant_arr.push(this.cantidadTotal_producto[i][k]);
-         
       }
     }
     this.cantidad_ingrediente[i] = arr;
@@ -172,14 +276,18 @@ counter(i: number) {
     const x = this.posicionOferta(i);
     console.log(i);
     if(x>-1){
-      console.log(this.visible2Oferta);
+      
      
       var d = new Array;
       var b = new Array;
       var c = new Array;
+      
+      this.visible2Oferta[x][0].forEach(element=>{
+         d.push(false);
+      });
       this.cantidad_ingredienteOferta[x][0].forEach(element2=>{
         var a = new Array;
-        d.push(false);
+       
         c.push(0);
         this.ingrediente.forEach(element =>{
          a.push(0);
@@ -188,7 +296,10 @@ counter(i: number) {
       });
       this.cantidad_ingredienteOferta[x].push(b);
       this.cantidadTotalOferta_producto[x].push(c);
+      console.log(this.visible2Oferta);
       this.visible2Oferta[x].push(d);
+      console.log(this.visible2Oferta);
+
     }
     this.botonPulsado = true;
     console.log(this.visible2Oferta);
@@ -204,22 +315,19 @@ counter(i: number) {
     var num3 = 0;
     for (let k = 0; k < this.carta.length; k++) {
       this.posOferta.push(-1);
-      for (let i = num; i < this.unionCartaOferta.length; i++) {
-        console.log('esto es: ' + k+ ' '+ j);
-        if (this.carta[k]) {
-          if (this.carta[k].ID_OFERTA) {
-            if (k == j) {
-              num2 = num;
-             break;
-            }
-            num++;
-          }
-        }console.log(num);
-      }
+      
+      if (this.carta[k]) {
+        if (this.carta[k].ID_OFERTA) {
+          if (k == j ) {
+            num2 = num;
+           }
+          num++;
+        }
+      } 
       if (this.carta[k]) {
         if (this.carta[k].ID_OFERTA) {
           this.posOferta[k] = num3;
-          num3++
+          num3++;
         }
       }
     }console.log(num2);
@@ -262,10 +370,10 @@ counter(i: number) {
        else if(this.visible2Oferta[i][j][k]==true){
         this.visible2Oferta[i][j][k]=false;
        }
-       console.log(this.visible2Oferta);
+       console.log("visible2Oferta" + this.visible2Oferta);
        console.log(this.visible2Oferta[i][j][k]);
    }
-
+ 
   precioTotal(){
     this.precioT=0;
     this.precioExtra(); 
@@ -315,7 +423,12 @@ counter(i: number) {
         });
       },
       error: (err) => { console.log(err); },
-      complete: () => { this.getExtraTerminado = true; }
+      complete: () => {
+         this.getExtraTerminado = true;
+         this.cantidadIngrediente();
+         this.productoOferta();
+         this.precioTotal();
+        }
     });
   }
 
@@ -389,8 +502,8 @@ counter(i: number) {
             arr.push(xarr);
           }
           marr.push(arr);
-          num++;
         }
+        num++;
       }
     }
     this.visible2Oferta = marr;
@@ -486,7 +599,8 @@ counter(i: number) {
   }
 
   carta_Oferta() {
-    this.cartaService.getCartabyid().subscribe({next: (res:any)=>{
+    this.cartaService.getCartabyid().subscribe({
+      next: (res:any)=>{
       res.forEach((element:any)=>{
         this.cartaOferta.push(element);
       })
@@ -514,7 +628,11 @@ counter(i: number) {
           });
         },
         error: (err) => { console.log(err); },
-        complete: () => { this.getPizzaTerminado = true; }
+        complete: () => { 
+          this.getPizzaTerminado = true; 
+          this.getOfertas();
+          this.carta_Oferta();
+        }
       });
     }
   }
@@ -535,7 +653,10 @@ counter(i: number) {
           });
         },
         error: (err) => { console.log(err); },
-        complete: () => { this.getOfertaTerminado = true; }
+        complete: () => { 
+          this.getOfertaTerminado = true;
+          this.getEntrantes();
+         }
       });
     }
   }
@@ -558,7 +679,10 @@ counter(i: number) {
           });
         },
         error: (err) => { console.log(err); },
-        complete: () => { this.getEntranteTerminado = true; }
+        complete: () => { 
+          this.getEntranteTerminado = true; 
+          this.getBebida();
+        }
       }
       );
     }
@@ -581,7 +705,10 @@ counter(i: number) {
           });
         },
         error: (err) => { console.log(err); },
-        complete: () => { this.getBebidaTerminado = true; }
+        complete: () => { 
+          this.getBebidaTerminado = true; 
+          this.getPostres();
+        }
       });
     }
   }
@@ -602,7 +729,10 @@ counter(i: number) {
           });
         },
         error: (err) => { console.log(err); },
-        complete: () => { this.getPostreTerminado = true; }
+        complete: () => { 
+          this.getPostreTerminado = true; 
+          this.getExtra();
+        }
       });
     }
   }

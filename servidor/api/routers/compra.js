@@ -6,30 +6,68 @@ const mysqlConnection = require('../connections/connection');
 
 
 router.post('/registrarcompraLista',(req, res)=>{
-
-    const{COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES}=req.body;
-    mysqlConnection.query('INSERT INTO compra_lista(COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES) VALUE (?, ?, ?, ?, ?, ?);',
-    [COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES	],
-    (err, rows, field)=>{
-        if(!err){
-            //res.json(rows);
-        }else{
-            console.log(err);
-        }
+const{COMPRA, OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES}=req.body;
+OFERTA.forEach(element => {
+    mysqlConnection.query('INSERT INTO compra_lista(COMPRA, OFERTA) VALUE (?, ?);',
+    [COMPRA, element],
+    (err)=>{
+        if(err){console.log(err);}
     });
 });
 
-router.post('/registrarCompra',(req, res)=>{
-    const{CLIENTE}=req.body;
-    mysqlConnection.query('INSERT INTO compra (CLIENTE) VALUES (?);',
-    [CLIENTE],
-    (err, rows, field)=>{
-        if(!err){
-            //res.json('guardado');
-        }else{
-            console.log(err);
-        }
+PIZZA.forEach(element => {
+    mysqlConnection.query('INSERT INTO compra_lista(COMPRA, PIZZA) VALUE (?, ?);',
+    [COMPRA, element],
+    (err)=>{
+        if(err){console.log(err);}
     });
+});
+
+BEBIDA.forEach(element => {
+    mysqlConnection.query('INSERT INTO compra_lista(COMPRA, BEBIDA) VALUE (?, ?);',
+    [COMPRA, element],
+    (err)=>{
+        if(err){console.log(err);}
+    });
+});
+
+ENTRANTES.forEach(element => {
+    mysqlConnection.query('INSERT INTO compra_lista(COMPRA, ENTRANTES) VALUE (?, ?);',
+    [COMPRA, element],
+    (err)=>{
+        if(err){console.log(err);}
+    });
+});
+
+POSTRES.forEach(element => {
+    mysqlConnection.query('INSERT INTO compra_lista(COMPRA, POSTRES) VALUE (?, ?);',
+    [COMPRA, element],
+    (err)=>{
+        if(err){console.log(err);}
+    });
+});
+res.json('listaCompra guardadad');
+ });
+
+router.post('/registrarCompra', (req, res) => {
+    const { CLIENTE } = req.body;
+    mysqlConnection.query('INSERT INTO compra (CLIENTE) VALUES (?);',
+        [CLIENTE],
+        (err) => {
+            if (!err) {
+                mysqlConnection.query('SELECT ID_COMPRA  FROM compra WHERE CLIENTE = ? AND FECHA_HORA = (SELECT MAX(C.FECHA_HORA) FROM compra C WHERE C.CLIENTE = ?);',
+                    [CLIENTE, CLIENTE],
+                    (err2, rows) => {
+                        if (!err2) {
+                            res.json(rows);
+                        } else {
+                            console.log(err2);
+                        }
+                    });
+            } else {
+                console.log(err);
+            }
+        });
 });
 
 router.get('/getIdCliente', (req, res)=>{
@@ -41,17 +79,65 @@ router.get('/getIdCliente', (req, res)=>{
             });
 });
 
+//SIN COMPROBAR
 router.post('/registrarModificacion',(req, res)=>{
-    const{COMPRA, PIZZA, ENTRANTES, EXTRAS, COMENTARIO, NUM_MOD}=req.body;
-    mysqlConnection.query('INSERT INTO modificado (COMPRA, PIZZA, ENTRANTES, EXTRAS, COMENTARIO, NUM_MOD) VALUES (?, ?, ?, ?, ?, ?);',
-    [COMPRA, PIZZA, ENTRANTES, EXTRAS, COMENTARIO, NUM_MOD],
-    (err, rows, field)=>{
-        if(!err){
-            //res.json(rows);
-        }else{
-            console.log(err);
+    const{COMPRA, arr_extra, DESCRIPCION} = req.body;
+    arr_extra.forEach(element =>{
+        switch (element.producto){
+            case "PIZZA":{
+                element.extra.forEach(element2 =>{
+                    mysqlConnection.query('INSERT INTO modificado (COMPRA, PIZZA, EXTRAS) VALUES (?, ?, ?);',
+                    [COMPRA, element.id, element2],
+                    (err)=>{
+                        if(err){
+                            console.log(err);
+                        }
+                    });
+                });
+                break;
+            }
+            case "ENTRANTES":{
+                element.extra.forEach(element2 =>{
+                    mysqlConnection.query('INSERT INTO modificado (COMPRA, ENTRANTES, EXTRAS) VALUES (?, ?, ?);',
+                    [COMPRA, element.id, element2],
+                    (err)=>{
+                        if(err){
+                            console.log(err);
+                        }
+                    });
+                });
+                break;
+            }
+            case "OFERTA":{
+                if(element.pizzaOferta !=0){
+                    element.extra.forEach(element2 =>{
+                        mysqlConnection.query('INSERT INTO modificado (COMPRA, OFERTA, PIZZA, EXTRAS) VALUES (?, ?, ?);',
+                        [COMPRA, element.id, element.pizzaOferta, element2],
+                        (err)=>{
+                            if(err){
+                                console.log(err);
+                            }
+                        });
+                    });
+                }
+                else if(element.entranteOferta !=0){
+                    element.extra.forEach(element2 =>{
+                        mysqlConnection.query('INSERT INTO modificado (COMPRA, OFERTA, ENTRANTES, EXTRAS) VALUES (?, ?, ?);',
+                        [COMPRA, element.id, element.entranteOferta, element2],
+                        (err)=>{
+                            if(err){
+                                console.log(err);
+                            }
+                        });
+                    });
+                }
+                break;
+            }
         }
     });
+
+   res.json(rows);
+
 });
 
 
