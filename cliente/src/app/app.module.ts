@@ -31,12 +31,13 @@ import { PostreComponent } from './components/postre/postre.component';
 import { AdminEdofertaComponent } from './components/admin-edoferta/admin-edoferta.component';
 import { CommonModule } from '@angular/common';
 import { CarritoCompraComponent } from './components/carrito-compra/carrito-compra.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
+//import {MatFormFieldModule} from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PagoComponent } from './components/pago/pago.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent, 
     HomeComponent,
     PrivateComponent,
     AdminComponent,
@@ -57,7 +58,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BebidaComponent,
     PostreComponent,
     AdminEdofertaComponent,
-    CarritoCompraComponent
+    CarritoCompraComponent,
+    PagoComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, 
@@ -77,12 +79,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export class AppModule {};
 
 
-
+/*
 @NgModule({
   imports:[MatFormFieldModule],
   exports:[MatFormFieldModule]
 
-})
+});
 
 export class MaterialModule{};
-
+*/

@@ -1,0 +1,53 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="card col-8">
+                <div class="card-body text center">
+                    <form>
+                        <h1 class=" col-12 text-center">Pago</h1>
+                        
+                            <div class="row">
+                                <div class="col-3 text-left">Método de pago: </div>
+                                <div class="form-group  col-2">
+                                <input type='checkbox'  class="form-check-input" [checked]="true">
+                                <label class="form-check-label"> Tarjeta</label>
+                                </div>
+                                <div class="form-group col-2">
+                                <input type='checkbox'  class="form-check-input" >
+                                <label class="form-check-label"> Ejectivo</label>
+                            </div>
+                         </div>
+                         <div class="alert alert-success text-center" role="alert" *ngIf="true">
+                            Normalmente los pedidos tardan 30 minutos.
+                         </div>
+                         <div class="row">
+                             <div class="col-3"></div>
+                             <div class="form-group col-2">
+                                <input type='checkbox'  class="form-check-input" [checked]="true">
+                                <label class="form-check-label">A domicilio</label>
+                             </div>
+                             <div class="form-group col-4">
+                                <input type='checkbox'  class="form-check-input" [checked]="false">
+                                <label class="form-check-label">Recoger en Restaurante</label>
+                             </div>
+                         </div>
+                        <div></div>
+                         <!--añadir dirreccion-->
+                         <div class="row">
+                              <div class="col-6">
+                                 <h1 >Precio Total: €*</h1>
+                             </div>
+                             <div class="col-6 text-right" *ngIf="true">
+                                 <button class="btn btn-primary align-right">Pagar</button>
+                             </div>
+                             <div class="col-6 text-right" *ngIf="false">
+                                <button class=" btn btn-success ">Reservar</button>
+                            </div>
+                         </div>
+                     </form>
+                 </div>
+                <p>(*) El precio total inclue el IVA</p>
+            </div>
+        </div>
+    </div>
+</section>

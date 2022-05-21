@@ -46,7 +46,7 @@
         <a class="nav-link" >¡Hola {{nombre}}!</a>
       </li>
       <li class="nav-item" *ngIf="title != 'admin' && title != 'empleado'">
-        <a class="nav-link" routerLink="private" routerLinkActive="active" >
+        <a class="nav-link" routerLink="/private/carrito-compra" routerLinkActive="active" >
           <div class="row">
             <div id="num-carrito"  *ngIf="compra>0">{{compra}}</div>
             <img id="img-carrito"  [src]="'/assets/carrito.svg'">

@@ -44,7 +44,7 @@ import { AuthService } from 'src/app/services/auth.service';
         const x = localStorage.getItem('ROL');
         switch (x){
           case "cliente": {
-            this.router.navigate(['private']);
+            this.router.navigate(['/private/carrito-compra']);
             break;
           }
           case "empleado": {

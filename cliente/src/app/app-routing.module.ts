@@ -22,7 +22,8 @@ import { EntranteComponent } from './components/entrante/entrante.component';
 import { BebidaComponent } from './components/bebida/bebida.component';
 import { PostreComponent } from './components/postre/postre.component';
 import { AdminEdofertaComponent } from './components/admin-edoferta/admin-edoferta.component';
-
+import { CarritoCompraComponent } from './components/carrito-compra/carrito-compra.component';
+import { PagoComponent } from './components/pago/pago.component';
 
 
 //rutas que me permiten navegar por la pagina web
@@ -32,7 +33,12 @@ const routes: Routes = [
       {path: 'oferta', component: OfertaComponent}
     ]
   },
-  {path:'private', component: PrivateComponent, canActivate:[RoleGuard], data: {expectedRole: 'cliente'}},  //se protege la ruta mediante un dato que se muestre tras el login
+  {path:'private', component: PrivateComponent,   
+      children:[
+          {path: 'carrito-compra', component: CarritoCompraComponent},
+          {path: 'pago', component: PagoComponent}
+      ], 
+  canActivate:[RoleGuard], data: {expectedRole: 'cliente'}}, //se protege la ruta mediante un dato que se muestre tras el login
   {path:'admin', component: AdminComponent, 
       children:[
           {path:'edhorario', component: AdminEdhorarioComponent},
@@ -59,7 +65,8 @@ const routes: Routes = [
   {path:'entrante', component: EntranteComponent},
   {path:'bebida', component: BebidaComponent},
   {path:'postre', component: PostreComponent},
-  {path:'**', pathMatch: 'full', redirectTo: 'oferta'}
+  {path:'**', pathMatch: 'full', redirectTo: 'oferta'},
+  //{path: 'carrito-compra', component: CarritoCompraComponent}
 ];
 
 @NgModule({
