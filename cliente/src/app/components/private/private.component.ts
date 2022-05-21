@@ -39,6 +39,8 @@ export class PrivateComponent implements OnInit, DoCheck {
   public cantidadTotalOferta_producto: number[][][]=[];
   public unionCartaOferta: number[]=[];
   public posOferta: number[] = [];
+  public comentario: string[][] = [];
+  public comentarioOferta: string[][][] = [];
 
   public getExtraTerminado = false;
   public getPizzaTerminado = false;
@@ -54,6 +56,7 @@ export class PrivateComponent implements OnInit, DoCheck {
    
     this.getCarrito();
     this.getPizza();
+   // this.compraService.getIdCliente().subscribe((res:any)=>{console.log(res);});
     /*
     this.getOfertas();
     this.getEntrantes();
@@ -76,8 +79,12 @@ export class PrivateComponent implements OnInit, DoCheck {
   }
   
   ngDoCheck(): void {
-    
-    if(this.botonPulsado){
+    console.log(this.menuOferta);
+    console.log(this.unionCartaOferta);
+    console.log(this.posOferta);
+    console.log(this.visible2Oferta);
+    //console.log(this.cantidad_ingredienteOferta);
+    if(this.botonPulsado) {
       this.precioTotal();
       this.botonPulsado = false;
       console.log(this.cantidad_ingrediente);
@@ -86,15 +93,25 @@ export class PrivateComponent implements OnInit, DoCheck {
         console.log("visible2Oferta");
         console.log( this.visible2Oferta);
    }
-
-
+/*
+ test(){
+   const CLIENTE = {CLIENTE: 27};
+  this.compraService.test(CLIENTE).subscribe({
+    next: (res:any)=>{console.log(res);},
+    error: (err)=>{console.log(err);},
+    complete: ()=>{}
+    });
+ }
+*/
    guardarCompra(){
      //creamos id de la compra y asociamos a cliente
      const id = localStorage.getItem('ID');
+     
      if(id){
+       const CLIENTE = {CLIENTE: parseInt(id)}
        var COMPRA = 0;
-       this.compraService.registrarCompra(parseInt(id)).subscribe({
-       next: (res:any)=>{COMPRA = res;},
+       this.compraService.registrarCompra(CLIENTE).subscribe({
+       next: (res:any)=>{COMPRA = res[0].ID_COMPRA; console.log(res);},
        error: (err)=>{console.log(err);},
        complete: ()=>{
          var PIZZA = new Array;
@@ -111,6 +128,7 @@ export class PrivateComponent implements OnInit, DoCheck {
            for(let j = 0; j<this.arr_cantidad[i]; j++){
              if(this.carta[i].ID_PIZZA){
                PIZZA.push(this.carta[i].ID_PIZZA);
+               extra = [];
                for (let k = 0; k<this.cantidad_ingrediente[i][j].length; k++){
                  if(this.cantidad_ingrediente[i][j][k] > 0){
                    for(let z = 0; z<this.cantidad_ingrediente[i][j][k]; z++){
@@ -119,10 +137,13 @@ export class PrivateComponent implements OnInit, DoCheck {
                  }
                } 
                producto = "PIZZA";
-               arr_extra.push({id: this.carta[i].ID_PIZZA, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra});
+               if(extra.length>0 || this.comentario[i][j]!=''){
+                   arr_extra.push({id: this.carta[i].ID_PIZZA, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra, comentario: this.comentario[i][j]});
+               }
               }
              else if(this.carta[i].ID_ENTRANTES){
               ENTRANTES.push(this.carta[i].ID_ENTRANTES);
+              extra = [];
               for (let k = 0; k<this.cantidad_ingrediente[i][j].length; k++){
                 if(this.cantidad_ingrediente[i][j][k] > 0){
                   for(let z = 0; z<this.cantidad_ingrediente[i][j][k]; z++){
@@ -131,7 +152,9 @@ export class PrivateComponent implements OnInit, DoCheck {
                 }
               } 
               producto = "ENTRANTES";
-              arr_extra.push({id: this.carta[i].ID_ENTRANTES, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra});
+              if(extra.length>0 || this.comentario[i][j]!=''){
+                  arr_extra.push({id: this.carta[i].ID_ENTRANTES, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra, comentario: this.comentario[i][j]});
+              }
             }
             else if(this.carta[i].ID_OFERTA){
               OFERTA.push(this.carta[i].ID_OFERTA);
@@ -141,7 +164,8 @@ export class PrivateComponent implements OnInit, DoCheck {
                 for(let k = 0; k<this.menuOferta[x].length; k++){
                     pizzaOferta = 0;
                     entranteOferta = 0;
-                    if(this.menuOferta[x][k].ID_PIZZA){
+                    extra = [];
+                     if(this.menuOferta[x][k].ID_PIZZA){
                         pizzaOferta = this.menuOferta[x][k].ID_PIZZA;
                         for(let z = 0; z<this.cantidad_ingredienteOferta[x][j][k].length; z++){
                           if(this.cantidad_ingredienteOferta[x][j][k][z]>0){
@@ -150,7 +174,10 @@ export class PrivateComponent implements OnInit, DoCheck {
                             }
                           }
                         }
-                        arr_extra.push({id: this.carta[i].ID_OFERTA, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra});
+                        if(extra.length>0 || this.comentarioOferta[x][j][k]!=''){
+                          arr_extra.push({id: this.carta[i].ID_OFERTA, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra, comentario: this.comentarioOferta[x][j][k]});
+                        }
+                        
                     }
                     else if(this.menuOferta[x][k].ID_ENTRANTES){
                       entranteOferta = this.menuOferta[x][k].ID_ENTRANTES;
@@ -161,7 +188,9 @@ export class PrivateComponent implements OnInit, DoCheck {
                           }
                         }
                       }
-                      arr_extra.push({id: this.carta[i].ID_OFERTA, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra});
+                      if(extra.length>0 || this.comentarioOferta[x][j][k]!=''){
+                        arr_extra.push({id: this.carta[i].ID_OFERTA, producto: producto, pizzaOferta: pizzaOferta, entranteOferta: entranteOferta, extra: extra, comentario: this.comentarioOferta[x][j][k]});
+                      }
                   }
                 }
               }
@@ -183,7 +212,7 @@ export class PrivateComponent implements OnInit, DoCheck {
            error: (err)=>{console.log(err);},
            complete: ()=>{
              var DESCRIPCION = '';
-              var mod = {COMPRA, arr_extra, DESCRIPCION};
+              var mod = {COMPRA, arr_extra};
               this.compraService.registrarModificacion(mod).subscribe({
                 next: (res:any)=>{},
                 error: (err)=>{console.log(err);},
@@ -208,11 +237,68 @@ counter(i: number) {
 
   //BORRA PRODUCTO DEL CARRITO
   borrarProducto(i:number){
-      delete this.carta[i];
-      delete this.arr_cantidad[i];
-      delete this.arr_carrito[2*i];
-      delete this.arr_carrito[(2*i)+1];
-      delete this.cantidad_ingrediente[i];
+      const x = this.posicionOferta(i);
+      if(x>-1){
+        var arrOf = new Array;
+        var arrVisibleof = new Array;
+        var arrVisible2of = new Array;
+        var arrUnion = new Array;
+        var arrmenuOf = new Array;
+        var arringtotalOf = new Array;
+        var arrcomOf = new Array;
+        for (let j=0;j< this.cantidad_ingredienteOferta.length; j++){
+          if(j!=x){
+             arrOf.push(this.cantidad_ingredienteOferta[j]);
+             //arrVisibleof.push(this.visibleOferta[j]);
+             arrVisible2of.push(this.visible2Oferta[j]);
+             arrUnion.push(this.unionCartaOferta[j]);
+             arrmenuOf.push(this.menuOferta[j]);
+             arringtotalOf.push(this.cantidadTotalOferta_producto[j]);
+             arrcomOf.push(this.comentarioOferta[j]);
+          }
+        }
+        this.cantidad_ingredienteOferta = arrOf;
+        //this.visibleOferta = arrVisibleof;
+        this.visible2Oferta = arrVisible2of;
+        this.unionCartaOferta = arrUnion;
+        this.menuOferta = arrmenuOf;
+        this.cantidadTotalOferta_producto = arringtotalOf;
+        this.comentarioOferta = arrcomOf;
+      }
+      var arrCarta = new Array;
+      var arrCantidad = new Array;
+      var arrCarrito = new Array;
+      var arrCantidadIngrediente  = new Array;
+      var arrvisible = new Array;
+      var arrvisible2 = new Array;
+      var arringtotal = new Array;
+      var arrcom = new Array;
+      for (let p = 0; p<this.carta.length; p++){
+        if(i!=p){
+            arrCarta.push(this.carta[p]);
+            arrCantidad.push(this.arr_cantidad[p]);
+            arrCantidadIngrediente.push(this.cantidad_ingrediente[p]);
+            arrvisible.push(this.visible[p]);
+            arrvisible2.push(this.visible2[p]);
+            arringtotal.push(this.cantidadTotal_producto[p]);
+            arrcom.push(this.comentario[p]);
+        }
+      }
+      this.carta = arrCarta;
+      this.arr_cantidad = arrCantidad;
+      this.cantidad_ingrediente = arrCantidadIngrediente;
+      this.visible = arrvisible;
+      this.visible2 = arrvisible2;
+      this.cantidadTotal_producto = arringtotal;
+      this.comentario = arrcom;
+      for(let t = 0; t<this.arr_carrito.length; t++){
+        if((2*i) != t ||((2*i)+1) !=t ){
+          arrCarrito.push(this.arr_carrito[t]);
+        }
+      }
+      this.arr_carrito = arrCarrito;
+      this.posicionOferta(0);
+
       this.compraService.borrarCarrito(i);
       this.botonPulsado = true;
   }
@@ -224,6 +310,7 @@ counter(i: number) {
        this.arr_cantidad[i]=this.arr_cantidad[i]-1;
        this.compraService.borrarCantidad(i);
        const x = this.posicionOferta(i);
+       console.log("es x: "+x+" es i: "+i);
        if(x>-1){
            this.borrarCantidad_ingredienteOferta(x,j);
        }
@@ -236,29 +323,34 @@ counter(i: number) {
    
     var arr = new Array;
     var cant_arr = new Array;
+    var com_arr = new Array;
     for(let k = 0; k<this.cantidad_ingrediente[i].length; k++){
       if(k!=j){
           arr.push(this.cantidad_ingrediente[i][k]);
           cant_arr.push(this.cantidadTotal_producto[i][k]);
+          com_arr.push(this.comentario[i][k]);
       }
     }
     this.cantidad_ingrediente[i] = arr;
     this.cantidadTotal_producto[i] = cant_arr;
+    this.comentario[i]=com_arr;
   }
 
   borrarCantidad_ingredienteOferta(x:number, j:number){
     
     var arr = new Array;
     var cant_arr = new Array;
+    var com = new Array;
     for(let k = 0; k<this.cantidad_ingredienteOferta[x].length; k++){
       if(k!=j){
         arr.push(this.cantidad_ingredienteOferta[x][k]);
         cant_arr.push(this.cantidadTotalOferta_producto[x][k]);
-        
+        com.push(this.comentarioOferta[x][k]);
       }
     }
     this.cantidad_ingredienteOferta[x] = arr;
     this.cantidadTotalOferta_producto[x] = cant_arr;
+    this.comentarioOferta[x]=com;
   }
 
   //AÑADE CANTIDAD DE PRODUCTO
@@ -271,19 +363,19 @@ counter(i: number) {
     this.cantidad_ingrediente[i].push(arr);
     this.compraService.addCantidad(i);
     this.visible2[i].push(false);
+    this.comentario[i].push('');
     this.cantidadTotal_producto[i].push(0);
     
     const x = this.posicionOferta(i);
     console.log(i);
     if(x>-1){
-      
-     
       var d = new Array;
       var b = new Array;
       var c = new Array;
-      
+      var com = new Array;
       this.visible2Oferta[x][0].forEach(element=>{
          d.push(false);
+         com.push('');
       });
       this.cantidad_ingredienteOferta[x][0].forEach(element2=>{
         var a = new Array;
@@ -296,9 +388,10 @@ counter(i: number) {
       });
       this.cantidad_ingredienteOferta[x].push(b);
       this.cantidadTotalOferta_producto[x].push(c);
-      console.log(this.visible2Oferta);
+      //console.log(this.visible2Oferta);
       this.visible2Oferta[x].push(d);
-      console.log(this.visible2Oferta);
+      this.comentarioOferta[x].push(com);
+      //console.log(this.visible2Oferta);
 
     }
     this.botonPulsado = true;
@@ -313,6 +406,8 @@ counter(i: number) {
     var num = 0;
     var num2 = -1;
     var num3 = 0;
+    this.posOferta = [];
+    console.log('carta longitud: '+this.carta.length);
     for (let k = 0; k < this.carta.length; k++) {
       this.posOferta.push(-1);
       
@@ -324,13 +419,15 @@ counter(i: number) {
           num++;
         }
       } 
+      
       if (this.carta[k]) {
         if (this.carta[k].ID_OFERTA) {
           this.posOferta[k] = num3;
           num3++;
         }
       }
-    }console.log(num2);
+    }
+    //console.log(num2);
     return num2;
   }
 
@@ -353,7 +450,7 @@ counter(i: number) {
         this.visible2[i][j]=false;
        }
    }
-
+/*
    isVisibleOferta(i:number, j:number){
      if(this.visibleOferta[i][j]==false){
       this.visibleOferta[i][j]= true;
@@ -362,7 +459,7 @@ counter(i: number) {
       this.visibleOferta[i][j]=false;
      }
    }
-
+*/
    isVisibleModificarOferta(i:number, j:number, k:number){
        if(this.visible2Oferta[i][j][k]==false){
         this.visible2Oferta[i][j][k]=true;
@@ -482,32 +579,42 @@ counter(i: number) {
     var arr = new Array;
     var xarr = new Array;
     var marr = new Array;
+
+    var com1 = new Array;
+    var com2 = new Array;
+    var com3 = new Array;
     var num  = 0;
     for (let k = 0; k < this.carta.length; k++) {
       arr=[];
+      com1=[];
       var element = this.carta[k];
       
       if (element) {
         if (element.ID_OFERTA) {
           for (let j = 0; j < this.arr_cantidad[num]; j++) {
             xarr = [];
+            com2 = [];
             this.cartaOferta.forEach(element2 => {
               if (element.ID_OFERTA == element2.OFERTA) {console.log('valor k:' +k);
                 for (let i = 0; i < element2.CANTIDAD; i++) {
                   xarr.push(false);
+                  com2.push('');
                   console.log(k + ' ' + this.carta.length+ ' '+element.ID_OFERTA + ' '+element2.CANTIDAD + ' '+ xarr );
                 }
               }
             });
             arr.push(xarr);
+            com1.push(com2);
           }
           marr.push(arr);
+          com3.push(com1);
         }
         num++;
       }
     }
     this.visible2Oferta = marr;
     this.getCartaOferta = false;
+    this.comentarioOferta = com3;
   }
 
   ingredienteOferta() {
@@ -592,9 +699,9 @@ counter(i: number) {
       this.visible_Oferta();
       this.ingredienteOferta();
       this.posicionOferta(-1);
-    console.log(this.posOferta);
-    console.log(this.visible2Oferta);
-    console.log(this.cantidadTotalOferta_producto);
+    //console.log(this.posOferta);
+   // console.log(this.visible2Oferta);
+    //console.log(this.cantidadTotalOferta_producto);
     }
   }
 
@@ -756,11 +863,15 @@ counter(i: number) {
    //Visiblidad de boton modificar
         for (let j = 0; j<this.arr_cantidad.length; j++){
          var arr = new Array;
+         var com_arr = new Array;
            for(let k = 0; k<this.arr_cantidad[j]; k++){
             arr[k]=false;
+            com_arr[k]='';
            }
            this.visible2[j] = (arr);
+           this.comentario[j]=com_arr;
            arr = [];
+           com_arr = [];
        }
   }
 

@@ -43,6 +43,9 @@
                                 <!--BOTON DETALLE -> MODIFICAR-->
                                 <div class="col-12" *ngIf=" visible2[i][j] ">
                                     <ng-container *ngIf="carta[i].ID_PIZZA || carta[i].ID_ENTRANTES">
+                                        <div class="form-group">
+                                            <textarea class="form-control" [(ngModel)]="comentario[i][j]" maxlength="150" placeholder="Aquí puedes pedir que te eliminan algún ingrediente..."></textarea>
+                                        </div>
                                         <ng-container *ngFor="let item of ingrediente; let p = index;" class="d-inline">
                                             <div class="col-2 text-center list-inline-item">
                                                 <div *ngIf="cantidad_ingrediente[i][j][p]!=0" id="cantidad_color" class="ingrediente">{{cantidad_ingrediente[i][j][p]}}</div>
@@ -80,6 +83,9 @@
                                                             <!--BOTON MODIFICAR BOTON DETALLE OFERTA -> DETALLE -> MODIFICAR-->
                                                             <div class="col-12" *ngIf="visible2Oferta[z][j][k]">
                                                                 <ng-container *ngIf="menuOferta[z][k].ID_PIZZA || menuOferta[z][k].ID_ENTRANTES">
+                                                                    <div class="form-group">
+                                                                        <textarea class="form-control" [(ngModel)]="comentarioOferta[z][j][k]" maxlength="150" placeholder="Aquí puedes pedir que te eliminan algún ingrediente..."></textarea>
+                                                                    </div>
                                                                     <ng-container *ngFor="let item of ingrediente; let p = index;" class="d-inline">
                                                                         <div class="col-2 text-center list-inline-item">
                                                                             <div *ngIf="cantidad_ingredienteOferta[z][j][k][p]>0" id="cantidad_color" class="ingrediente">{{cantidad_ingredienteOferta[z][j][k][p]}}</div>
@@ -132,6 +138,9 @@
                                             <!---->
                                             <div class="col-12" *ngIf="visible2Oferta[z][0][k]">
                                                 <ng-container *ngIf="menuOferta[z][k].ID_PIZZA || menuOferta[z][k].ID_ENTRANTES">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" [(ngModel)]="comentarioOferta[z][0][k]" maxlength="150" placeholder="Aquí puedes pedir que te eliminan algún ingrediente..."></textarea>
+                                                    </div>
                                                     <ng-container *ngFor="let item of ingrediente; let p = index;" class="d-inline">
                                                         <div class="col-2 text-center list-inline-item">
                                                             <div *ngIf="cantidad_ingredienteOferta[z][0][k][p]>0" id="cantidad_color" class="ingrediente">{{cantidad_ingredienteOferta[z][0][k][p]}}</div>
@@ -161,6 +170,9 @@
                     <!--BOTON MODIFICAR-->
                     <div class="col-12" *ngIf=" visible2[i][0] && arr_cantidad[i] == 1">
                         <ng-container *ngIf="carta[i].ID_PIZZA || carta[i].ID_ENTRANTES">
+                            <div class="form-group">
+                                <textarea class="form-control" [(ngModel)]="comentario[i][0]" maxlength="150" placeholder="Aquí puedes pedir que te eliminan algún ingrediente..."></textarea>
+                            </div>
                             <ng-container *ngFor="let item of ingrediente; let p = index;" class="d-inline">
                                 <div class="col-2 text-center list-inline-item">
                                     <div *ngIf="cantidad_ingrediente[i][0][p]!=0" id="cantidad_color" class="ingrediente">{{cantidad_ingrediente[i][0][p]}}</div>
@@ -179,7 +191,7 @@
                 </div>
             </ng-container>
             <div  class="col-7 display-4">Precio Total: {{precioT.toFixed(2)}} €</div>
-            <button id="ptotal" class="btn btn-primary btn-lg" (click)="precioTotal()"> Seguir Comprando</button>
+            <button id="ptotal" class="btn btn-primary btn-lg" (click)="guardarCompra()"> Seguir Comprando</button>
         </div>
     </div>
 </section>

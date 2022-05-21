@@ -84,7 +84,7 @@ router.put('/registerUser', (req, res)=>{
      [NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, FECHA_NACIMIENTO, DIRECCION],
      (err,rows, fields) =>{
          if(!err){
-             //console.log(rows);
+             res.json(rows);
          }else console.log(err);  
      });
     

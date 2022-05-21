@@ -19,6 +19,7 @@ export class CartaService {
      
       ) { }
 
+      
     registerIngrediente(ingrediente:{NOMBRE: string, ALERGENO: string, IMAGEN: string}){
         //console.log(ingrediente);
         return this.http.post(this.URL+"/pizza/registerIngrediente", ingrediente);

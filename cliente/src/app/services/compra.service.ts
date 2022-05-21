@@ -15,15 +15,20 @@ export class CompraService {
       private http: HttpClient
      ) { }
 
+     test( CLIENTE: {CLIENTE: number}){
+        return this.http.post(this.URL+"/compra/test", CLIENTE);
+     }
+
      registrarcompraLista(arr: {COMPRA: number, OFERTA: any[], PIZZA: any[], BEBIDA: any[], ENTRANTES: any[], POSTRES:any[]}){
          return this.http.post(this.URL+"/compra/registrarcompraLista", arr);
      }
 
-     registrarCompra( CLIENTE: number){
+     registrarCompra(CLIENTE: {CLIENTE: number}){
         return this.http.post(this.URL+"/compra/registrarCompra",CLIENTE);
      }
 
-     registrarModificacion(mod: {COMPRA:number, arr_extra: any[], DESCRIPCION: string}){
+     registrarModificacion(mod: {COMPRA:number, arr_extra: any[]}){
+         console.log(mod);
         return this.http.post(this.URL+"/compra/registrarModificacion", mod);
      }
      getIdCliente(){
@@ -67,6 +72,7 @@ export class CompraService {
             }
             };
             localStorage.setItem('carrito', arr.toString());
+            if(arr.length == 0){this.arr_carrito=[];}
         }
      }
 

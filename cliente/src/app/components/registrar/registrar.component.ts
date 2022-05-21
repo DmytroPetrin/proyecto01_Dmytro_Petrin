@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegistrarComponent implements OnInit {
 
   public user: FormGroup;
+  public alert = false;
 
   constructor(private authService: AuthService)
   {
@@ -41,9 +42,16 @@ export class RegistrarComponent implements OnInit {
       
       console.log('Valido');
       //console.log(this.user.value);
-      this.authService.registerUser(this.user.value).subscribe((res:any)=>{
+      this.authService.registerUser(this.user.value).subscribe({
+        next:(res:any)=>{
          //console.log(res);
-      });
+      },
+      error:(err)=>{console.log(err);},
+      complete: ()=>{
+        this.OnResetForm();
+        this.alert = true;
+      }
+    });
     }else{
       console.log('No valido');}
   
