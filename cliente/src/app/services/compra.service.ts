@@ -15,10 +15,13 @@ export class CompraService {
       private http: HttpClient
      ) { }
 
+     /*
      test( CLIENTE: {CLIENTE: number}){
         return this.http.post(this.URL+"/compra/test", CLIENTE);
      }
+    */
 
+     //pestaña compra-carrito
      registrarcompraLista(arr: {COMPRA: number, OFERTA: any[], PIZZA: any[], BEBIDA: any[], ENTRANTES: any[], POSTRES:any[]}){
          return this.http.post(this.URL+"/compra/registrarcompraLista", arr);
      }
@@ -61,6 +64,7 @@ export class CompraService {
          }
        }
 
+       // añadir y borrar producto en carrito
      borrarCarrito(i: number){
         const carr = localStorage.getItem('carrito');
         var arr = new Array;
@@ -94,8 +98,21 @@ export class CompraService {
         }
      }
         
+    
+    //pestaña pago
+    guardarPago(pago:{COMPRA: number, TARJETA: boolean, RECOGIDA: boolean}){
+       return this.http.post(this.URL+"/compra/guardarPago", pago);
+    }
 
-     }
+    getCompra(compra:{ID:number}){
+        return this.http.post(this.URL+"/compra/getCompra", compra);
+    }
+
+    getModificado(compra:{ID:number}){
+        return this.http.post(this.URL+"/compra/getModificado", compra);
+    }
+  
+}
 
 
 

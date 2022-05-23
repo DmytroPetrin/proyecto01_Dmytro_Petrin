@@ -47,8 +47,9 @@ router.post('/registrarcompraLista', (req, res) => {
     });
     res.json('listaCompra guardadad');
 });
-//test
 
+//test
+/*
 router.post('/test', (req, res) => {
     //console.log(req);
     const {CLIENTE} = req.body;
@@ -64,6 +65,7 @@ router.post('/test', (req, res) => {
         }
         });
     });
+*/
 
 router.post('/registrarCompra',  (req, res) => {
     const { CLIENTE } = req.body;
@@ -210,6 +212,46 @@ router.post('/getcompraOferta', (req, res) => {
                 console.log(err);
             }
         })
+});
+
+//pestaña pago
+router.post('/guardarPago', (req, res)=>{
+    const{COMPRA, TARJETA, RECOGIDA}=req.body;
+    mysqlConnection.query('',)
+    [COMPRA, TARJETA, RECOGIDA],
+    (err, rows)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    }
+});
+
+router.post('/getCompra', (req, res)=>{
+    const{ID}=req.body;
+    mysqlConnection.query('',
+    [ID],
+    (err, rows)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+router.post('/getModificado', (req, res)=>{
+    const{ID}=req.body;
+    mysqlConnection.query('',
+    [ID],
+    (err, rows)=>{
+        if(!err){
+            res.json(rows);
+        }else{
+            console.log(err);
+        }
+    });
 });
 
 module.exports = router;
