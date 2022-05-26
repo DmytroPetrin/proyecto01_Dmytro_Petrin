@@ -32,6 +32,7 @@ export class PostreComponent implements OnInit {
   getPostres(){
     this.cartaService.getPostres().subscribe((res:any)=>{
       res.forEach((element:any)=>{
+        element.SIZE = element.TAMAÑO;
         this.postre.push(element);
         this.CANTIDAD.push(this.formBuilder.control('1'));
       });

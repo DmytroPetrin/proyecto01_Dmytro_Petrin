@@ -219,7 +219,10 @@ export class CarritoCompraComponent implements OnInit, DoCheck {
               this.compraService.registrarModificacion(mod).subscribe({
                 next: (res:any)=>{},
                 error: (err)=>{console.log(err);},
-                complete: ()=>{ this.router.navigate(['/private/pago']);}
+                complete: ()=>{ 
+                  localStorage.setItem('compra', COMPRA.toString());
+                  this.router.navigate(['/private/pago']);
+                }
               });
            }
        });

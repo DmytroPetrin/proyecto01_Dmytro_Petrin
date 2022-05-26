@@ -100,7 +100,7 @@ export class CompraService {
         
     
     //pestaña pago
-    guardarPago(pago:{COMPRA: number, TARJETA: boolean, RECOGIDA: boolean}){
+    guardarPago(pago:{COMPRA: number, TARJETA: boolean, EFECTIVO: boolean, RECOGIDA: boolean}){
        return this.http.post(this.URL+"/compra/guardarPago", pago);
     }
 
@@ -111,7 +111,14 @@ export class CompraService {
     getModificado(compra:{ID:number}){
         return this.http.post(this.URL+"/compra/getModificado", compra);
     }
+
+    getPrecioT(compra: {ID: number}){
+        return this.http.post(this.URL+"/compra/getPrecioT", compra);
+    }
   
+    getListaOferta(compra: {ID: number}){
+        return this.http.post(this.URL+"/compra/getListaOferta", compra);
+    }
 }
 
 

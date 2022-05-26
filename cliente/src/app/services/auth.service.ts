@@ -45,8 +45,9 @@ export class AuthService {
         localStorage.setItem('ROL', ROL);
       }
       if (ROL == 'cliente') {
-        const { ID_CLIENTE }: { ID_CLIENTE: string } = decode(token);
+        const { ID_CLIENTE , DIRECCION}: { ID_CLIENTE: string, DIRECCION: string } = decode(token);
         localStorage.setItem('ID', ID_CLIENTE);
+        localStorage.setItem('DIRECCION', DIRECCION);
       }
     }
   }

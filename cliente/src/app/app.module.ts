@@ -34,6 +34,7 @@ import { CarritoCompraComponent } from './components/carrito-compra/carrito-comp
 //import {MatFormFieldModule} from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PagoComponent } from './components/pago/pago.component';
+import { GraciasComponent } from './components/gracias/gracias.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { PagoComponent } from './components/pago/pago.component';
     PostreComponent,
     AdminEdofertaComponent,
     CarritoCompraComponent,
-    PagoComponent
+    PagoComponent,
+    GraciasComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, 

@@ -27,24 +27,33 @@ export class PizzaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPizza();
-    this.getIngredientePizza();
+    
     console.log(this.ingrediente);
+    console.log(this.pizza);
   }
 
-  getPizza(){
-    this.cartaService.getPizza().subscribe((res:any)=>{
-      res.forEach((element:any)=>{
-        this.pizza.push(element);
-        this.CANTIDAD.push(this.formBuilder.control('1'));
-      });
+  getPizza() {
+    this.cartaService.getPizza().subscribe({
+      next: (res: any) => {
+        res.forEach((element: any) => {
+          this.pizza.push(element);
+          this.CANTIDAD.push(this.formBuilder.control('1'));
+        });
+      },
+      error: (err) => { console.log(err); },
+      complete: () => { this.getIngredientePizza();}
     });
   }
 
-  getIngredientePizza(){
-    this.cartaService.getIngredientePizza().subscribe((res:any)=>{
-      res.forEach((element:any)=>{
-        this.ingrediente.push(element);
-      });
+  getIngredientePizza() {
+    this.cartaService.getIngredientePizza().subscribe({
+      next: (res: any) => {
+        res.forEach((element: any) => {
+          this.ingrediente.push(element);
+        });
+      },
+      error: (err) => { console.log(err); },
+      complete: () => {this.ajustarDatos(); }
     });
   }
 
@@ -58,5 +67,27 @@ export class PizzaComponent implements OnInit {
 get CANTIDAD(){
   return this.cantidad.get('CANTIDAD') as FormArray;
 }
+
+  ajustarDatos() {
+    this.pizza.forEach(element => {
+      var arr = new Array;
+      for (let i = 0; i < this.ingrediente.length; i++) {
+        var element2 = this.ingrediente[i];
+        if (arr.length == 0 && element.ID_PIZZA == element2.PIZZA) {
+          arr.push(element2.IMAGEN);
+        } else if (arr.length != 0 && element.ID_PIZZA == element2.PIZZA) {
+          arr.forEach(element3 => {
+            if (element3 == element2.IMAGEN) {
+              //console.log(element.ID_PIZZA);
+              this.ingrediente[i].IMAGEN = '';
+              this.ingrediente[i].ALERGENOS = '';
+            } else {
+              arr.push(element2.IMAGEN);
+            }
+          });
+        }
+      }
+    });
+  }
 
 }

@@ -26,23 +26,34 @@ export class EntranteComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEntrantes();
-    this.getIngredienteEntrantes();
+    
   }
 
-  getEntrantes(){
-    this.cartaService.getEntrantes().subscribe((res:any)=>{
-      res.forEach((element:any)=>{
-        this.entrantes.push(element);
-        this.CANTIDAD.push(this.formBuilder.control('1'));
-      });
+  getEntrantes() {
+    this.cartaService.getEntrantes().subscribe({
+      next: (res: any) => {
+        res.forEach((element: any) => {
+          element.SIZE = element.TAMAÑO;
+          this.entrantes.push(element);
+          this.CANTIDAD.push(this.formBuilder.control('1'));
+        });
+      },
+      error: (err) => { console.log(err); },
+      complete: () => { this.getIngredienteEntrantes(); }
     });
   }
 
-  getIngredienteEntrantes(){
-    this.cartaService.getIngredienteEntrantes().subscribe((res:any)=>{
-      res.forEach((element:any)=>{
-        this.ingrediente.push(element);
-      });
+  getIngredienteEntrantes() {
+    this.cartaService.getIngredienteEntrantes().subscribe({
+      next: (res: any) => {
+        res.forEach((element: any) => {
+          this.ingrediente.push(element);
+        });
+      },
+      error: (err) => { console.log(err); },
+      complete: () => { 
+        this.ajustarDatos();
+       }
     });
   }
 
@@ -55,6 +66,28 @@ export class EntranteComponent implements OnInit {
 
 get CANTIDAD(){
   return this.cantidad.get('CANTIDAD') as FormArray;
+}
+
+ajustarDatos() {
+  this.entrantes.forEach(element => {
+    var arr = new Array;
+    for (let i = 0; i < this.ingrediente.length; i++) {
+      var element2 = this.ingrediente[i];
+      if (arr.length == 0 && element.ID_ENTRANTES == element2.ENTRANTES) {
+        arr.push(element2.IMAGEN);
+      } else if (arr.length != 0 && element.ID_ENTRANTES == element2.ENTRANTES) {
+        arr.forEach(element3 => {
+          if (element3 == element2.IMAGEN) {
+            //console.log(element.ID_ENTRANTES);
+            this.ingrediente[i].IMAGEN = '';
+            this.ingrediente[i].ALERGENOS = '';
+          } else {
+            arr.push(element2.IMAGEN);
+          }
+        });
+      }
+    }
+  });
 }
 
 }

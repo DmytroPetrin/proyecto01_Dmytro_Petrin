@@ -24,6 +24,7 @@ import { PostreComponent } from './components/postre/postre.component';
 import { AdminEdofertaComponent } from './components/admin-edoferta/admin-edoferta.component';
 import { CarritoCompraComponent } from './components/carrito-compra/carrito-compra.component';
 import { PagoComponent } from './components/pago/pago.component';
+import { GraciasComponent } from './components/gracias/gracias.component';
 
 
 //rutas que me permiten navegar por la pagina web
@@ -36,7 +37,8 @@ const routes: Routes = [
   {path:'private', component: PrivateComponent,   
       children:[
           {path: 'carrito-compra', component: CarritoCompraComponent},
-          {path: 'pago', component: PagoComponent}
+          {path: 'pago', component: PagoComponent},
+          {path: 'gracias', component: GraciasComponent}
       ], 
   canActivate:[RoleGuard], data: {expectedRole: 'cliente'}}, //se protege la ruta mediante un dato que se muestre tras el login
   {path:'admin', component: AdminComponent, 

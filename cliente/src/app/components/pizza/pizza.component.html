@@ -2,12 +2,12 @@
     <div class="container">
         <div class="row ">
             <ng-container *ngFor="let c of pizza; let i = index;">
-                <div class="col-4 ">
+                <div class="col-xl-4 col-md-4 col-sm-6">
                     <div class="card  margin-right margin-top">
                         <div class="card-body text-center ">
                             <img class="card-img-top"
                                 [src]="pizza[i].IMAGEN == '' ? '/assets/no_image1.png': pizza[i].IMAGEN">
-                            <h3 class="card-title">{{pizza[i].NOMBRE}}</h3>
+                            <h3 class="card-title font-weight-bold">{{pizza[i].NOMBRE}}</h3>
                             <div></div>
                             <div class="text-xl-right  font-weight-bold">{{pizza[i].PRECIO.toFixed(2)}}€</div>
                             <div class="text-right font-weight-light">Tamaño: {{pizza[i].SIZE}}</div>
