@@ -48,11 +48,11 @@ import { AuthService } from 'src/app/services/auth.service';
             break;
           }
           case "empleado": {
-            this.router.navigate(['empleado']);
+            this.router.navigate(['/empleado/cocina']);
             break;
           }
           case "admin": {
-            this.router.navigate(['admin']);
+            this.router.navigate(['/admin/edhorario']);
             break;
           }
         }

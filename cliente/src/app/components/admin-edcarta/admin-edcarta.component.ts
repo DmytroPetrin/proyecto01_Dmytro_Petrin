@@ -259,9 +259,56 @@ export class AdminEdcartaComponent implements OnInit, DoCheck {
             },
             error:(err)=>{console.log(err);},
             complete:()=>{
+              this.ajustarDatosPizza();
+              this.ajustarDatosEntrante();
               console.log(this.ingredientePizza);
               console.log(this.ingredienteEntrante);
               console.log(this.entrante);
+              
+            }
+          });
+        }
+
+        ajustarDatosPizza() {
+          this.pizza.forEach(element => {
+            var arr = new Array;
+            for (let i = 0; i < this.ingredientePizza.length; i++) {
+              var element2 = this.ingredientePizza[i];
+              if (arr.length == 0 && element.ID_PIZZA == element2.PIZZA) {
+                arr.push(element2.IMAGEN);
+              } else if (arr.length != 0 && element.ID_PIZZA == element2.PIZZA) {
+                arr.forEach(element3 => {
+                  if (element3 == element2.IMAGEN) {
+                    //console.log(element.ID_PIZZA);
+                    this.ingredientePizza[i].IMAGEN = '';
+                    this.ingredientePizza[i].ALERGENOS = '';
+                  } else {
+                    arr.push(element2.IMAGEN);
+                  }
+                });
+              }
+            }
+          });
+        }
+
+        ajustarDatosEntrante() {
+          this.entrante.forEach(element => {
+            var arr = new Array;
+            for (let i = 0; i < this.ingredienteEntrante.length; i++) {
+              var element2 = this.ingredienteEntrante[i];
+              if (arr.length == 0 && element.ID_ENTRANTES == element2.ENTRANTES) {
+                arr.push(element2.IMAGEN);
+              } else if (arr.length != 0 && element.ID_ENTRANTES == element2.ENTRANTES) {
+                arr.forEach(element3 => {
+                  if (element3 == element2.IMAGEN) {
+                    //console.log(element.ID_ENTRANTES);
+                    this.ingredienteEntrante[i].IMAGEN = '';
+                    this.ingredienteEntrante[i].ALERGENOS = '';
+                  } else {
+                    arr.push(element2.IMAGEN);
+                  }
+                });
+              }
             }
           });
         }

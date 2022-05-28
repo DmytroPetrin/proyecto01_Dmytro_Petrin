@@ -1,98 +1,96 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-  <a class="navbar-brand" routerLink="oferta" routerLinkActive="active">
-    <div class="row">
-      <img id="logo" [src]="'/assets/logo.png'">
-    <div class="row">
-      <div id="logo-texto1" class="col-12 h3" >Pizzeria</div>
-      <div id="logo-texto2" class="col-12 display-3" >entro</div>
+<nav class=" nopm navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <a class="navbar-brand col-4 nopm" routerLink="oferta" routerLinkActive="active">
+    <div class="row nopm">
+      <img class="rotate nopm" id="logo" [src]="'/assets/logo.png'">
+   <div class="col-6 text-left nopm">
+        <div id="logo-texto1" class="col-12 h3 nopm">Pizzeria</div>
+        <div id="logo-texto2" class="col-12 display-3 nopm">entro</div>
+     </div>
     </div>
-    </div>
+    
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+   aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 align-right">
+  <div class="collapse navbar-collapse " id="navbarTogglerDemo02">
+    <ul class=" navbar-nav mr-auto mt-2 mt-lg-0 text-left ">
       
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="oferta">Oferta </a>
+      <li class="nav-item tmargin ">
+        <a class="nav-link" routerLink="oferta" routerLinkActive="active-link">Oferta </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="pizza">Pizza</a>
+      <li class="nav-item tmargin">
+        <a class="nav-link" routerLink="pizza" routerLinkActive="active-link">Pizza</a>
       </li>
-      <li class="nav-item ">
-        <a class="nav-link" routerLink="entrante">Entrante</a>
+      <li class="nav-item tmargin">
+        <a class="nav-link" routerLink="entrante" routerLinkActive="active-link">Entrante</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="bebida">Bebida</a>
+      <li class="nav-item tmargin">
+        <a class="nav-link" routerLink="bebida" routerLinkActive="active-link">Bebida</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="postre">Postre</a>
+      <li class="nav-item tmargin">
+        <a class="nav-link" routerLink="postre" routerLinkActive="active-link">Postre</a>
       </li>
-      <li class="nav-item " *ngIf="title == 'admin'">
-        <a class="nav-link" routerLink="admin" routerLinkActive="active"  >Admin</a>
+      <li class="nav-item tmargin" *ngIf="title == 'admin'">
+        <a class="nav-link" routerLink="/admin/edhorario" routerLinkActive="active-link"  >Admin</a>
       </li>
-      <li class="nav-item " *ngIf="title == 'empleado'">
-        <a class="nav-link" routerLink="empleado" routerLinkActive="active"  >Empleado</a>
+      <li class="nav-item tmargin" *ngIf="title == 'empleado'">
+        <a class="nav-link" routerLink="/empleado/cocina" routerLinkActive="active-link"  >Empleado</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="login" routerLinkActive="active">Login</a>
+      <li class="nav-item tmargin">
+        <a class="nav-link" routerLink="login" routerLinkActive="active-link">Login</a>
       </li>
-      <li class="nav-item" *ngIf="title != 'admin' && title != 'empleado'">
-        <a class="nav-link" routerLink="registrar" routerLinkActive="active"  >Registrate</a>
+      <li class="nav-item tmargin" *ngIf="title != 'admin' && title != 'empleado'">
+        <a class="nav-link" routerLink="registrar" routerLinkActive="active-link"  >Registrate</a>
       </li>
-      <li class="nav-item" *ngIf="nombre && (title == 'admin' || title == 'empleado' || title=='cliente')">
-        <a class="nav-link" >¡Hola {{nombre}}!</a>
+      <li class="nav-item tmargin dropdown" *ngIf="nombre && (title == 'admin' || title == 'empleado' || title=='cliente')">
+        <a class="nav-link dropdown-toggle" aria-labelledby="navbarDropdown" id="navbarDropdown" role="button"
+         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ¡Hola {{nombre}}!</a>
+        <div class="dropdown-menu bg-light" >
+          <a class="dropdown-item bg-light" (click)="logOut()"> Salir
+            <img id="img_salir" [src]="'/assets/switch_off.svg'">
+          </a>
+        </div>
       </li>
-      <li class="nav-item" *ngIf="title != 'admin' && title != 'empleado'">
-        <a class="nav-link" routerLink="/private/carrito-compra" routerLinkActive="active" >
+      
+      <li class="nav-item tmargin " *ngIf="title != 'admin' && title != 'empleado'">
+        <a class="nav-link mio" routerLink="/private/carrito-compra">
           <div class="row">
-            <div id="num-carrito"  *ngIf="compra>0">{{compra}}</div>
-            <img id="img-carrito"  [src]="'/assets/carrito.svg'">
+            <img class=" nopm" id="img-carrito"  [src]="'/assets/carrito.svg'">
+            <div class="nopm" id="num-carrito" alt="carrito" *ngIf="compra>0">{{compra}}</div>
           </div> 
         </a>
       </li>
-      <li class="nav-item" *ngIf="title == 'admin' || title == 'empleado' || title=='cliente'">
-        <a class="nav-link" (click)="logOut()">
-          <img id="img_salir" [src]="'/assets/switch_off.svg'">
-        </a>
-      </li>
+     
     </ul>
    
   </div>
   </nav>
   
 
-
-<div class="conteiner mt-5">
+<!--LOS COMPONENTES SE MUESTRAN AQUI-->
+<div class="conteiner mt-5 size">
   <router-outlet></router-outlet>
 </div>
 
 <!-- Footer -->
 <footer class="bg-dark text-center text-white">
   <!-- Grid container -->
-  <div class="container p-4">
+  <div class="container">
     
-    
-    <!-- Section: Text -->
-    <section class="mb-4">
-      <p>
-        Esta página web esta creada con el objetivo de estudiar el framework “Angular” basado en el Node.js.
-      </p>
-    </section>
-    
-    <!-- Section: Links -->
-    <section class="">
+    <section >
       <!--Grid row-->
       <div class="row">
         <!--Grid column-->
-        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-          <h5 class="text-uppercase ">Productos</h5>
+        <div class="col-2 mb-4 mb-md-0 mt-2">
+          <h4 class="text-uppercase ">Productos</h4>
 
           <ul class="list-unstyled mb-0">
             <li class="nav-item active">
-              <a class="nav-link text-white" routerLink="oferta">Oferta </a>
+              <a class="nav-link text-white " routerLink="oferta">Oferta </a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" routerLink="pizza">Pizza</a>
@@ -108,16 +106,59 @@
             </li>
           </ul>
         </div>
-       
+
+        <div class="col-4 mb-4 mb-md-0 mt-2">
+          <h4 class="text-uppercase">Aviso Legal</h4>
+          <ul class="list-unstyled mb-0">
+            <li>Aviso legal</li>
+            <li>Condiciones generales</li>
+            <li>Política de privacidad</li>
+            <li>Política de cookies</li>
+            <li>Condiciones promocionales</li>
+            <li>Prevención de Fraude Electronico</li>
+          </ul>
+        </div>
         
-        <!--Grid column-->
+        <div class="col-4 mb-4 mb-md-0 mt-2">
+          <h4 class="text-uppercase">Ayuda</h4>
+          <ul class="list-unstyled mb-0">
+            <li>Localizacion de Pizzería</li>
+            <li>Contacto</li>
+            <li>Preguntas Frecuentes</li>
+            <li>COVID-19</li>
+          </ul>
+        </div>
+       
+        <div class="col-2 mb-4 mb-md-0 mt-2">
+          <h4 class="text-uppercase">Síguenos</h4>
+          <ul class="list-unstyled mb-0 text-center">
+            <li class="nav-item">
+              <a class="nav-link grow" href="https://twitter.com/?lang=es"><img id="icon" [src]="'/assets/twitter.svg'"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link grow" href="https://www.facebook.com/"><img id="icon" [src]="'/assets/facebook.svg'"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link grow" href="https://www.instagram.com/"><img id="icon" [src]="'/assets/instagram.svg'"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link grow" href="https://github.com/DmytroPetrin/proyecto01_Dmytro_Petrin"><img id="icon" [src]="'/assets/github.svg'"></a>
+            </li>
+          </ul>
+        </div>
+       
       </div>
       <!--Grid row-->
     </section>
-    <!-- Section: Links -->
+    
   </div>
-  <!-- Grid container -->
-
+  
+<section class="col-12">
+      <p>
+        Esta página web esta creada con el objetivo de presentar el trabajo fin de Ciclo Formativo en CIFP Carlos III. 
+        La página web se basa en framworks principales como: Angular.js, Node.js y Express.js.
+      </p>
+    </section>
   <!-- Copyright -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
     © 2022 Copyright:

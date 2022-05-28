@@ -1,13 +1,15 @@
 <section>
     <div class="conteiner">
         <div class="row">
-           <div class="col-2"></div>
-            <form >
+           <div class="col-12"></div>
+           <div class="col-sm-4"></div>
+            <form class="text-center col-sm-4 mb-4">
                 <button routerLink="../empleado/horario" type="button" class="btn btn-outline-primary">Horario</button>
-                <button routerLink="../empleado/salon" type="submit" class="btn btn-lg btn-primary">Salon</button>
-                <button  routerLink="../empleado/cocina" type="submit" class="btn btn-lg btn-primary ">Cocina</button>
+                <!--<button routerLink="../empleado/salon" type="submit" class="btn btn-lg btn-primary">Salon</button>-->
+                <button  routerLink="../empleado/cocina" type="submit" class="ml-2 btn  btn-outline-primary ">Cocina</button>
             </form>
         </div>
     </div>
 </section>
+<!--visualizacion de componentes hijos-->
 <router-outlet></router-outlet>

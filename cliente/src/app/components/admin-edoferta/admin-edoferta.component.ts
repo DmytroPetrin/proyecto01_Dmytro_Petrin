@@ -226,7 +226,55 @@ export class AdminEdofertaComponent implements OnInit, DoCheck {
         });
       },
       error: (err) => { console.log(err); },
-      complete: () => {console.log(this.ingrediente);}
+      complete: () => {
+        this.ajustarDatos();
+        console.log(this.ingrediente);
+      }
+    });
+  }
+
+
+  ajustarDatos() {
+    this.carta.forEach(element => {
+      if (element.QUE == 'P') {
+        var arr = new Array;
+        for (let i = 0; i < this.ingrediente.length; i++) {
+          var element2 = this.ingrediente[i];
+          if (arr.length == 0 && element.ID == element2.ID && element2.PE == 'P') {
+            arr.push(element2.IMAGEN);
+          } else if (arr.length != 0 && element.ID == element2.ID && element2.PE == 'P') {
+            arr.forEach(element3 => {
+              if (element3 == element2.IMAGEN) {
+                //console.log(element.ID);
+                this.ingrediente[i].IMAGEN = '';
+                this.ingrediente[i].ALERGENOS = '';
+              } else {
+                arr.push(element2.IMAGEN);
+              }
+            });
+          }
+        }
+      }
+      else if (element.QUE == 'E') {
+        var arr = new Array;
+        for (let i = 0; i < this.ingrediente.length; i++) {
+          var element2 = this.ingrediente[i];
+          if (arr.length == 0 && element.ID == element2.ID && element2.PE == 'E') {
+            arr.push(element2.IMAGEN);
+          } else if (arr.length != 0 && element.ID == element2.ID && element2.PE == 'E') {
+            arr.forEach(element3 => {
+              if (element3 == element2.IMAGEN) {
+                //console.log(element.ID);
+                this.ingrediente[i].IMAGEN = '';
+                this.ingrediente[i].ALERGENOS = '';
+              } else {
+                arr.push(element2.IMAGEN);
+              }
+            });
+          }
+        }
+      }
+
     });
   }
 

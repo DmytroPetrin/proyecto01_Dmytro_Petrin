@@ -1,8 +1,8 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-1"></div>
-            <div class="card col-10 ">
+            <div class="col-0 col-md-1 col-xl-2"></div>
+            <div class="card col-12 col-md-10 col-xl-8">
                 <div class="card-body ">
                     <form>
                         <h1 class=" col-12 text-center card-title">Pago</h1>
@@ -15,7 +15,7 @@
                                     <div *ngIf="compra[i].QUE=='O'" class="col-12 border border-primary">
                                         <br>
                                         <div class="row">
-                                        <div class="text-left col-12 ">Oferta:</div>
+                                        <div class="text-left col-12 text-nowrap">Oferta:</div>
                                         <div class="col"></div>
                                         <div class="col-11 text-left font-weight-bold"><u>{{compra[i].NOMBRE}}</u></div>
                                         <ng-container *ngFor="let oferta of listaOferta; let k = index;">
@@ -33,7 +33,7 @@
                                                         <ng-container
                                                             *ngIf="arr_mod[l][0] && arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].COMENTARIO">
                                                             <div class="col-4"></div>
-                                                            <div class="col-3 font-weight-bold"><em>Comentario:</em></div>
+                                                            <div class="col-3 font-weight-bold text-nowrap"><em>Comentario:</em></div>
                                                             <div class="col-5">{{mod[m].COMENTARIO}}</div>
                                                         </ng-container>
                                                         <ng-container
@@ -62,7 +62,7 @@
                                     <div *ngIf="compra[i].QUE=='P'" class="col-12 border border-primary">
                                         <br>
                                         <div class="row">
-                                        <div class="text-left col-2 ">Pizza:</div>
+                                        <div class="text-left col-2 text-nowrap">Pizza:</div>
                                         <div class="col-10 text-left font-weight-bold"><u>{{compra[i].NOMBRE}}</u></div>
                                         <ng-container *ngFor="let item of mod; let m = index;">
                                             <ng-container *ngIf="(compra[i].ID == mod[m].PIZZA)">
@@ -70,7 +70,7 @@
                                                     <ng-container
                                                         *ngIf="!arr_mod[l][0] && arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].COMENTARIO">
                                                         <div class="col-4"></div>
-                                                        <div class="col-3 font-weight-bold"><em>Comentario:</em></div>
+                                                        <div class="col-3 font-weight-bold text-nowrap"><em>Comentario:</em></div>
                                                         <div class="col-5">{{mod[m].COMENTARIO}}</div>
                                                     </ng-container>
                                                     <ng-container
@@ -95,7 +95,7 @@
                                     <div *ngIf="compra[i].QUE=='E'" class="col-12 border border-primary">
                                         <br>
                                         <div class="row">
-                                        <div class="text-left col-2 ">Entrante:</div>
+                                        <div class="text-left col-2 text-nowrap">Entrante:</div>
                                         <div class="col-10 text-left font-weight-bold"><u>{{compra[i].NOMBRE}}</u></div>
                                         <ng-container *ngFor="let item of mod; let m = index;">
                                             <ng-container *ngIf="(compra[i].ID == mod[m].ENTRANTES)">
@@ -103,7 +103,7 @@
                                                     <ng-container
                                                         *ngIf="!arr_mod[l][0] && arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].COMENTARIO">
                                                         <div class="col-4"></div>
-                                                        <div class="col-3 font-weight-bold"><em>Comentario:</em></div>
+                                                        <div class="col-3 font-weight-bold text-nowrap"><em>Comentario:</em></div>
                                                         <div class="col-5">{{mod[m].COMENTARIO}}</div>
                                                     </ng-container>
                                                     <ng-container
@@ -128,7 +128,7 @@
                                     <div *ngIf="compra[i].QUE=='B'" class="col-12 border border-primary">
                                         <br>
                                        <div class="row">
-                                        <div class="text-left col-2 ">Bebida:</div>
+                                        <div class="text-left col-2 text-nowrap">Bebida:</div>
                                         <div class="col-10 text-left font-weight-bold"><u>{{compra[i].NOMBRE}}</u></div>
                                        </div>
                                     </div>
@@ -137,7 +137,7 @@
                                     <div *ngIf="compra[i].QUE=='PO'" class="col-12 border border-primary">
                                         <br>
                                         <div class="row">
-                                            <div class="text-left col-2 ">Bebida:</div>
+                                            <div class="text-left col-2 text-nowrap">Postre:</div>
                                             <div class="col-10 text-left font-weight-bold"><u>{{compra[i].NOMBRE}}</u></div>
                                         </div>
                                      </div>
@@ -147,29 +147,29 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-3 text-left font-weight-bold">Método de pago: </div>
-                            <div class="form-group  col-2">
+                            <div class="col-4 col-md-3  text-left font-weight-bold text-nowrap">Método de pago: </div>
+                            <div class="form-group  col-2 text-left">
                                 <input type='checkbox' class="form-check-input" [checked]="tarjeta"
                                     (change)="tarjetaPago($event)">
                                 <label class="form-check-label"> Tarjeta</label>
                             </div>
-                            <div class="form-group col-2">
+                            <div class="form-group col-2 text-left">
                                 <input type='checkbox' class="form-check-input" [checked]="efectivo"
                                     (change)="efectivoPago($event)">
                                 <label class="form-check-label"> Ejectivo</label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3"></div>
-                            <div class="form-group col-2">
+                            <div class="col-4 col-md-3"></div>
+                            <div class="form-group col-3 col-md-2">
                                 <input type='checkbox' class="form-check-input" [checked]="domicilio"
                                     (change)="aDomicilio($event)">
-                                <label class="form-check-label">A domicilio</label>
+                                <label class="form-check-label text-nowrap">A domicilio</label>
                             </div>
                             <div class="form-group col-4">
                                 <input type='checkbox' class="form-check-input" [checked]="recoger"
                                     (change)="aRecoger($event)">
-                                <label class="form-check-label">Recoger en Restaurante</label>
+                                <label class="form-check-label text-nowrap">Recoger en Restaurante</label>
                             </div>
                         </div>
                         <div class="alert alert-success text-center" role="alert" *ngIf="recoger">
@@ -182,14 +182,14 @@
 
 
                         <div class="row">
-                            <div class="col-6">
-                                <h1>Precio Total: {{precioTotal.toFixed(2)}}€*</h1>
+                            <div class="col-12 col-sm-6 text-center">
+                                <h1 class="col-12 text-nowrap">Precio Total: {{precioTotal.toFixed(2)}}€*</h1>
                             </div>
-                            <div class="col-6 text-right" *ngIf="tarjeta">
-                                <button class="btn btn-primary align-right" (click)="guardarPago()">Pagar</button>
+                            <div class="col-12 col-sm-6 text-center" *ngIf="tarjeta">
+                                <button class="col-12 btn btn-primary align-right" (click)="guardarPago()">Pagar</button>
                             </div>
-                            <div class="col-6 text-right" *ngIf="efectivo">
-                                <button class=" btn btn-success " (click)="guardarPago()">Reservar</button>
+                            <div class="col-12 col-sm-6 text-center" *ngIf="efectivo">
+                                <button class="col-12 btn btn-success " (click)="guardarPago()">Reservar</button>
                             </div>
                         </div>
                     </form>

@@ -5,3 +5,19 @@
 #imagen_alergeno{
     height: 50px;
 }
+
+.form-control.login-user{
+    border: 0px solid white !important;
+}
+
+.alert-danger{
+    color: red;
+    background: white;
+    border-color: antiquewhite;
+    margin-bottom: 5px;
+
+}
+
+.container-error-danger{
+    padding: 3px;
+}

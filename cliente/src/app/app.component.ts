@@ -57,6 +57,7 @@ export class AppComponent implements OnInit, DoCheck{
     localStorage.removeItem('NOMBRE');
     localStorage.removeItem('ID');
     this.router.navigate(['login']);
+    this.title_old = "algo";
     this.checkUser();
    }
 

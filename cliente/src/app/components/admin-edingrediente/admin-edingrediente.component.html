@@ -2,7 +2,8 @@
 <section id="editar_empleado" class="mb-5">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+            <div class="col-0  col-md-0 col-lg-2 "></div>
+            <div class="col-12  col-md-6 col-lg-4 mb-5">
                 <div class="card_register">
                     <div class="card">
                         <div class="card-body text-center">
@@ -37,9 +38,13 @@
                                         </div>
                                     </div>
                                  </div>
-                                 <div class="form-group">
-                                    <input type='checkbox'  class="form-check-input" [checked]="visible" (change)="isVisible($event)">
-                                    <label class="form-check-label"> ¿Este ingrediente es un extra?</label>   
+                                 <div class="form-group text-left">
+                                     <div class="col-2"></div>
+                                     <div class="col-10">
+                                         <input type='checkbox'  class="form-check-input" [checked]="visible" (change)="isVisible($event)">
+                                         <label class="form-check-label text-nowrap"> ¿Este ingrediente es un extra?</label>
+                                     </div>
+                                       
                                  </div>
                                  <div *ngIf="visible" >
                                     <div class="form-group">
@@ -68,19 +73,20 @@
                 </div>
             </div>
             
-            <div class="col-4">
+            <div class="col-12  col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card body text-center">
                         <img [src]="ing.IMAGEN2 == '' ? '/assets/no_image.png': ing.IMAGEN2" class="card-img-top">
                         
-                        <h3 class="col-12"> {{ing.NOMBRE == '' ? 'Ingrediente': ing.NOMBRE}}</h3>
+                        <h2 class="col-12"> {{ing.NOMBRE == '' ? 'Ingrediente': ing.NOMBRE}}</h2>
                         <div class="col-12" *ngIf="visible"> {{ing.PRECIO == '' ? 'Precio': ing.PRECIO +' €'}}  </div>
-                        <div class="col-10">{{ing.ALERGENO == '' ? 'Alergeno': ing.ALERGENO}}</div>
+                        <div class="col-12">{{ing.ALERGENO == '' ? 'Alergeno': ing.ALERGENO}}</div>
+                        <div class="col-10"></div>
                         <img class="col-3" [src]="ing.IMAGEN == '' ? '/assets/no_image.png': ing.IMAGEN" >
                      </div>
                 </div>
             </div>
-         
+            <div class="col-0  col-md-0 col-lg-2"></div>
             
         </div>
     </div>
@@ -89,14 +95,14 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <table class="table table-striped">
+                <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Alergeno</th>
-                            <th scope="col">Img Alergeno</th>
+                            <th scope="col">Imagen Alergeno</th>
                             <th scope="col">Precio</th>
-                            <th scope="col">Img Extra</th>
+                            <th scope="col">Imagen Extra</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>

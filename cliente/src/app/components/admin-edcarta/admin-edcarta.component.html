@@ -1,12 +1,13 @@
-<section id="editar_empleado" class="mb-5">
+<section >
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+            <div class="col-0  col-md-0 col-lg-2"></div>
+            <div class="col-12  col-md-6 col-lg-4 mb-5">
                 <div class="card_register">
                     <div class="card">
                         <div class="card-body text-center">
                              <form [formGroup]="menu" (ngSubmit)="onRegister()">
-                                <h3 class="h3 mb-3 font-weight-nomrmal">Añadir Menu</h3>
+                                <h2 class="h3 mb-3 font-weight-nomrmal">Añadir Menú</h2>
                                  <div class="form-group">
                                     <div class="form-group">
                                         <select class="form-control" [(ngModel)]="menux.CARTA" formControlName="CARTA" required autoforcus>
@@ -63,23 +64,7 @@
                                         <option [value]="item.NOMBRE" *ngFor="let item of lista">{{item.NOMBRE}}</option>
                                     </select>
                                 </div>
-                                <!--probando cosas-->
-                                <!--
-                                <div class="form-group">
-                                    <select class="form-control" multiple="multiple">
-                                        <option>
-                                            Primero
-                                        </option>
-                                        <option selected="null">
-                                           Segundo
-                                        </option>
-                                        <option selected="true">
-                                            Tercero
-                                        </option>
-                                        
-                                    </select>
-                                </div>
-                                 -->
+                               
                                  <button  type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="menu.invalid">Guardar</button>
                              </form>
                              
@@ -88,11 +73,11 @@
                 </div>
             </div>
             
-            <div class="col-5">
+            <div class="col-12 col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card body text-center">
                         <img [src]="menux.IMAGEN == '' ? '/assets/no_image.png': menux.IMAGEN" class="card-img-top">
-                        <h1> {{menux.NOMBRE == '' ? 'NOMBRE': menux.NOMBRE}}</h1>
+                        <h2> {{menux.NOMBRE == '' ? 'Nombre': menux.NOMBRE}}</h2>
                         <p>{{menux.PRECIO == '' ? 'PRECIO': menux.PRECIO}} €</p>
                         <p>{{menux.SIZE == '' ? 'TAMAÑO': menux.SIZE}}</p>
                         <p>{{menux.DESCRIPCION == '' ? 'DESCRIPCIÓN': menux.DESCRIPCION}}</p>
@@ -100,6 +85,7 @@
                     </div>
                 </div>
             </div>
+            <div class="col-0 col-md-0  col-lg-2"></div>
          </div>
     </div>
 </section> 
@@ -108,7 +94,7 @@
         <h1>Pizza</h1>
         <div class="row">
             <ng-container *ngFor="let c of pizza; let i = index;">
-                <div id="cards" class="col-4" *ngIf="c">
+                <div id="cards" class="col-6 col-md-4" *ngIf="c">
                     <div class="card  margin-right margin-top">
                         <div class="card-body text-center ">
                             <img class="card-img-top"
@@ -157,7 +143,7 @@
         <h1>Entrante</h1>
         <div class="row">
             <ng-container *ngFor="let c of entrante; let i = index;">
-                <div id="cards" class="col-4" *ngIf="c">
+                <div id="cards" class="col-6 col-md-4" *ngIf="c">
                     <div class="card  margin-right margin-top">
                         <div class="card-body text-center ">
                             <img class="card-img-top"
@@ -207,7 +193,7 @@
         <h1>Bebida</h1>
         <div class="row">
             <ng-container *ngFor="let c of bebida; let i = index;">
-                <div id="cards" class="col-4" *ngIf="c">
+                <div id="cards" class="col-6 col-md-4" *ngIf="c">
                     <div class="card  margin-right margin-top">
                         <div class="card-body text-center ">
                             <img class="card-img-top"
@@ -232,7 +218,7 @@
         <h1>Postre</h1>
         <div class="row">
             <ng-container *ngFor="let c of postre; let i = index;">
-                <div id="cards" class="col-4" *ngIf="c">
+                <div id="cards" class="col-6 col-md-4" *ngIf="c">
                     <div class="card  margin-right margin-top">
                         <div class="card-body text-center ">
                             <img class="card-img-top"
