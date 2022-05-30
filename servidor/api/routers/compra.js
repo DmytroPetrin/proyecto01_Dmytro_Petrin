@@ -354,4 +354,16 @@ router.post('/getPrecioT', (req, res)=>{
     });
 });
 
+//pestaña empleado-cocina
+router.get('/getPedido', (req, res)=>{
+    mysqlConnection.query('SELECT P.*, C.FECHA_HORA, CL.DIRECCION FROM pago P INNER JOIN compra C ON P.COMPRA = C.ID_COMPRA INNER JOIN cliente CL ON C.CLIENTE = CL.ID_CLIENTE WHERE DATE(C.FECHA_HORA) = CURRENT_DATE ORDER BY TIME(C.FECHA_HORA) DESC;',
+    (err, rows)=>{
+        if(!err){
+            res.json(rows);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
 module.exports = router;

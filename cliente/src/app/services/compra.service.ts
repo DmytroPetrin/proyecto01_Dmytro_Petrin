@@ -97,6 +97,11 @@ export class CompraService {
             localStorage.setItem('carrito', this.arr_carrito.toString()) ;
         }
      }
+
+     resetCarrito(){
+         this.arr_carrito = [];
+         localStorage.setItem('carrito','');
+     }
         
     
     //pestaña pago
@@ -118,6 +123,11 @@ export class CompraService {
   
     getListaOferta(compra: {ID: number}){
         return this.http.post(this.URL+"/compra/getListaOferta", compra);
+    }
+
+    //pestaña empleado-cocina
+    getPedido(){
+        return this.http.get(this.URL+'/compra/getPedido');
     }
 }
 

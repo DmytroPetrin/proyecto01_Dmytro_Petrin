@@ -1,1 +1,187 @@
-<p>empleado-cocina works!</p>
+<section>
+    <div class="container">
+        
+         <ng-containter *ngFor="let to of todo; let t = index;"> 
+        <div class="row compra">
+           
+                <div class="col-0 col-md-1 col-xl-2"></div>
+                <div class="card col-12 col-md-10 col-xl-8">
+
+                    <div class="card-body ">
+                        <form>
+                            <h1 class=" col-12 text-center card-title">Pedido: {{todo[t][6]}}</h1>
+                            <div class="col-12 text-center">Hora: {{pedido[t].FECHA_HORA | date: 'dd/MM/yyyy, HH:mm'}}</div>
+                            
+                            <!--lista de compra-->
+                            <div class="row ">
+                                <ng-container *ngFor="let c of todo[t][0]; let i = index;">
+                                    <ng-container *ngFor="let c of counter(todo[t][0][i].CANTIDAD); let j = index;">
+                                        <br>
+                                        <!--OFERTA-->
+                                        <div *ngIf="todo[t][0][i].QUE=='O'" class="compra col-12 border border-primary">
+                                            <br>
+                                            <div class="row mb-4">
+                                                <div class="text-left col-12 text-nowrap">Oferta:</div>
+                                                <div class="col"></div>
+                                                <div class="col-11 text-left font-weight-bold">
+                                                    <u>{{todo[t][0][i].NOMBRE}}</u></div>
+                                                <ng-container *ngFor="let oferta of todo[t][1]; let k = index;">
+                                                    <ng-container *ngIf="todo[t][1][k].OFERTA == todo[t][0][i].ID">
+                                                        <ng-container
+                                                            *ngFor="let item of counter(todo[t][1][k].CANTIDAD/todo[t][0][i].CANTIDAD); let z = index;">
+                                                            <div class="col-2"></div>
+                                                            <div class="text-left col-10 font-weight-bold">
+                                                                {{todo[t][1][k].NOMBRE}}</div>
+                                                            <ng-container *ngFor="let item of todo[t][2]; let m = index;">
+                                                                <ng-container
+                                                                    *ngIf="(todo[t][0][i].ID == todo[t][2][m].OFERTA && todo[t][1][k].PIZZA == todo[t][2][m].PIZZA && todo[t][2][m].PIZZA) ||
+                                                       (todo[t][0][i].ID == todo[t][2][m].OFERTA && todo[t][1][k].ENTRANTES == todo[t][2][m].ENTRANTES && todo[t][2][m].ENTRANTES)">
+                                                                    <ng-container
+                                                                        *ngFor="let item of todo[t][5]; let l = index">
+                                                                        <ng-container
+                                                                            *ngIf="todo[t][5][l][0] && todo[t][5][l][4] == m && todo[t][5][l][3]==j && todo[t][5][l][5] == todo[t][2][m].NUM_MOD && todo[t][2][m].COMENTARIO">
+                                                                            <div class="col-4"></div>
+                                                                            <div
+                                                                                class="col-3 font-weight-bold text-nowrap">
+                                                                                <em>Comentario:</em></div>
+                                                                            <div class="col-5">{{todo[t][2][m].COMENTARIO}}
+                                                                            </div>
+                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="todo[t][5][l][4] == m && todo[t][5][l][3]==j && todo[t][5][l][5] == todo[t][2][m].NUM_MOD && todo[t][2][m].NOMBRE">
+                                                                            <ng-container
+                                                                                *ngIf="(l==0 || (l > 0 && todo[t][5][l][5]!=todo[t][5][l-1][5])) ">
+                                                                                <div class="col-4"></div>
+                                                                                <div
+                                                                                    class="col-8 font-weight-bold text-left">
+                                                                                    <em>Extra:</em>
+                                                                                </div>
+                                                                            </ng-container>
+                                                                            <div class="col-5"></div>
+                                                                            <div class="col-7 text-left">-
+                                                                                {{todo[t][2][m].NOMBRE}}
+                                                                            </div>
+                                                                        </ng-container>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
+
+                                        <!--PIZZA-->
+                                        <div *ngIf="todo[t][0][i].QUE=='P'" class="compra col-12 border border-primary">
+                                            <br>
+                                            <div class="row">
+                                                <div class="text-left col-2 text-nowrap">Pizza:</div>
+                                                <div class="col-10 text-left font-weight-bold">
+                                                    <u>{{todo[t][0][i].NOMBRE}}</u></div>
+                                                <ng-container *ngFor="let item of todo[t][2]; let m = index;">
+                                                    <ng-container *ngIf="(todo[t][0][i].ID == todo[t][2][m].PIZZA)">
+                                                        <ng-container *ngFor="let item of todo[t][5]; let l = index">
+                                                            <ng-container
+                                                                *ngIf="!todo[t][5][l][0] && todo[t][5][l][4] == m && todo[t][5][l][3]==j && todo[t][5][l][5] == todo[t][2][m].NUM_MOD && todo[t][2][m].COMENTARIO && !todo[t][2][m].OFERTA">
+                                                                <div class="col-4"></div>
+                                                                <div class="col-3 font-weight-bold text-nowrap">
+                                                                    <em>Comentario:</em></div>
+                                                                <div class="col-5">{{todo[t][2][m].COMENTARIO}}</div>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="todo[t][5][l][4] == m && todo[t][5][l][3]==j && todo[t][5][l][5] == todo[t][2][m].NUM_MOD && todo[t][2][m].NOMBRE && !todo[t][2][m].OFERTA">
+                                                                <ng-container
+                                                                    *ngIf="l==0 || (l > 0 && todo[t][5][l][5]!=todo[t][5][l-1][5])">
+                                                                    <div class="col-4"></div>
+                                                                    <div class="col-8 font-weight-bold text-left">
+                                                                        <em>Extra:</em>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <div class="col-5"></div>
+                                                                <div class="col-7 text-left">- {{todo[t][2][m].NOMBRE}}
+                                                                </div>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
+                                        <!--ENTRANTES-->
+                                        <div *ngIf="todo[t][0][i].QUE=='E'" class="compra col-12 border border-primary">
+                                            <br>
+                                            <div class="row">
+                                                <div class="text-left col-2 text-nowrap">Entrante:</div>
+                                                <div class="col-10 text-left font-weight-bold">
+                                                    <u>{{todo[t][0][i].NOMBRE}}</u></div>
+                                                <ng-container *ngFor="let item of todo[t][2]; let m = index;">
+                                                    <ng-container *ngIf="(todo[t][0][i].ID == todo[t][2][m].ENTRANTES)">
+                                                        <ng-container *ngFor="let item of todo[t][5]; let l = index">
+                                                            <ng-container
+                                                                *ngIf="!todo[t][5][l][0] && todo[t][5][l][4] == m && todo[t][5][l][3]==j && todo[t][5][l][5] == todo[t][2][m].NUM_MOD && todo[t][2][m].COMENTARIO && !todo[t][2][m].OFERTA">
+                                                                <div class="col-4"></div>
+                                                                <div class="col-3 font-weight-bold text-nowrap">
+                                                                    <em>Comentario:</em></div>
+                                                                <div class="col-5">{{todo[t][2][m].COMENTARIO}}</div>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="todo[t][5][l][4] == m && todo[t][5][l][3]==j && todo[t][5][l][5] == todo[t][2][m].NUM_MOD && todo[t][2][m].NOMBRE && !todo[t][2][m].OFERTA">
+                                                                <ng-container
+                                                                    *ngIf="l==0 || (l > 0 && todo[t][5][l][5]!=todo[t][5][l-1][5])">
+                                                                    <div class="col-4"></div>
+                                                                    <div class="col-8 font-weight-bold text-left">
+                                                                        <em>Extra:</em>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <div class="col-5"></div>
+                                                                <div class="col-7 text-left">- {{todo[t][2][m].NOMBRE}}
+                                                                </div>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
+                                        <!--BEBIDA-->
+                                        <div *ngIf="todo[t][0][i].QUE=='B'" class="compra col-12 border border-primary">
+                                            <br>
+                                            <div class="row">
+                                                <div class="text-left col-2 text-nowrap">Bebida:</div>
+                                                <div class="col-10 text-left font-weight-bold">
+                                                    <u>{{todo[t][0][i].NOMBRE}}</u></div>
+                                            </div>
+                                        </div>
+
+                                        <!--POSTRES-->
+                                        <div *ngIf="todo[t][0][i].QUE=='PO'" class="compra col-12 border border-primary">
+                                            <br>
+                                            <div class="row">
+                                                <div class="text-left col-2 text-nowrap">Postre:</div>
+                                                <div class="col-10 text-left font-weight-bold">
+                                                    <u>{{todo[t][0][i].NOMBRE}}</u></div>
+                                            </div>
+                                        </div>
+
+                                    </ng-container>
+                                </ng-container>
+
+                            </div>
+
+                        </form>
+                        <div class="row">
+                            <div class="col-12" *ngIf="pedido[t].RECOGIDA == 0 "><strong>Direccion: </strong>{{pedido[t].DIRECCION}}</div>
+                            <div class="col-12" *ngIf="pedido[t].RECOGIDA == 1 "><strong>Recogida en local</strong></div>
+                            <div class="col-12  text-center font-weight-bold" *ngIf="pedido[t].TARJETA == 1"><h2>## Pagado ##</h2></div>
+                            <div class="col-12  text-center font-weight-bold" *ngIf="pedido[t].EFECTIVO == 1"><h2>## Pendiente de Pagado ##</h2></div>
+                         </div>
+                    </div>
+                    
+                </div>
+                <div class="col-0 col-md-1 col-xl-2"></div>
+           
+        </div>
+        </ng-containter>
+    </div>
+</section>

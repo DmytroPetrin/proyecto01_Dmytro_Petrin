@@ -93,91 +93,172 @@ export class PagoComponent implements OnInit {
       }
       //se crea array especial para poder diferenciar productos iguales
       var rarr = new Array;
+      var mod1 = new Array;
+      this.mod.forEach(element=>{
+        mod1.push(element);
+      });
+
+      var arr = new Array;
       this.compra.forEach(element =>{
         var num = -1;
         var x = 0;
+        var control = -1;
         
          for(let i = 0; i<element.CANTIDAD; i++){
-           for(let j = 0; j< this.mod.length; j++){
-             if(rarr.length != this.mod.length){
+           control = -1;
+           
+           for(let j = 0; j< mod1.length; j++){
+             if(rarr.length != mod1.length){
                rarr.push(0);
              }
              if(element.QUE == 'P'){
-               if(element.ID == this.mod[j].PIZZA){
-                 if(this.mod[j].NUM_MOD || this.mod[j].NUM_MOD == 0){
-                   if(num == -1){
-                       num = this.mod[j].NUM_MOD;
-                       x = num - i
+               if(mod1[j] && element.ID == mod1[j].PIZZA && !mod1[j].OFERTA){
+                 if(mod1[j].NUM_MOD || mod1[j].NUM_MOD == 0){
+                   if(control==-1){
+                      control=mod1[j].NUM_MOD;
                    }
-                   if(j < this.cmodNum[this.mod[j].NUM_MOD] && this.mod[j].NUM_MOD - i == x){ 
-                     this.arr_mod.push([null, element.ID, null, i, j, this.mod[j].NUM_MOD]);
+                   
+                   if((j < this.cmodNum[mod1[j].NUM_MOD]) && (control==mod1[j].NUM_MOD)  && (rarr[j] == 0) ){ 
+                     this.arr_mod.push([null, element.ID, null, i, j, mod1[j].NUM_MOD]);
                      rarr[j]=1;
+                     delete mod1[j];
                    }
                  }
                }
              }
+
              if(element.QUE == 'E'){
-              if(element.ID == this.mod[j].ENTRANTES){
-                if(this.mod[j].NUM_MOD || this.mod[j].NUM_MOD == 0){ 
-                  if(num == -1){
-                      num = this.mod[j].NUM_MOD;
-                      x = num - i
-                  }
-                  if(j < this.cmodNum[this.mod[j].NUM_MOD] && this.mod[j].NUM_MOD - i == x){ 
-                    this.arr_mod.push([null, null, element.ID, i, j, this.mod[j].NUM_MOD]);
+              if(mod1[j] && element.ID == mod1[j].ENTRANTES && !mod1[j].OFERTA){
+                if(mod1[j].NUM_MOD || mod1[j].NUM_MOD == 0){ 
+                  if(control==-1){
+                    control=mod1[j].NUM_MOD;
+                 }
+                  if((j < this.cmodNum[mod1[j].NUM_MOD]) && (control==mod1[j].NUM_MOD) && (rarr[j] == 0)){ 
+                    this.arr_mod.push([null, null, element.ID, i, j, mod1[j].NUM_MOD]);
                     rarr[j]=1;
+                    delete mod1[j];
                   }
                 }
               }
             }
              if (element.QUE == 'O') {
-               if (element.ID == this.mod[j].OFERTA) {
-                 if (this.mod[j].NUM_MOD || this.mod[j].NUM_MOD == 0) {
-                    if (j < this.cmodNum[this.mod[j].NUM_MOD] && rarr[j] == 0) {
+               if (mod1[j] && element.ID == mod1[j].OFERTA) {
+                 if (mod1[j].NUM_MOD || mod1[j].NUM_MOD == 0) {
+                    if (j < this.cmodNum[mod1[j].NUM_MOD] && rarr[j] == 0) {
                       
-                      this.arr_mod.forEach(am =>{
+                      //true significa que es distinto
+                      var id = true;
+                      var posicion = true;
+                      var posicion2 = false;
+                      var nuM = true;
+                      var nuM2 = false;
+                      var p = true;
+                      var e = true;
+                      var p1 = true;
+                      var e1 = true;
+                      var rep = true
+                      this.arr_mod.forEach(am => {
+                        //interrumpo el bucle
+                        if (rep) {
+                          //si existe mismo id
+                          if (am[0] == element.ID) {
+                            id = false;
+                            //si es misma oferta
+                            if (am[3] == i) {
+                              posicion = false;
+                              //si es mismo num_mod
+                              if (am[5] == mod1[j].NUM_MOD) {
+                                nuM = false;
+                                //si es misma idPizza o idEntrante
+                                if (((am[1] == mod1[j].PIZZA) && am[1] && mod1[j].PIZZA)) {
+                                  p = false;
+                                  p1=true;
+                                  rep = false;
+                                }
+                                else if (((am[2] == mod1[j].ENTRANTES) && am[2] && mod1[j].ENTRANTES)) {
+                                  e = false;
+                                  e1=true;
+                                  rep = false;
+                                }
+                              }
+                              // si es disitino num_mod
+                              if (am[5] != mod1[j].NUM_MOD) {
+                                nuM2 = true;
+                                nuM = false;
+                                //si es misma idPizza o idEntrante
+                                if (((am[1] == mod1[j].PIZZA) && am[1] && mod1[j].PIZZA)) {
+                                  p1 = false;
+                                  p = true;
+                                  rep = false;
+                                }
+                                else if (((am[2] == mod1[j].ENTRANTES) && am[2] && mod1[j].ENTRANTES)) {
+                                  e1 = false;
+                                  e = true;
+                                  rep = false;
+                                }
+                              }
+                            }
+                            //si es distinta oferta
+                            else if(am[3] != i) {
+                              posicion2 = true;
+                              rep = false;
+                            }
+                          }
+                          //console.log('id: '+  element.ID + " pizza: "+mod1[j].PIZZA+ id + posicion + nuM+p+e);
+                        }
 
-                        if((am[3]==i) && (am[4]!=j) && (am[5]==this.mod[j].NUM_MOD) && (am[0]==element.ID) && rarr[j] == 0){
-                          this.arr_mod.push([element.ID, this.mod[j].PIZZA, this.mod[j].ENTRANTES, i, j, this.mod[j].NUM_MOD]);
-                          rarr[j]=1;
-                        }
-                        
-                        else if((am[3]==i) && (am[4]!=j) && (am[5]!=this.mod[j].NUM_MOD) && (am[1]!=this.mod[j].PIZZA)&& am[1] && this.mod[j].PIZZA && (am[0]==element.ID) && rarr[j] == 0){
-                          this.arr_mod.push([element.ID, this.mod[j].PIZZA, this.mod[j].ENTRANTES, i, j, this.mod[j].NUM_MOD]);
-                          rarr[j]=1;
-                        }
-                        else if((am[3]==i) && (am[4]!=j) && (am[5]!=this.mod[j].NUM_MOD) && (am[2]!=this.mod[j].ENTRANTES) && am[2] && this.mod[j].ENTRANTES && (am[0]==element.ID) && rarr[j] == 0){
-                          this.arr_mod.push([element.ID, this.mod[j].PIZZA, this.mod[j].ENTRANTES, i, j, this.mod[j].NUM_MOD]);
-                          rarr[j]=1;
-                        }
-                        else if((am[3]!=i) && (am[4]!=j) && (am[5]!=this.mod[j].NUM_MOD) && (am[0]==element.ID) && rarr[j] == 0){
-                          this.arr_mod.push([element.ID, this.mod[j].PIZZA, this.mod[j].ENTRANTES, i, j, this.mod[j].NUM_MOD]);
-                          rarr[j]=1;
-                          //console.log('funck'+ i +" "+ j + " " +am[1]+" "+this.mod[j].NUM_MOD);
-                          //console.log(rarr);
-                        }
-                        else if((am[0]!=element.ID) && (am[4]!=j) && (am[5]!=this.mod[j].NUM_MOD) && (rarr[j] == 0) && (x == 0)){
-                          this.arr_mod.push([element.ID, this.mod[j].PIZZA, this.mod[j].ENTRANTES, i, j, this.mod[j].NUM_MOD]);
-                          rarr[j]=1;
-                          x++;
-                        }
-                        
                       });
-                         if(this.arr_mod.length == 0){
-                          this.arr_mod.push([element.ID, this.mod[j].PIZZA, this.mod[j].ENTRANTES, i, j, this.mod[j].NUM_MOD]);
-                          rarr[j]=1;
-                         }
+                      
+                      
+                      //id totalmente distinto
+                      if (id && posicion && nuM && (p || e)) {
+                        this.arr_mod.push([element.ID, mod1[j].PIZZA, mod1[j].ENTRANTES, i, j, mod1[j].NUM_MOD]);
+                        arr.push([element.ID, mod1[j].PIZZA, mod1[j].ENTRANTES, i, j, mod1[j].NUM_MOD]);
+                        rarr[j] = 1;
+                        delete mod1[j];
+                        
+                      }
+                       
+                      //mismo id misma oferta mismo numod y misma pizza o entrante
+                      else if (!id && !posicion && !nuM && (!p || !e) && (p1||e1)) {
+                        this.arr_mod.push([element.ID, mod1[j].PIZZA, mod1[j].ENTRANTES, i, j, mod1[j].NUM_MOD]);
+                        arr.push([element.ID, mod1[j].PIZZA, mod1[j].ENTRANTES, i, j, mod1[j].NUM_MOD]);
+                        rarr[j] = 1;
+                        delete mod1[j];
+                      }
+                      
+                      //mismo id misma posicion distinto num_mod
+                      else if (!id && !posicion && nuM2 ) {
+                        this.arr_mod.push([element.ID, mod1[j].PIZZA, mod1[j].ENTRANTES, i, j, mod1[j].NUM_MOD]);
+                        arr.push([element.ID, mod1[j].PIZZA, mod1[j].ENTRANTES, i, j, mod1[j].NUM_MOD]);
+                        rarr[j] = 1;
+                        delete mod1[j];
+                      }
+
+                      
                        }
-                    
-                  
-
-
-                 }
+                     }
                }
              }
            }
          }
       });
+     //ultimo ajuste
+     
+     var n = 0;
+     while (n == 0) {
+       n = 1;
+       arr.forEach(aa => {
+         for (let r = 0; r < this.arr_mod.length; r++) {
+           var bb = this.arr_mod[r];
+           if (aa[0] == bb[0] && aa[1] == bb[1] && aa[2] == bb[2] && aa[3] == bb[3] && aa[5] > bb[5]) {
+              this.arr_mod[r][3]++;
+                   arr[r][3]++;
+                   n = 0;
+              }
+         }
+       });
+     }
    }
    
    //se obtienen datos de la base de datos
@@ -249,6 +330,7 @@ export class PagoComponent implements OnInit {
          complete: ()=>{
            localStorage.setItem('compra', '');
            localStorage.setItem('carrito', '');
+           this.compraService.resetCarrito();
            this.router.navigate(['/private/gracias']);
          }
        });

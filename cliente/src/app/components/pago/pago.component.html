@@ -38,7 +38,7 @@
                                                         </ng-container>
                                                         <ng-container
                                                             *ngIf="arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].NOMBRE">
-                                                            <ng-container *ngIf="l==0 || (l > 0 && arr_mod[l][5]!=arr_mod[l-1][5])">
+                                                            <ng-container *ngIf="(l==0 || (l > 0 && arr_mod[l][5]!=arr_mod[l-1][5])) ">
                                                                 <div class="col-4"></div>
                                                                 <div class="col-8 font-weight-bold text-left">
                                                                     <em>Extra:</em>
@@ -68,13 +68,13 @@
                                             <ng-container *ngIf="(compra[i].ID == mod[m].PIZZA)">
                                                 <ng-container *ngFor="let item of arr_mod; let l = index">
                                                     <ng-container
-                                                        *ngIf="!arr_mod[l][0] && arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].COMENTARIO">
+                                                        *ngIf="!arr_mod[l][0] && arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].COMENTARIO && !mod[m].OFERTA">
                                                         <div class="col-4"></div>
                                                         <div class="col-3 font-weight-bold text-nowrap"><em>Comentario:</em></div>
                                                         <div class="col-5">{{mod[m].COMENTARIO}}</div>
                                                     </ng-container>
                                                     <ng-container
-                                                        *ngIf="arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].NOMBRE">
+                                                        *ngIf="arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].NOMBRE && !mod[m].OFERTA">
                                                         <ng-container *ngIf="l==0 || (l > 0 && arr_mod[l][5]!=arr_mod[l-1][5])">
                                                             <div class="col-4"></div>
                                                             <div class="col-8 font-weight-bold text-left">
@@ -101,13 +101,13 @@
                                             <ng-container *ngIf="(compra[i].ID == mod[m].ENTRANTES)">
                                                 <ng-container *ngFor="let item of arr_mod; let l = index">
                                                     <ng-container
-                                                        *ngIf="!arr_mod[l][0] && arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].COMENTARIO">
+                                                        *ngIf="!arr_mod[l][0] && arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].COMENTARIO && !mod[m].OFERTA">
                                                         <div class="col-4"></div>
                                                         <div class="col-3 font-weight-bold text-nowrap"><em>Comentario:</em></div>
                                                         <div class="col-5">{{mod[m].COMENTARIO}}</div>
                                                     </ng-container>
                                                     <ng-container
-                                                        *ngIf="arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].NOMBRE">
+                                                        *ngIf="arr_mod[l][4] == m && arr_mod[l][3]==j && arr_mod[l][5] == mod[m].NUM_MOD && mod[m].NOMBRE && !mod[m].OFERTA">
                                                         <ng-container *ngIf="l==0 || (l > 0 && arr_mod[l][5]!=arr_mod[l-1][5])">
                                                             <div class="col-4"></div>
                                                             <div class="col-8 font-weight-bold text-left">
