@@ -1,8 +1,7 @@
-const mysql = require('mysql');
 
-const mysqlConnection = mysql.createConnection({
-   
-     host: 'localhost',
+const mysql = require('pg')
+const mysqlConnection = new mysql.Pool({
+    host: 'localhost',
     user: 'dima',
     password: '123456',
     database: 'pizzeria',
