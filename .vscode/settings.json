@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "postgresql://dima:Sx1GlzwL7OZhqmJy5MUwxYMvj0iNF39V@dpg-cq8nu02ju9rs73b71ldg-a.frankfurt-postgres.render.com/pizzeria_47bh",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "pizzeria-db-deployed",
+            "database": "pizzeria_47bh",
+            "username": "dima"
+        }
+    ]
+}
