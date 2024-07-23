@@ -1,11 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2022 a las 20:04:36
--- Versión del servidor: 10.4.21-MariaDB
--- Versión de PHP: 8.0.10
+-- Active: 1721755205182@@dpg-cq8nu02ju9rs73b71ldg-a.frankfurt-postgres.render.com@5432@postgres@public
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,14 +20,14 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `bebida`
 --
 
-CREATE TABLE `bebida` (
-  `ID_BEBIDA` int(4) NOT NULL,
-  `NOMBRE` varchar(30) NOT NULL,
-  `PRECIO` float(4,2) DEFAULT 0.00,
-  `DESCRIPCION` text DEFAULT NULL,
-  `TAMAÑO` varchar(20) NOT NULL,
-  `IMAGEN` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE 'bebida' (
+  'ID_BEBIDA' NUMERIC(4) NOT NULL,
+  'NOMBRE' varchar(30) NOT NULL,
+  'PRECIO' NUMERIC(4,2) DEFAULT 0.00,
+  'DESCRIPCION' text DEFAULT NULL,
+  'TAMAÑO' varchar(20) NOT NULL,
+  'IMAGEN' varchar(100) DEFAULT NULL
+);
 
 --
 -- Volcado de datos para la tabla `bebida`
