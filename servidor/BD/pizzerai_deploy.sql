@@ -1,39 +1,20 @@
--- Active: 1721755205182@@dpg-cq8nu02ju9rs73b71ldg-a.frankfurt-postgres.render.com@5432@postgres@public
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `pizzeria`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `bebida`
---
-
-CREATE TABLE 'bebida' (
-  'ID_BEBIDA' NUMERIC(4) NOT NULL,
-  'NOMBRE' varchar(30) NOT NULL,
-  'PRECIO' NUMERIC(4,2) DEFAULT 0.00,
-  'DESCRIPCION' text DEFAULT NULL,
-  'TAMAÑO' varchar(20) NOT NULL,
-  'IMAGEN' varchar(100) DEFAULT NULL
+CREATE TABLE "bebida" (
+  "ID_BEBIDA" NUMERIC(4) NOT NULL,
+  "NOMBRE" varchar(30) NOT NULL,
+  "PRECIO" NUMERIC(4,2) DEFAULT 0.00,
+  "DESCRIPCION" text DEFAULT NULL,
+  "TAMAÑO" varchar(20) NOT NULL,
+  "IMAGEN" varchar(100) DEFAULT NULL
 );
+
 
 --
 -- Volcado de datos para la tabla `bebida`
 --
 
-INSERT INTO `bebida` (`ID_BEBIDA`, `NOMBRE`, `PRECIO`, `DESCRIPCION`, `TAMAÑO`, `IMAGEN`) VALUES
+INSERT INTO "bebida" ("ID_BEBIDA", "NOMBRE", "PRECIO", "DESCRIPCION", "TAMAÑO", "IMAGEN") VALUES
 (8, 'Agua', 1.00, 'Agua refrescante', '500 ml', 'http://127.0.0.1:8081/bebida/agua_500ml.jpg'),
 (12, 'Aquarius Limón', 1.25, 'Bebida refrescante.', '500 ml', 'https://pizerria-centro-imageserver.onrender.com/bebida/aquarius_limon_500ml.jpg'),
 (13, 'Aquarius Naranja', 1.25, 'Bebida refrescante.', '500 ml', 'https://pizerria-centro-imageserver.onrender.com/bebida/aquarius_naranja_500ml.jpg'),
@@ -45,7 +26,7 @@ INSERT INTO `bebida` (`ID_BEBIDA`, `NOMBRE`, `PRECIO`, `DESCRIPCION`, `TAMAÑO`,
 (25, 'Fanta Limón', 1.45, 'Bebida refrescante.', '500 ml', 'https://pizerria-centro-imageserver.onrender.com/bebida/fanta_limon_500ml.jpg'),
 (26, 'Fanta Naranja', 1.45, 'Bebida refrescante.', '500 ml', 'https://pizerria-centro-imageserver.onrender.com/bebida/fanta_naranja_500ml.jpg'),
 (30, 'Bifrutas Mediterráneo', 0.75, 'Bebida refrescante.', '330 ml', 'https://pizerria-centro-imageserver.onrender.com/bebida/bifrutas_mediterraneso_lata.jpg'),
-(31, 'Coca-Cola ', 1.45, 'Bebida refrescante.', '500 ml', 'https://pizerria-centro-imageserver.onrender.com/bebida/coca_cola_500ml.jpg'),
+(31, 'Coca-Cola', 1.45, 'Bebida refrescante.', '500 ml', 'https://pizerria-centro-imageserver.onrender.com/bebida/coca_cola_500ml.jpg'),
 (32, 'Aquarius Limón Lata', 0.95, 'Bebida refrescante.', '330 ml', 'https://pizerria-centro-imageserver.onrender.com/bebida/aquarius_limon_lata.jpg'),
 (33, 'Aquarius Naranja Lata', 0.95, 'Bebida refrescante.', '330 ml', 'https://pizerria-centro-imageserver.onrender.com/bebida/aquarius_naranja_lata.jpg'),
 (34, 'Coca-Cola Light Lata', 0.95, 'Bebida refrescante.', '330 ml', 'https://pizerria-centro-imageserver.onrender.com/bebida/coca_cola_lite_lata.jpg'),
@@ -60,23 +41,23 @@ INSERT INTO `bebida` (`ID_BEBIDA`, `NOMBRE`, `PRECIO`, `DESCRIPCION`, `TAMAÑO`,
 -- Estructura de tabla para la tabla `cliente`
 --
 
-CREATE TABLE `cliente` (
-  `ID_CLIENTE` int(10) NOT NULL,
-  `NOMBRE` varchar(40) NOT NULL,
-  `APELLIDO` varchar(40) DEFAULT NULL,
-  `FECHA_NACIMIENTO` date DEFAULT NULL,
-  `TELEFONO` int(9) NOT NULL,
-  `DIRECCION` varchar(100) NOT NULL,
-  `EMAIL` varchar(40) NOT NULL,
-  `CONTRASEÑA` varchar(40) NOT NULL,
-  `ROL` varchar(40) NOT NULL DEFAULT 'cliente'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "cliente" (
+  "ID_CLIENTE" NUMERIC(10) NOT NULL,
+  "NOMBRE" varchar(40) NOT NULL,
+  "APELLIDO" varchar(40) DEFAULT NULL,
+  "FECHA_NACIMIENTO" date DEFAULT NULL,
+  "TELEFONO" NUMERIC(9) NOT NULL,
+  "DIRECCION" varchar(100) NOT NULL,
+  "EMAIL" varchar(40) NOT NULL,
+  "CONTRASEÑA" varchar(40) NOT NULL,
+  "ROL" varchar(40) NOT NULL DEFAULT 'cliente'
+);
 
 --
 -- Volcado de datos para la tabla `cliente`
 --
 
-INSERT INTO `cliente` (`ID_CLIENTE`, `NOMBRE`, `APELLIDO`, `FECHA_NACIMIENTO`, `TELEFONO`, `DIRECCION`, `EMAIL`, `CONTRASEÑA`, `ROL`) VALUES
+INSERT INTO "cliente" ("ID_CLIENTE", "NOMBRE", "APELLIDO", "FECHA_NACIMIENTO", "TELEFONO", "DIRECCION", "EMAIL", "CONTRASEÑA", "ROL") VALUES
 (16, 'test_todo', '', '2022-01-09', 123456789, 'Murcia', 'test_todo@gmail.com', 'Hola1234', 'cliente'),
 (27, 'Cliente', 'Cliente', '2022-05-07', 111222333, 'Murcia', 'cliente@gmail.com', '1234Hola', 'cliente'),
 (28, 'XXX', 'XXX', '2022-05-14', 111222333, 'Murcia', 'cliente2@gmail.com', '1234Hola', 'cliente'),
@@ -88,18 +69,19 @@ INSERT INTO `cliente` (`ID_CLIENTE`, `NOMBRE`, `APELLIDO`, `FECHA_NACIMIENTO`, `
 -- Estructura de tabla para la tabla `compra`
 --
 
-CREATE TABLE `compra` (
-  `ID_COMPRA` int(10) NOT NULL,
-  `FECHA_HORA` datetime DEFAULT current_timestamp(),
-  `CLIENTE` int(10) DEFAULT NULL,
-  `DESCRIPCION` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "compra" (
+  "ID_COMPRA" numeric(10) NOT NULL,
+  "FECHA_HORA" timestamp DEFAULT current_timestamp,
+  "CLIENTE" numeric(10) DEFAULT NULL,
+  "DESCRIPCION" text DEFAULT NULL
+);
+
 
 --
 -- Volcado de datos para la tabla `compra`
 --
 
-INSERT INTO `compra` (`ID_COMPRA`, `FECHA_HORA`, `CLIENTE`, `DESCRIPCION`) VALUES
+INSERT INTO "compra" ("ID_COMPRA", "FECHA_HORA", "CLIENTE", "DESCRIPCION") VALUES
 (14, '2022-05-18 21:11:25', 27, NULL),
 (15, '2022-05-18 21:13:31', 27, NULL),
 (16, '2022-05-18 21:13:49', 27, NULL),
@@ -185,20 +167,20 @@ INSERT INTO `compra` (`ID_COMPRA`, `FECHA_HORA`, `CLIENTE`, `DESCRIPCION`) VALUE
 -- Estructura de tabla para la tabla `compra_lista`
 --
 
-CREATE TABLE `compra_lista` (
-  `COMPRA` int(10) NOT NULL,
-  `OFERTA` int(4) DEFAULT NULL,
-  `PIZZA` int(4) DEFAULT NULL,
-  `BEBIDA` int(4) DEFAULT NULL,
-  `ENTRANTES` int(4) DEFAULT NULL,
-  `POSTRES` int(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "compra_lista" (
+  "COMPRA" numeric(10) NOT NULL,
+  "OFERTA" numeric(4) DEFAULT NULL,
+  "PIZZA" numeric(4) DEFAULT NULL,
+  "BEBIDA" numeric(4) DEFAULT NULL,
+  "ENTRANTES" numeric(4) DEFAULT NULL,
+  "POSTRES" numeric(4) DEFAULT NULL
+);
 
 --
 -- Volcado de datos para la tabla `compra_lista`
 --
 
-INSERT INTO `compra_lista` (`COMPRA`, `OFERTA`, `PIZZA`, `BEBIDA`, `ENTRANTES`, `POSTRES`) VALUES
+INSERT INTO "compra_lista" ("COMPRA", "OFERTA", "PIZZA", "BEBIDA", "ENTRANTES", "POSTRES") VALUES
 (8, 64, NULL, NULL, NULL, NULL),
 (8, NULL, 27, NULL, NULL, NULL),
 (8, NULL, 21, NULL, NULL, NULL),
@@ -382,25 +364,25 @@ INSERT INTO `compra_lista` (`COMPRA`, `OFERTA`, `PIZZA`, `BEBIDA`, `ENTRANTES`, 
 -- Estructura de tabla para la tabla `empleados`
 --
 
-CREATE TABLE `empleados` (
-  `ID_EMPLEADO` int(4) NOT NULL,
-  `NOMBRE` varchar(40) NOT NULL,
-  `APELLIDO` varchar(40) NOT NULL,
-  `DNI` varchar(9) NOT NULL,
-  `DIRECCION` varchar(40) NOT NULL,
-  `EMAIL` varchar(40) NOT NULL,
-  `CONTRASEÑA` varchar(40) NOT NULL,
-  `ROL` varchar(40) NOT NULL,
-  `FECHA_ALTA` date DEFAULT NULL,
-  `FECHA_BAJA` date DEFAULT NULL,
-  `TELEFONO` int(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "empleados" (
+  "ID_EMPLEADO" numeric(4) NOT NULL,
+  "NOMBRE" varchar(40) NOT NULL,
+  "APELLIDO" varchar(40) NOT NULL,
+  "DNI" varchar(9) NOT NULL,
+  "DIRECCION" varchar(40) NOT NULL,
+  "EMAIL" varchar(40) NOT NULL,
+  "CONTRASEÑA" varchar(40) NOT NULL,
+  "ROL" varchar(40) NOT NULL,
+  "FECHA_ALTA" date DEFAULT NULL,
+  "FECHA_BAJA" date DEFAULT NULL,
+  "TELEFONO" numeric(9) NOT NULL
+);
 
 --
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`ID_EMPLEADO`, `NOMBRE`, `APELLIDO`, `DNI`, `DIRECCION`, `EMAIL`, `CONTRASEÑA`, `ROL`, `FECHA_ALTA`, `FECHA_BAJA`, `TELEFONO`) VALUES
+INSERT INTO "empleados" ("ID_EMPLEADO", "NOMBRE", "APELLIDO", "DNI", "DIRECCION", "EMAIL", "CONTRASEÑA", "ROL", "FECHA_ALTA", "FECHA_BAJA", "TELEFONO") VALUES
 (25, 'admin', 'admin', '12345678X', 'MURCIA', 'admin@gmail.com', '1234Hola', 'admin', '2022-04-23', NULL, 111111111),
 (26, 'empleado', 'empleado', '12345678X', 'MURCIA', 'empleado@gmail.com', '1234Hola', 'empleado', '2022-04-23', NULL, 666555666),
 (32, 'Sandra ', 'Bullock', 'X5566688T', 'EEUU', 'bullock@email.com', '1234Hola', 'empleado', '2021-11-10', NULL, 987456120),
@@ -415,20 +397,20 @@ INSERT INTO `empleados` (`ID_EMPLEADO`, `NOMBRE`, `APELLIDO`, `DNI`, `DIRECCION`
 -- Estructura de tabla para la tabla `entrantes`
 --
 
-CREATE TABLE `entrantes` (
-  `ID_ENTRANTES` int(4) NOT NULL,
-  `NOMBRE` varchar(30) NOT NULL,
-  `PRECIO` float(4,2) DEFAULT 0.00,
-  `TAMAÑO` varchar(20) NOT NULL,
-  `DESCRIPCION` text DEFAULT NULL,
-  `IMAGEN` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "entrantes" (
+  "ID_ENTRANTES" numeric(4) NOT NULL,
+  "NOMBRE" varchar(30) NOT NULL,
+  "PRECIO" numeric(4,2) DEFAULT 0.00,
+  "TAMAÑO" varchar(20) NOT NULL,
+  "DESCRIPCION" text DEFAULT NULL,
+  "IMAGEN" varchar(300) DEFAULT NULL
+);
 
 --
 -- Volcado de datos para la tabla `entrantes`
 --
 
-INSERT INTO `entrantes` (`ID_ENTRANTES`, `NOMBRE`, `PRECIO`, `TAMAÑO`, `DESCRIPCION`, `IMAGEN`) VALUES
+INSERT INTO "entrantes" ("ID_ENTRANTES", "NOMBRE", "PRECIO", "TAMAÑO", "DESCRIPCION", "IMAGEN") VALUES
 (5, 'Alitas de Pollo', 6.00, 'Mediano', 'Siete alitas de pollo crujientes', 'https://pizerria-centro-imageserver.onrender.com/entrante/alitas_pollo.png'),
 (6, 'Aros de Cebolla', 5.00, 'Mediano', 'Una cesta de aros de cebolla muy crujientes.', 'https://pizerria-centro-imageserver.onrender.com/entrante/aros_cebolla.png'),
 (7, 'Bacon Cheese Fries', 4.50, 'Mediana', '¡Un entrante especial!', 'https://pizerria-centro-imageserver.onrender.com/entrante/bacon-cheese-fries.png'),
@@ -449,16 +431,16 @@ INSERT INTO `entrantes` (`ID_ENTRANTES`, `NOMBRE`, `PRECIO`, `TAMAÑO`, `DESCRIP
 -- Estructura de tabla para la tabla `entrantes_ingrediente`
 --
 
-CREATE TABLE `entrantes_ingrediente` (
-  `ENTRANTES` int(4) NOT NULL,
-  `INGREDIENTE` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "entrantes_ingrediente" (
+  "ENTRANTES" numeric(4) NOT NULL,
+  "INGREDIENTE" numeric(4) NOT NULL
+);
 
 --
 -- Volcado de datos para la tabla `entrantes_ingrediente`
 --
 
-INSERT INTO `entrantes_ingrediente` (`ENTRANTES`, `INGREDIENTE`) VALUES
+INSERT INTO "entrantes_ingrediente" ("ENTRANTES", "INGREDIENTE") VALUES
 (5, 72),
 (6, 54),
 (6, 117),
@@ -531,18 +513,18 @@ INSERT INTO `entrantes_ingrediente` (`ENTRANTES`, `INGREDIENTE`) VALUES
 -- Estructura de tabla para la tabla `extras`
 --
 
-CREATE TABLE `extras` (
-  `ID_EXTRA` int(4) NOT NULL,
-  `PRECIO` float(4,2) DEFAULT 0.00,
-  `IMAGEN` varchar(100) DEFAULT NULL,
-  `INGREDIENTE` int(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "extras" (
+  "ID_EXTRA" numeric(4) NOT NULL,
+  "PRECIO" numeric(4,2) DEFAULT 0.00,
+  "IMAGEN" varchar(300) DEFAULT NULL,
+  "INGREDIENTE" numeric(4) DEFAULT NULL
+);
 
 --
 -- Volcado de datos para la tabla `extras`
 --
 
-INSERT INTO `extras` (`ID_EXTRA`, `PRECIO`, `IMAGEN`, `INGREDIENTE`) VALUES
+INSERT INTO "extras" ("ID_EXTRA", "PRECIO", "IMAGEN", "INGREDIENTE") VALUES
 (4, 1.15, 'https://pizerria-centro-imageserver.onrender.com/ingredientes/mejillones.jpg', 21),
 (6, 0.50, 'https://pizerria-centro-imageserver.onrender.com/ingredientes/ketchup.jpg', 24),
 (9, 0.30, 'https://pizerria-centro-imageserver.onrender.com/ingredientes/aceite_vinagre.jpg', 27),
@@ -593,18 +575,18 @@ INSERT INTO `extras` (`ID_EXTRA`, `PRECIO`, `IMAGEN`, `INGREDIENTE`) VALUES
 -- Estructura de tabla para la tabla `ingredientes`
 --
 
-CREATE TABLE `ingredientes` (
-  `ID_INGREDIENTE` int(4) NOT NULL,
-  `NOMBRE` varchar(30) NOT NULL,
-  `ALERGENOS` varchar(20) DEFAULT NULL,
-  `IMAGEN` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "ingredientes" (
+  "ID_INGREDIENTE" NUMERIC(4) NOT NULL,
+  "NOMBRE" varchar(30) NOT NULL,
+  "ALERGENOS" varchar(20) DEFAULT NULL,
+  "IMAGEN" varchar(300) DEFAULT NULL
+);
 
 --
 -- Volcado de datos para la tabla `ingredientes`
 --
 
-INSERT INTO `ingredientes` (`ID_INGREDIENTE`, `NOMBRE`, `ALERGENOS`, `IMAGEN`) VALUES
+INSERT INTO "ingredientes" ("ID_INGREDIENTE", "NOMBRE", "ALERGENOS", "IMAGEN") VALUES
 (20, 'Masa de Pizza', 'gluten', 'https://pizerria-centro-imageserver.onrender.com/alergenos/IconoAlergenoGluten-Gluten_icon-icons.com_67600.svg'),
 (21, 'Mejillones', 'moluscos', 'https://pizerria-centro-imageserver.onrender.com/alergenos/IconoAlergenoMoluscos-Mollusks_icon-icons.com_67596.svg'),
 (24, 'Ketchup', NULL, NULL),
@@ -664,21 +646,21 @@ INSERT INTO `ingredientes` (`ID_INGREDIENTE`, `NOMBRE`, `ALERGENOS`, `IMAGEN`) V
 -- Estructura de tabla para la tabla `modificado`
 --
 
-CREATE TABLE `modificado` (
-  `COMPRA` int(10) NOT NULL,
-  `PIZZA` int(4) DEFAULT NULL,
-  `ENTRANTES` int(4) DEFAULT NULL,
-  `EXTRAS` int(4) DEFAULT NULL,
-  `COMENTARIO` text DEFAULT NULL,
-  `NUM_MOD` int(10) NOT NULL,
-  `OFERTA` int(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "modificado" (
+  "COMPRA" numeric(10) NOT NULL,
+  "PIZZA" numeric(4) DEFAULT NULL,
+  "ENTRANTES" numeric(4) DEFAULT NULL,
+  "EXTRAS" numeric(4) DEFAULT NULL,
+  "COMENTARIO" text DEFAULT NULL,
+  "NUM_MOD" numeric(10) NOT NULL,
+  "OFERTA" numeric(4) DEFAULT NULL
+);
 
 --
 -- Volcado de datos para la tabla `modificado`
 --
 
-INSERT INTO `modificado` (`COMPRA`, `PIZZA`, `ENTRANTES`, `EXTRAS`, `COMENTARIO`, `NUM_MOD`, `OFERTA`) VALUES
+INSERT INTO "modificado" ("COMPRA", "PIZZA", "ENTRANTES", "EXTRAS", "COMENTARIO", "NUM_MOD", "OFERTA") VALUES
 (31, 20, NULL, 33, NULL, 2, 57),
 (31, NULL, 8, 35, NULL, 3, 57),
 (31, NULL, 8, 40, NULL, 4, 57),
@@ -864,20 +846,20 @@ INSERT INTO `modificado` (`COMPRA`, `PIZZA`, `ENTRANTES`, `EXTRAS`, `COMENTARIO`
 -- Estructura de tabla para la tabla `oferta`
 --
 
-CREATE TABLE `oferta` (
-  `ID_OFERTA` int(4) NOT NULL,
-  `NOMBRE` varchar(30) NOT NULL,
-  `FECHA_FIN` date DEFAULT NULL,
-  `IMAGEN` varchar(100) DEFAULT NULL,
-  `DESCRIPCION` text DEFAULT NULL,
-  `PRECIO` float(4,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "oferta" (
+  "ID_OFERTA" numeric(4) NOT NULL,
+  "NOMBRE" varchar(30) NOT NULL,
+  "FECHA_FIN" date DEFAULT NULL,
+  "IMAGEN" varchar(300) DEFAULT NULL,
+  "DESCRIPCION" text DEFAULT NULL,
+  "PRECIO" numeric(4,2) DEFAULT 0.00
+);
 
 --
 -- Volcado de datos para la tabla `oferta`
 --
 
-INSERT INTO `oferta` (`ID_OFERTA`, `NOMBRE`, `FECHA_FIN`, `IMAGEN`, `DESCRIPCION`, `PRECIO`) VALUES
+INSERT INTO "oferta" ("ID_OFERTA", "NOMBRE", "FECHA_FIN", "IMAGEN", "DESCRIPCION", "PRECIO") VALUES
 (57, 'I ♡ Chicken', '2022-11-24', 'https://pizerria-centro-imageserver.onrender.com/oferta/I_love_chicken.png', 'Nuestros productos especiales elaborados con gallinas de alta calidad.', 16.50),
 (64, 'Solo Entrante', '2022-06-05', 'https://pizerria-centro-imageserver.onrender.com/oferta/solo_entrante.png', 'Si solo queréis picotear...', 18.00),
 (66, 'Menú del Dia', '1970-01-01', 'https://pizerria-centro-imageserver.onrender.com/oferta/menu_del_dia.png', 'Valido todos los días solo hasta las 17:00.', 10.50),
@@ -892,19 +874,19 @@ INSERT INTO `oferta` (`ID_OFERTA`, `NOMBRE`, `FECHA_FIN`, `IMAGEN`, `DESCRIPCION
 -- Estructura de tabla para la tabla `oferta_lista`
 --
 
-CREATE TABLE `oferta_lista` (
-  `OFERTA` int(4) NOT NULL,
-  `PIZZA` int(4) DEFAULT NULL,
-  `ENTRANTES` int(4) DEFAULT NULL,
-  `BEBIDA` int(4) DEFAULT NULL,
-  `POSTRES` int(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "oferta_lista" (
+  "OFERTA" numeric(4) NOT NULL,
+  "PIZZA" numeric(4) DEFAULT NULL,
+  "ENTRANTES" numeric(4) DEFAULT NULL,
+  "BEBIDA" numeric(4) DEFAULT NULL,
+  "POSTRES" numeric(4) DEFAULT NULL
+);
 
 --
 -- Volcado de datos para la tabla `oferta_lista`
 --
 
-INSERT INTO `oferta_lista` (`OFERTA`, `PIZZA`, `ENTRANTES`, `BEBIDA`, `POSTRES`) VALUES
+INSERT INTO "oferta_lista" ("OFERTA", "PIZZA", "ENTRANTES", "BEBIDA", "POSTRES") VALUES
 (57, NULL, 8, NULL, NULL),
 (57, NULL, 5, NULL, NULL),
 (57, 20, NULL, NULL, NULL),
@@ -935,20 +917,20 @@ INSERT INTO `oferta_lista` (`OFERTA`, `PIZZA`, `ENTRANTES`, `BEBIDA`, `POSTRES`)
 -- Estructura de tabla para la tabla `pago`
 --
 
-CREATE TABLE `pago` (
-  `ID_PAGO` int(10) NOT NULL,
-  `COMPRA` int(10) NOT NULL,
-  `TARJETA` tinyint(1) DEFAULT NULL,
-  `EFECTIVO` tinyint(1) DEFAULT NULL,
-  `TOTAL_PAGO` float(6,2) DEFAULT NULL,
-  `RECOGIDA` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "pago" (
+  "ID_PAGO" numeric(10) NOT NULL,
+  "COMPRA" numeric(10) NOT NULL,
+  "TARJETA" numeric(1) DEFAULT NULL,
+  "EFECTIVO" numeric(1) DEFAULT NULL,
+  "TOTAL_PAGO" numeric(6,2) DEFAULT NULL,
+  "RECOGIDA" numeric(1) NOT NULL DEFAULT 0
+);
 
 --
 -- Volcado de datos para la tabla `pago`
 --
 
-INSERT INTO `pago` (`ID_PAGO`, `COMPRA`, `TARJETA`, `EFECTIVO`, `TOTAL_PAGO`, `RECOGIDA`) VALUES
+INSERT INTO "pago" ("ID_PAGO", "COMPRA", "TARJETA", "EFECTIVO", "TOTAL_PAGO", "RECOGIDA") VALUES
 (1, 39, 1, 0, 50.00, 0),
 (6, 45, 1, 0, 4.95, 0),
 (7, 40, 1, 0, 34.25, 0),
@@ -988,20 +970,20 @@ INSERT INTO `pago` (`ID_PAGO`, `COMPRA`, `TARJETA`, `EFECTIVO`, `TOTAL_PAGO`, `R
 -- Estructura de tabla para la tabla `pizza`
 --
 
-CREATE TABLE `pizza` (
-  `ID_PIZZA` int(4) NOT NULL,
-  `NOMBRE` varchar(30) NOT NULL,
-  `PRECIO` float(4,2) DEFAULT 0.00,
-  `TAMAÑO` varchar(20) NOT NULL,
-  `DESCRIPCION` text DEFAULT NULL,
-  `IMAGEN` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "pizza" (
+  "ID_PIZZA" numeric(4) NOT NULL,
+  "NOMBRE" varchar(30) NOT NULL,
+  "PRECIO" numeric(4,2) DEFAULT 0.00,
+  "TAMAÑO" varchar(20) NOT NULL,
+  "DESCRIPCION" text DEFAULT NULL,
+  "IMAGEN" varchar(300) DEFAULT NULL
+);
 
 --
 -- Volcado de datos para la tabla `pizza`
 --
 
-INSERT INTO `pizza` (`ID_PIZZA`, `NOMBRE`, `PRECIO`, `TAMAÑO`, `DESCRIPCION`, `IMAGEN`) VALUES
+INSERT INTO "pizza" ("ID_PIZZA", "NOMBRE", "PRECIO", "TAMAÑO", "DESCRIPCION", "IMAGEN") VALUES
 (20, 'Campesina', 8.45, 'Mediana', '¡Un sabor rustico! ', 'https://pizerria-centro-imageserver.onrender.com/pizza/pizza_campesina.png'),
 (21, 'Picante', 8.35, 'Mediana', 'Pizza picante para los que gustan sabores fuertes.', 'https://pizerria-centro-imageserver.onrender.com/pizza/pizza_picante.jpg'),
 (26, '4 Queso', 7.50, 'Mediana', '¡Para los amantes de queso!', 'https://pizerria-centro-imageserver.onrender.com/pizza/pizza_4_queso.png'),
@@ -1021,16 +1003,16 @@ INSERT INTO `pizza` (`ID_PIZZA`, `NOMBRE`, `PRECIO`, `TAMAÑO`, `DESCRIPCION`, `
 -- Estructura de tabla para la tabla `pizza_ingrediente`
 --
 
-CREATE TABLE `pizza_ingrediente` (
-  `PIZZA` int(4) NOT NULL,
-  `INGREDIENTE` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "pizza_ingrediente" (
+  "PIZZA" numeric(4) NOT NULL,
+  "INGREDIENTE" numeric(4) NOT NULL
+);
 
 --
 -- Volcado de datos para la tabla `pizza_ingrediente`
 --
 
-INSERT INTO `pizza_ingrediente` (`PIZZA`, `INGREDIENTE`) VALUES
+INSERT INTO "pizza_ingrediente" ("PIZZA", "INGREDIENTE") VALUES
 (20, 35),
 (20, 39),
 (20, 54),
@@ -1156,20 +1138,20 @@ INSERT INTO `pizza_ingrediente` (`PIZZA`, `INGREDIENTE`) VALUES
 -- Estructura de tabla para la tabla `postres`
 --
 
-CREATE TABLE `postres` (
-  `ID_POSTRES` int(4) NOT NULL,
-  `NOMBRE` varchar(40) NOT NULL,
-  `PRECIO` float(4,2) DEFAULT 0.00,
-  `TAMAÑO` varchar(20) NOT NULL,
-  `DESCRIPCION` text DEFAULT NULL,
-  `IMAGEN` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE "postres" (
+  "ID_POSTRES" numeric(4) NOT NULL,
+  "NOMBRE" varchar(40) NOT NULL,
+  "PRECIO" numeric(4,2) DEFAULT 0.00,
+  "TAMAÑO" varchar(20) NOT NULL,
+  "DESCRIPCION" text DEFAULT NULL,
+  "IMAGEN" varchar(300) DEFAULT NULL
+);
 
 --
 -- Volcado de datos para la tabla `postres`
 --
 
-INSERT INTO `postres` (`ID_POSTRES`, `NOMBRE`, `PRECIO`, `TAMAÑO`, `DESCRIPCION`, `IMAGEN`) VALUES
+INSERT INTO "postres" ("ID_POSTRES", "NOMBRE", "PRECIO", "TAMAÑO", "DESCRIPCION", "IMAGEN") VALUES
 (2, 'BJ Half Baked', 4.95, '465 ml', 'EL helado Ben & Jarry´s half baked', 'https://pizerria-centro-imageserver.onrender.com/postres/helado_ben_jerry_half-baked_465ml.jpg'),
 (3, 'BJ Chunky Monkey', 4.95, '465 ml', 'El helado Ben&Jarry´s Chunky Monkey.', 'https://pizerria-centro-imageserver.onrender.com/postres/helado_ben_jerrys_chunky-monkey_465ml.jpg'),
 (4, 'BJ Fairly Nuts', 4.95, '465 ml', 'El helado Ben&Jerry´s Fairly Nuts.', 'https://pizerria-centro-imageserver.onrender.com/postres/helado_ben_jerrys_fairly_nuts_465ml.jpg'),
@@ -1191,165 +1173,180 @@ INSERT INTO `postres` (`ID_POSTRES`, `NOMBRE`, `PRECIO`, `TAMAÑO`, `DESCRIPCION
 --
 -- Indices de la tabla `bebida`
 --
-ALTER TABLE `bebida`
-  ADD PRIMARY KEY (`ID_BEBIDA`);
+ALTER TABLE "bebida"
+  ADD PRIMARY KEY ("ID_BEBIDA");
 
 --
 -- Indices de la tabla `cliente`
 --
-ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`ID_CLIENTE`);
+ALTER TABLE "cliente"
+  ADD PRIMARY KEY ("ID_CLIENTE");
 
 --
 -- Indices de la tabla `compra`
 --
-ALTER TABLE `compra`
-  ADD PRIMARY KEY (`ID_COMPRA`),
-  ADD KEY `COD_COMPRA_CLIENTE_FK` (`CLIENTE`);
-
+ALTER TABLE "compra"
+ADD PRIMARY KEY ("ID_COMPRA"),
+ADD CONSTRAINT "COD_COMPRA_CLIENTE_FK"
+FOREIGN KEY ("CLIENTE") REFERENCES "cliente"("ID_CLIENTE");
 --
 -- Indices de la tabla `compra_lista`
---
-ALTER TABLE `compra_lista`
-  ADD KEY `COD_COMPRA_LISTA_COMPRA_FK` (`COMPRA`),
-  ADD KEY `COD_COMPRA_LISTA_OFERTA_FK` (`OFERTA`),
-  ADD KEY `COD_COMPRA_LISTA_PIZZA_FK` (`PIZZA`),
-  ADD KEY `COD_COMPRA_LISTA_BEBIDA_FK` (`BEBIDA`),
-  ADD KEY `COD_COMPRA_LISTA_ENTRANTES_FK` (`ENTRANTES`),
-  ADD KEY `COD_COMPRA_LISTA_POSTRES_FK` (`POSTRES`);
 
---
--- Indices de la tabla `empleados`
---
-ALTER TABLE `empleados`
-  ADD PRIMARY KEY (`ID_EMPLEADO`);
+ALTER TABLE "oferta"
+  ADD PRIMARY KEY ("ID_OFERTA");
 
---
--- Indices de la tabla `entrantes`
---
-ALTER TABLE `entrantes`
-  ADD PRIMARY KEY (`ID_ENTRANTES`);
 
+ALTER TABLE "empleados"
+  ADD PRIMARY KEY ("ID_EMPLEADO");
+--
+
+ALTER TABLE "entrantes"
+  ADD PRIMARY KEY ("ID_ENTRANTES");
+
+
+ALTER TABLE "pizza"
+  ADD PRIMARY KEY ("ID_PIZZA");
+
+  ALTER TABLE "postres"
+  ADD PRIMARY KEY ("ID_POSTRES");
+
+
+ALTER TABLE "compra_lista"
+  ADD CONSTRAINT "COD_COMPRA_LISTA_COMPRA_FK"
+  FOREIGN KEY ("COMPRA") REFERENCES "compra"("ID_COMPRA"),
+  ADD CONSTRAINT "COD_COMPRA_LISTA_OFERTA_FK" 
+  FOREIGN KEY ("OFERTA") REFERENCES "oferta"("ID_OFERTA"),
+  ADD CONSTRAINT "COD_COMPRA_LISTA_PIZZA_FK" 
+  FOREIGN KEY ("PIZZA") REFERENCES "pizza"("ID_PIZZA"),
+  ADD CONSTRAINT "COD_COMPRA_LISTA_BEBIDA_FK" 
+  FOREIGN KEY ("BEBIDA") REFERENCES "bebida"("ID_BEBIDA"),
+  ADD CONSTRAINT "COD_COMPRA_LISTA_ENTRANTES_FK" 
+  FOREIGN KEY ("ENTRANTES") REFERENCES "entrantes"("ID_ENTRANTES"),
+  ADD CONSTRAINT "COD_COMPRA_LISTA_POSTRES_FK" 
+  FOREIGN KEY ("POSTRES") REFERENCES "postres"("ID_POSTRES");
+
+ALTER TABLE "ingredientes"
+  ADD PRIMARY KEY ("ID_INGREDIENTE");
 --
 -- Indices de la tabla `entrantes_ingrediente`
 --
-ALTER TABLE `entrantes_ingrediente`
-  ADD KEY `COD_ENTRANTE_INGREDIENTE_FK` (`ENTRANTES`),
-  ADD KEY `COD_INGREDIENTE_ENTRANTE_FK` (`INGREDIENTE`);
-
+ALTER TABLE "entrantes_ingrediente"
+  ADD CONSTRAINT "COD_ENTRANTE_INGREDIENTE_FK" 
+  FOREIGN KEY ("ENTRANTES") REFERENCES "entrantes"("ID_ENTRANTES"),
+  ADD CONSTRAINT "COD_INGREDIENTE_ENTRANTE_FK" 
+  FOREIGN KEY ("INGREDIENTE") references "ingredientes"("ID_INGREDIENTE");
 --
 -- Indices de la tabla `extras`
 --
-ALTER TABLE `extras`
-  ADD PRIMARY KEY (`ID_EXTRA`),
-  ADD KEY `COD_INGREDIENTES_EXTRAS_FK` (`INGREDIENTE`);
+ALTER TABLE "extras"
+  ADD PRIMARY KEY ("ID_EXTRA"),
+  ADD CONSTRAINT "COD_INGREDIENTES_EXTRAS_FK" 
+  FOREIGN KEY ("INGREDIENTE") REFERENCES "ingredientes"("ID_INGREDIENTE");
 
 --
 -- Indices de la tabla `ingredientes`
 --
-ALTER TABLE `ingredientes`
-  ADD PRIMARY KEY (`ID_INGREDIENTE`);
+
 
 --
 -- Indices de la tabla `modificado`
 --
-ALTER TABLE `modificado`
-  ADD KEY `COD_MOD_COMPRA_FK` (`COMPRA`),
-  ADD KEY `COD_MOD_PIZZA_FK` (`PIZZA`),
-  ADD KEY `COD_MOD_ENTRANTES_FK` (`ENTRANTES`),
-  ADD KEY `COD_MOD_EXTRAS_FK` (`EXTRAS`),
-  ADD KEY `COD_MOD_OFERTA_FK` (`OFERTA`);
+ALTER TABLE "modificado"
+  ADD CONSTRAINT "COD_MOD_COMPRA_FK" 
+  FOREIGN KEY ("COMPRA") REFERENCES "compra"("ID_COMPRA"),
+  ADD CONSTRAINT "COD_MOD_PIZZA_FK" 
+  FOREIGN KEY ("PIZZA") REFERENCES "pizza"("ID_PIZZA"),
+  ADD CONSTRAINT "COD_MOD_ENTRANTES_FK" 
+  FOREIGN KEY ("ENTRANTES") REFERENCES "entrantes"("ID_ENTRANTES"),
+  ADD CONSTRAINT "COD_MOD_EXTRAS_FK" 
+  FOREIGN KEY ("EXTRAS") REFERENCES "extras"("ID_EXTRA"),
+  ADD CONSTRAINT "COD_MOD_OFERTA_FK" 
+  FOREIGN KEY ("OFERTA") REFERENCES "oferta"("ID_OFERTA");
 
---
--- Indices de la tabla `oferta`
---
-ALTER TABLE `oferta`
-  ADD PRIMARY KEY (`ID_OFERTA`);
 
 --
 -- Indices de la tabla `oferta_lista`
 --
-ALTER TABLE `oferta_lista`
-  ADD KEY `COD_OFERTA_LISTA_BEBIDA_FK` (`BEBIDA`),
-  ADD KEY `COD_OFERTA_LISTA_ENTRANTES_FK` (`ENTRANTES`),
-  ADD KEY `COD_OFERTA_LISTA_OFERTA_FK` (`OFERTA`),
-  ADD KEY `COD_OFERTA_LISTA_PIZZA_FK` (`PIZZA`),
-  ADD KEY `COD_OFERTA_LISTA_POSTRES_FK` (`POSTRES`);
+ALTER TABLE "oferta_lista"
+  ADD CONSTRAINT "COD_OFERTA_LISTA_BEBIDA_FK" 
+  FOREIGN KEY ("BEBIDA") REFERENCES "bebida"("ID_BEBIDA"),
+  ADD CONSTRAINT "COD_OFERTA_LISTA_ENTRANTES_FK" 
+  FOREIGN KEY ("ENTRANTES") REFERENCES "entrantes"("ID_ENTRANTES"),
+  ADD CONSTRAINT "COD_OFERTA_LISTA_OFERTA_FK" 
+  FOREIGN KEY ("OFERTA") REFERENCES "oferta"("ID_OFERTA"),
+  ADD CONSTRAINT "COD_OFERTA_LISTA_PIZZA_FK" 
+  FOREIGN KEY ("PIZZA") REFERENCES "pizza"("ID_PIZZA"),
+  ADD CONSTRAINT "COD_OFERTA_LISTA_POSTRES_FK" 
+  FOREIGN KEY ("POSTRES") REFERENCES "postres"("ID_POSTRES");
 
 --
 -- Indices de la tabla `pago`
 --
-ALTER TABLE `pago`
-  ADD PRIMARY KEY (`ID_PAGO`),
-  ADD KEY `COD_PAGO_COMPRA_FK` (`COMPRA`);
+ALTER TABLE "pago"
+  ADD PRIMARY KEY ("ID_PAGO"),
+  ADD CONSTRAINT "COD_PAGO_COMPRA_FK" 
+  FOREIGN KEY ("COMPRA") REFERENCES "compra"("ID_COMPRA");
+
+
+ALTER TABLE "pizza_ingrediente"
+  ADD CONSTRAINT "COD_PIZZA_INGREDIENTE_FK" 
+  FOREIGN KEY ("PIZZA")  REFERENCES "pizza"("ID_PIZZA"),
+  ADD CONSTRAINT "COD_INGREDIENTE_PIZZA_FK" 
+  FOREIGN KEY ("INGREDIENTE") REFERENCES "ingredientes"("ID_INGREDIENTE");
+
 
 --
--- Indices de la tabla `pizza`
---
-ALTER TABLE `pizza`
-  ADD PRIMARY KEY (`ID_PIZZA`);
+CREATE SEQUENCE bebida_id_bebida_seq
+START WITH 39
+INCREMENT BY 1;
 
---
--- Indices de la tabla `pizza_ingrediente`
---
-ALTER TABLE `pizza_ingrediente`
-  ADD KEY `COD_PIZZA_INGREDIENTE_FK` (`PIZZA`),
-  ADD KEY `COD_INGREDIENTE_PIZZA_FK` (`INGREDIENTE`);
+ALTER TABLE "bebida"
+ALTER COLUMN "ID_BEBIDA" SET DEFAULT nextval('bebida_id_bebida_seq');
 
---
--- Indices de la tabla `postres`
---
-ALTER TABLE `postres`
-  ADD PRIMARY KEY (`ID_POSTRES`);
+CREATE SEQUENCE cliente_id_cliente_seq
+START WITH 30
+INCREMENT BY 1;
 
---
--- AUTO_INCREMENT de las tablas volcadas
---
+ALTER TABLE "cliente"
+ALTER COLUMN "ID_CLIENTE" SET DEFAULT nextval('cliente_id_cliente_seq')
 
---
--- AUTO_INCREMENT de la tabla `bebida`
---
-ALTER TABLE `bebida`
-  MODIFY `ID_BEBIDA` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+CREATE SEQUENCE compra_id_compra_seq
+START WITH 93
+INCREMENT BY 1;
 
---
--- AUTO_INCREMENT de la tabla `cliente`
---
-ALTER TABLE `cliente`
-  MODIFY `ID_CLIENTE` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+ALTER TABLE "compra"
+ALTER COLUMN "ID_COMPRA" SET DEFAULT nextval('compra_id_compra_seq')
 
---
--- AUTO_INCREMENT de la tabla `compra`
---
-ALTER TABLE `compra`
-  MODIFY `ID_COMPRA` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+CREATE SEQUENCE empleados_id_empleados_seq
+START WITH 50
+INCREMENT BY 1;
 
---
--- AUTO_INCREMENT de la tabla `empleados`
---
-ALTER TABLE `empleados`
-  MODIFY `ID_EMPLEADO` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+ALTER TABLE "empleados"
+ALTER COLUMN "ID_EMPLEADO" SET DEFAULT nextval('empleados_id_empleados_seq');
 
---
--- AUTO_INCREMENT de la tabla `entrantes`
---
-ALTER TABLE `entrantes`
-  MODIFY `ID_ENTRANTES` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+CREATE SEQUENCE entrantes_id_entrantes_seq
+START WITH 18
+INCREMENT BY 1;
 
---
--- AUTO_INCREMENT de la tabla `extras`
---
-ALTER TABLE `extras`
-  MODIFY `ID_EXTRA` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+ALTER TABLE "entrantes"
+ALTER COLUMN "ID_ENTRANTES" SET DEFAULT nextval('entrantes_id_entrantes_seq');
 
---
--- AUTO_INCREMENT de la tabla `ingredientes`
---
-ALTER TABLE `ingredientes`
-  MODIFY `ID_INGREDIENTE` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+CREATE SEQUENCE extras_id_extras_seq
+START WITH 82
+INCREMENT BY 1;
 
---
--- AUTO_INCREMENT de la tabla `oferta`
+ALTER TABLE "extras"
+ALTER COLUMN "ID_EXTRA" SET DEFAULT nextval('extras_id_extras_seq');
+
+CREATE SEQUENCE ingredientes_id_ingredientes_seq
+START WITH 128
+INCREMENT BY 1;
+
+ALTER TABLE "ingredientes"
+ALTER COLUMN "ID_INGREDIENTE" SET DEFAULT nextval('ingredientes_id_ingredientes_seq');
+
+
+-- seguir aqui #############################
 --
 ALTER TABLE `oferta`
   MODIFY `ID_OFERTA` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
