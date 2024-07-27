@@ -145,7 +145,7 @@ router.post('/borrarIngrediente',(req, res)=>{
 });
 
 router.get('/getPizza', (req, res)=>{
-    mysqlConnection.query('SELECT ID_PIZZA, NOMBRE, PRECIO, IMAGEN, DESCRIPCION, TAMAÑO AS SIZE FROM PIZZA ORDER BY NOMBRE ASC;',
+    mysqlConnection.query('SELECT "ID_PIZZA", "NOMBRE", "PRECIO", "IMAGEN", "DESCRIPCION", "TAMAÑO" AS "SIZE" FROM PIZZA ORDER BY "NOMBRE" ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
