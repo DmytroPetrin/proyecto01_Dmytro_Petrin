@@ -35,8 +35,8 @@ export class PizzaComponent implements OnInit {
   getPizza() {
     this.cartaService.getPizza().subscribe({
       next: (res: any) => {
-        console.log(res)
-        res.forEach((element: any) => {
+        console.log(res.rows)
+        res.rows.forEach((element: any) => {
           this.pizza.push(element);
           this.CANTIDAD.push(this.formBuilder.control('1'));
         });
