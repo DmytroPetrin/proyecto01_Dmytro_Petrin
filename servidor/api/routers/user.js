@@ -23,7 +23,7 @@ router.post('/signin', (req,res)=>{
     cuando lo encuentre guarda los datos en rows de query*/
     const{EMAIL, PASS} = req.body;
     const CONTRASEÑA = PASS; //ESTA CONVERSION PORQUE ANGULAR NO SABE TRABAJAR CON LETRA Ñ EN OBJETOS
-    mysqlConnection.query('select * from empleados where EMAIL=? AND CONTRASEÑA=?',
+    mysqlConnection.query('select * from empleados where "EMAIL"=? AND "CONTRASEÑA"=?',
      [EMAIL, CONTRASEÑA], 
      (err,rows, fields) =>{  
          if(!err){
@@ -32,7 +32,7 @@ router.post('/signin', (req,res)=>{
                  const token = jwt.sign(data, 'palabra_secreta'); //jwt permite crear token donde los datos seran cifrados medianten la palabra secreta
                  res.json({token}); //respondemos con el token creado
              }else if(rows.length==0){
-                mysqlConnection.query('select * from cliente where EMAIL=? AND CONTRASEÑA=?',
+                mysqlConnection.query('select * from cliente where "EMAIL"=? AND "CONTRASEÑA"=?',
                 [EMAIL, CONTRASEÑA], 
                 (err,rows, fields) =>{
                     if(!err){
@@ -79,7 +79,7 @@ function verifyToken(req, res, next){
 router.put('/registerUser', (req, res)=>{ 
     
     const{NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, FECHA_NACIMIENTO, DIRECCION} = req.body;
-    mysqlConnection.query('INSERT INTO cliente (NOMBRE, APELLIDO, EMAIL, CONTRASEÑA, TELEFONO, FECHA_NACIMIENTO, DIRECCION)'+
+    mysqlConnection.query('INSERT INTO cliente ("NOMBRE", "APELLIDO", "EMAIL", "CONTRASEÑA", "TELEFONO", "FECHA_NACIMIENTO", DIRECCION)'+
     ' VALUES(?, ?, ?, ?, ?, ?, ?);',
      [NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, FECHA_NACIMIENTO, DIRECCION],
      (err,rows, fields) =>{
@@ -93,7 +93,7 @@ router.put('/registerUser', (req, res)=>{
 
 router.put('/registerEmpleado', (req, res)=>{
     const{NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, FECHA_ALTA, DIRECCION, DNI, ROL} = req.body;
-    mysqlConnection.query('INSERT INTO empleados(NOMBRE, APELLIDO, EMAIL, CONTRASEÑA, TELEFONO, FECHA_ALTA, DIRECCION, DNI, ROL) VALUES (?,?,?,?,?,?,?,?,?)',
+    mysqlConnection.query('INSERT INTO empleados("NOMBRE", "APELLIDO", "EMAIL", "CONTRASEÑA", "TELEFONO", "FECHA_ALTA", "DIRECCION", "DNI", "ROL") VALUES (?,?,?,?,?,?,?,?,?)',
      [NOMBRE, APELLIDO, EMAIL, PASS, TELEFONO, FECHA_ALTA, DIRECCION, DNI, ROL],
      (err,rows, fields) =>{
         if(!err){
@@ -106,14 +106,14 @@ router.put('/registerEmpleado', (req, res)=>{
 router.post('/comprobarUsuario', (req,res)=>{
     console.log(req.body);
     const{EMAIL}=req.body;
-    mysqlConnection.query('SELECT EMAIL FROM empleados WHERE EMAIL = ?;',
+    mysqlConnection.query('SELECT "EMAIL" FROM empleados WHERE "EMAIL" = ?;',
      [EMAIL],
      (err,rows,fields) =>{
          if(!err){
              if(rows.length>0){
                  res.json(true);
              }else if (rows.length==0){
-            mysqlConnection.query('SELECT EMAIL FROM cliente WHERE EMAIL = ?;',
+            mysqlConnection.query('SELECT "EMAIL" FROM cliente WHERE "EMAIL" = ?;',
             [EMAIL],
             (err,rows,fields) =>{
                 if(!err){
@@ -147,7 +147,7 @@ router.get('/getEmpleado', (req,res)=>{
 
 router.post('/borrarEmpleado', (req, res)=>{
     const{EMAIL}=req.body;
-    mysqlConnection.query('DELETE FROM empleados WHERE EMAIL = ?;',
+    mysqlConnection.query('DELETE FROM empleados WHERE "EMAIL" = ?;',
     [EMAIL],
     (err, rows)=>{
         if(!err){

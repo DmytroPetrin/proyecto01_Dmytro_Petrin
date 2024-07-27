@@ -75,7 +75,7 @@ router.get('/getCartabyid', (req,res)=>{
 
 router.get('/getIngredientebyid', (req,res)=>{ 
     
-    mysqlConnection.query('(SELECT "P" AS PE, PI.PIZZA AS ID, I.* FROM ingredientes I, PIZZA_INGREDIENTE PI WHERE PI.INGREDIENTE=I.ID_INGREDIENTE) UNION (SELECT "E" AS PE, EI.ENTRANTES AS ID, I.* FROM ingredientes I, ENTRANTES_INGREDIENTE EI WHERE EI.INGREDIENTE=I.ID_INGREDIENTE);',
+    mysqlConnection.query('(SELECT "P" AS "PE", PI."PIZZA" AS "ID", I.* FROM ingredientes I, PIZZA_INGREDIENTE PI WHERE PI."INGREDIENTE"=I."ID_INGREDIENTE") UNION (SELECT "E" AS "PE", EI."ENTRANTES" AS "ID", I.* FROM ingredientes I, ENTRANTES_INGREDIENTE EI WHERE EI."INGREDIENTE"=I."ID_INGREDIENTE");',
     (err,rows, fields) =>{
         if(!err){
             
@@ -104,7 +104,7 @@ router.post('/registerCarta', (req,res)=>{
     if(CARTA == "pizza"|| CARTA == "entrantes"){
         INGREDIENTE.forEach((element)=> {
             mysqlConnection.query('INSERT INTO ' + CARTA +
-            '_ingrediente (INGREDIENTE, ' + CARTA + ') SELECT ID_INGREDIENTE, MAX(ID_' + CARTA + ') FROM ingredientes, ' + CARTA + ' WHERE ingredientes.NOMBRE = ?;',
+            '_ingrediente ("INGREDIENTE", ' + CARTA + ') SELECT "ID_INGREDIENTE", MAX("ID_' + CARTA + '") FROM ingredientes, ' + CARTA + ' WHERE ingredientes."NOMBRE" = ?;',
             [element],
             (err, rows)=>{
                 if(!err){
@@ -121,7 +121,7 @@ router.post('/registerCarta', (req,res)=>{
 });
 
 router.get('/getIngrediente', (req,res)=>{
-    mysqlConnection.query('SELECT * FROM ingredientes ORDER BY NOMBRE ASC;',
+    mysqlConnection.query('SELECT * FROM ingredientes ORDER BY "NOMBRE" ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -133,7 +133,7 @@ router.get('/getIngrediente', (req,res)=>{
 
 router.post('/borrarIngrediente',(req, res)=>{
     const{ID_INGREDIENTE}=req.body;
-    mysqlConnection.query('DELETE FROM ingredientes WHERE ID_INGREDIENTE = ?',
+    mysqlConnection.query('DELETE FROM ingredientes WHERE "ID_INGREDIENTE" = ?',
     [ID_INGREDIENTE],
     (err,rows)=>{
         if(!err){
@@ -167,7 +167,7 @@ router.get('/getIngredientePizza', (req, res)=>{
 });
 
 router.get('/getIngredienteEntrantes', (req, res)=>{
-    mysqlConnection.query('SELECT EI.ENTRANTES, I.* FROM ingredientes I, entrantes_ingrediente EI WHERE EI.INGREDIENTE = I.ID_INGREDIENTE;  ',
+    mysqlConnection.query('SELECT EI."ENTRANTES", I.* FROM ingredientes I, entrantes_ingrediente EI WHERE EI."INGREDIENTE" = I."ID_INGREDIENTE";  ',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -178,7 +178,7 @@ router.get('/getIngredienteEntrantes', (req, res)=>{
 });
 
 router.get('/getOferta', (req, res)=>{
-    mysqlConnection.query('SELECT * FROM oferta ORDER BY NOMBRE ASC;',
+    mysqlConnection.query('SELECT * FROM oferta ORDER BY "NOMBRE" ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -189,7 +189,7 @@ router.get('/getOferta', (req, res)=>{
 });
 
 router.get('/getEntrantes', (req, res)=>{
-    mysqlConnection.query('SELECT * FROM entrantes ORDER BY NOMBRE ASC;',
+    mysqlConnection.query('SELECT * FROM entrantes ORDER BY "NOMBRE" ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -200,7 +200,7 @@ router.get('/getEntrantes', (req, res)=>{
 });
 
 router.get('/getPostres', (req, res)=>{
-    mysqlConnection.query('SELECT * FROM postres ORDER BY NOMBRE ASC;',
+    mysqlConnection.query('SELECT * FROM postres ORDER BY "NOMBRE" ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -211,7 +211,7 @@ router.get('/getPostres', (req, res)=>{
 });
 
 router.get('/getBebida', (req, res)=>{
-    mysqlConnection.query('SELECT * FROM bebida ORDER BY NOMBRE ASC;',
+    mysqlConnection.query('SELECT * FROM bebida ORDER BY "NOMBRE" ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -223,7 +223,7 @@ router.get('/getBebida', (req, res)=>{
 
 router.post('/borrarCarta', (req, res)=>{
     const{CARTA, ID}=req.body;
-    mysqlConnection.query('DELETE FROM '+ CARTA +' WHERE ID_' + CARTA + ' = ' + ID,
+    mysqlConnection.query('DELETE FROM '+ CARTA +' WHERE "ID_' + CARTA + '" = "' + ID + '"',
     (err, rows)=>{
         if(!err){
             res.json(rows);
@@ -236,7 +236,7 @@ router.post('/borrarCarta', (req, res)=>{
 router.post('/getCarta',  (req,res)=>{
     //console.log(req.body);
     const{CARTA}=req.body;
-    mysqlConnection.query('SELECT ID_' + CARTA + ', NOMBRE FROM ' + CARTA + ' ORDER BY NOMBRE ASC;',
+    mysqlConnection.query('SELECT "ID_' + CARTA + '", "NOMBRE" FROM ' + CARTA + ' ORDER BY "NOMBRE" ASC;',
     (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -253,7 +253,7 @@ router.post('/registerOferta',  async (req,res)=>{
         const{NOMBRE, PRECIO, IMAGEN, FECHA_FIN, DESCRIPCION, CARTA, CANTIDAD, NOMBRE_PLATO}=req.body;
        
         
-        mysqlConnection.query('INSERT INTO oferta (NOMBRE, PRECIO, IMAGEN, FECHA_FIN, DESCRIPCION) VALUES(?,?,?,?,?);',
+        mysqlConnection.query('INSERT INTO oferta ("NOMBRE", "PRECIO", "IMAGEN", "FECHA_FIN", "DESCRIPCION") VALUES(?,?,?,?,?);',
         [NOMBRE, PRECIO, IMAGEN, FECHA_FIN, DESCRIPCION],
         (err, rows, fields)=>{
             if(!err){
@@ -294,7 +294,7 @@ router.post('/registerOferta',  async (req,res)=>{
         var POSTRES = null;
         var ENTRANTES = null;
         return new Promise(function(resolve, reject) {
-        mysqlConnection.query('SELECT ID_' +  CARTA[i] + ' FROM ' +  CARTA[i] + " where NOMBRE = '" +  NOMBRE_PLATO[i] + "' LIMIT 1;",
+        mysqlConnection.query('SELECT "ID_' +  CARTA[i] + '" FROM ' +  CARTA[i] + ' where "NOMBRE" = "' +  NOMBRE_PLATO[i] + '" LIMIT 1;',
             (err, rows, fields)=>{ 
              if(!err){
               const x = JSON.stringify( rows[0]);
@@ -335,7 +335,7 @@ router.post('/registerOferta',  async (req,res)=>{
 
         function meterDatos (PIZZA, BEBIDA, ENTRANTES, POSTRES) {
             return new Promise(function(resolve, reject) {
-             mysqlConnection.query('INSERT INTO oferta_lista (OFERTA, PIZZA, BEBIDA, ENTRANTES, POSTRES) SELECT MAX(OFERTA.ID_OFERTA), ?, ?, ?, ? FROM oferta;',
+             mysqlConnection.query('INSERT INTO oferta_lista ("OFERTA", "PIZZA", "BEBIDA", "ENTRANTES", "POSTRES") SELECT MAX(OFERTA."ID_OFERTA"), ?, ?, ?, ? FROM oferta;',
                   [ PIZZA,  BEBIDA,  ENTRANTES,  POSTRES],
                  (err, rows, fields)=>{
                   if(!err){
