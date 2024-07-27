@@ -10,7 +10,7 @@ import { Injectable } from "@angular/core";
   })
 export class CartaService {
   
-    private URL ="http://localhost:3000";
+    private URL ="https://pizzeria-centro-frontend.onrender.com";
   
     
   

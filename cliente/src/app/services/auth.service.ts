@@ -10,7 +10,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class AuthService {
 
-  private URL ="http://localhost:3000";
+  private URL ="https://pizzeria-centro-frontend.onrender.com";
 
   
 

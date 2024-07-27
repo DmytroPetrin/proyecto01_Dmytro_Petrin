@@ -7,7 +7,7 @@ import { Injectable } from "@angular/core";
   })
 export class CompraService {
   
-    private URL ="http://localhost:3000";
+    private URL ="https://pizzeria-centro-frontend.onrender.com";
     private arr_carrito: string[] =[];
     
   
