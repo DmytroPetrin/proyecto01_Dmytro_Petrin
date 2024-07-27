@@ -21,7 +21,7 @@ router.post('/registerIngrediente', (req,res)=>{
      este usuario en la base de datos
     cuando lo encuentre guarda los datos en rows de query*/
     const{NOMBRE, ALERGENO, IMAGEN} = req.body;
-    mysqlConnection.query('INSERT INTO ingredientes (NOMBRE, ALERGENOS, IMAGEN) VALUES (?, ?, ?);',
+    mysqlConnection.query('INSERT INTO ingredientes ("NOMBRE", "ALERGENOS", "IMAGEN") VALUES (?, ?, ?);',
      [NOMBRE, ALERGENO, IMAGEN], 
      (err,rows, fields) =>{
         if(!err){
@@ -35,7 +35,7 @@ router.post('/registerIngrediente', (req,res)=>{
 
 router.post('/registerExtra', (req,res)=>{
     const{IMAGEN2, PRECIO} = req.body;
-    mysqlConnection.query('INSERT INTO extras(INGREDIENTE, IMAGEN, PRECIO) SELECT MAX(ID_INGREDIENTE), ?, ? FROM ingredientes',
+    mysqlConnection.query('INSERT INTO extras("INGREDIENTE", "IMAGEN", "PRECIO") SELECT MAX("ID_INGREDIENTE"), ?, ? FROM ingredientes',
      [IMAGEN2, PRECIO], 
      (err,rows, fields) =>{
         if(!err){
@@ -48,7 +48,7 @@ router.post('/registerExtra', (req,res)=>{
 });
 
 router.get('/getExtra', (req, res)=>{
-    mysqlConnection.query('SELECT E.*, I.NOMBRE, I.IMAGEN AS IMAGEN2, I.ALERGENOS FROM extras E, INGREDIENTES I WHERE E.INGREDIENTE = I.ID_INGREDIENTE ORDER BY I.NOMBRE;',
+    mysqlConnection.query('SELECT E.*, I."NOMBRE", I."IMAGEN" AS "IMAGEN2", I."ALERGENOS" FROM extras E, INGREDIENTES I WHERE E."INGREDIENTE" = I."ID_INGREDIENTE" ORDER BY I."NOMBRE";',
     (err, rows, field)=>{
         if(!err){
             res.json(rows);
@@ -60,7 +60,7 @@ router.get('/getExtra', (req, res)=>{
 
 router.get('/getCartabyid', (req,res)=>{ 
     
-    mysqlConnection.query('(SELECT "P" AS QUE, COUNT(*) AS CANTIDAD, ol.OFERTA as OFERTA, P.ID_PIZZA AS ID, P.NOMBRE, P.TAMAÑO FROM pizza P, oferta_lista OL where P.ID_PIZZA = OL.PIZZA GROUP BY OL.PIZZA, OL.OFERTA HAVING COUNT(*)) UNION (SELECT "E" AS QUE, COUNT(*) AS CANTIDAD, ol.OFERTA as OFERTA, P.ID_ENTRANTES, P.NOMBRE, P.TAMAÑO FROM entrantes P, oferta_lista OL where P.ID_ENTRANTES = OL.ENTRANTES GROUP BY OL.ENTRANTES, OL.OFERTA HAVING COUNT(*)) UNION (SELECT "B" AS QUE, COUNT(*) AS CANTIDAD, ol.OFERTA as OFERTA, P.ID_BEBIDA, P.NOMBRE, P.TAMAÑO FROM bebida P, oferta_lista OL where P.ID_BEBIDA = OL.BEBIDA GROUP BY OL.BEBIDA, OL.OFERTA HAVING COUNT(*)) UNION (SELECT "PO" AS QUE, COUNT(*) AS CANTIDAD, ol.OFERTA as OFERTA, P.ID_POSTRES, P.NOMBRE, P.TAMAÑO FROM postres P, oferta_lista OL where P.ID_POSTRES = OL.POSTRES GROUP BY OL.POSTRES, OL.OFERTA HAVING COUNT(*));',
+    mysqlConnection.query('(SELECT "P" AS "QUE", COUNT(*) AS "CANTIDAD", ol."OFERTA" as "OFERTA", P."ID_PIZZA" AS "ID", P."NOMBRE", P."TAMAÑO" FROM pizza P, oferta_lista OL where P."ID_PIZZA" = OL."PIZZA" GROUP BY OL."PIZZA", OL."OFERTA" HAVING COUNT(*)) UNION (SELECT "E" AS "QUE", COUNT(*) AS "CANTIDAD", ol."OFERTA" as "OFERTA", P."ID_ENTRANTES", P."NOMBRE", P."TAMAÑO" FROM entrantes P, oferta_lista OL where P."ID_ENTRANTES" = OL."ENTRANTES" GROUP BY OL."ENTRANTES", OL."OFERTA" HAVING COUNT(*)) UNION (SELECT "B" AS "QUE", COUNT(*) AS "CANTIDAD", ol."OFERTA" as "OFERTA", P."ID_BEBIDA", P."NOMBRE", P."TAMAÑO" FROM bebida P, oferta_lista OL where P."ID_BEBIDA" = OL."BEBIDA" GROUP BY OL."BEBIDA", OL."OFERTA" HAVING COUNT(*)) UNION (SELECT "PO" AS "QUE", COUNT(*) AS "CANTIDAD", ol."OFERTA" as "OFERTA", P."ID_POSTRES", P."NOMBRE", P."TAMAÑO" FROM postres P, oferta_lista OL where P."ID_POSTRES" = OL."POSTRES" GROUP BY OL."POSTRES", OL."OFERTA" HAVING COUNT(*));',
      (err,rows, fields) =>{
         if(!err){
             
@@ -90,7 +90,7 @@ router.get('/getIngredientebyid', (req,res)=>{
 
 router.post('/registerCarta', (req,res)=>{
     const{CARTA, NOMBRE, PRECIO, SIZE, IMAGEN, DESCRIPCION, INGREDIENTE} = req.body;
-    mysqlConnection.query('INSERT INTO '+ CARTA +' (NOMBRE, PRECIO, TAMAÑO, IMAGEN, DESCRIPCION) VALUES (?, ?, ?, ?, ?)',
+    mysqlConnection.query('INSERT INTO '+ CARTA +' ("NOMBRE", "PRECIO", "TAMAÑO", "IMAGEN", "DESCRIPCION") VALUES (?, ?, ?, ?, ?)',
     [NOMBRE, PRECIO, SIZE, IMAGEN, DESCRIPCION],
     (err, rows, fields)=>{
         if(!err){
