@@ -64,7 +64,7 @@ router.get('/getCartabyid', (req,res)=>{
      (err,rows, fields) =>{
         if(!err){
             
-           res.json(rows.rows);
+           res.json(rows);
            
         }else{
             console.log(err);
