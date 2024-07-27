@@ -156,7 +156,7 @@ router.get('/getPizza', (req, res)=>{
 });
 
 router.get('/getIngredientePizza', (req, res)=>{
-    mysqlConnection.query('SELECT PI.PIZZA, I.* FROM ingredientes I, pizza_ingrediente PI WHERE PI.INGREDIENTE = I.ID_INGREDIENTE; ',
+    mysqlConnection.query('SELECT PI."PIZZA", I.* FROM ingredientes I, pizza_ingrediente PI WHERE PI."INGREDIENTE" = I."ID_INGREDIENTE";',
     (err, rows)=>{
         if(!err){
             res.json(rows);
