@@ -28,8 +28,6 @@ export class PizzaComponent implements OnInit {
   ngOnInit(): void {
     this.getPizza();
     
-    console.log(this.ingrediente);
-    console.log(this.pizza);
   }
 
   getPizza() {
